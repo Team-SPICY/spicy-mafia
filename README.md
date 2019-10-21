@@ -1,6 +1,6 @@
 # Mafia
 
-A web application implementation of the popular party game Mafia, also known as Werewolf.
+A web application for the popular party game Mafia, also known as Werewolf.
 
 
 ## Team Members
