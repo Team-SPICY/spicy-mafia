@@ -1,23 +1,10 @@
-# Mafia
+Introduction
 
-A web application for the popular party game Mafia, also known as Werewolf.
+Requirements
 
+Let's Get Started
 
-## Team Members
-
-* Charles Xiong
-* Yenia Grada-Ibarra
-* Breenan Upton Sanderbeck
-* Brandon Gonzalez
-* Jacob Doering-Powell
-* Fernando Lopez Garcia
-* Justin Cruz
-* Sebastian Martinez-Barry
-* Gustavo Aguayo & Thuc Phan
+How to Run it?
 
 
-
-
-Description:
-This is a Mafia game webapp that utilizes the Django REST framework for the backend and 
-ReactJS for the frontend.
+Technologies Used
