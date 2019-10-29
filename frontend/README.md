@@ -43,7 +43,7 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-###Requirements
+### Requirements
 
 3 lines: You must install the node_modules folder before running the react webapp. In addition, install yarn in order to run the webapp.
 
@@ -74,6 +74,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 
 ### `npm run build` fails to minify
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
 
 
 
