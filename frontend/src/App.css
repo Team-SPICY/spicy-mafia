@@ -1,5 +1,11 @@
 .App {
   text-align: center;
+  width:100vw;
+  height:100vh;
+  background: rgb(252,146,83);
+  background: linear-gradient(180deg, rgba(252,146,83,1) 26%,
+    rgba(255,163,84,1) 63%, rgba(255,193,124,1) 100%);
+  touch-action: manipulation;
 }
 
 .App-logo {
@@ -19,4 +25,95 @@
 
 .App-link {
   color: #09d3ac;
+}
+
+.background {
+   background-size:cover
+}
+.card {
+  /* Add shadows to create the "card" effect */
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+.cardimg {
+  width: 100%;
+  height: auto;
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.buttontest {
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: black;
+  background-color: white;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 5px #919191;
+
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  font-size: 18px;
+  transform: scale(0.7);
+
+}
+
+.buttontest:hover {
+  background-color: white;
+
+
+}
+
+.buttontest:active {
+  background-color: #989898;
+
+  transform: scale(0.7);
+}
+.buttontest2 {
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: black;
+  background-color: white;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 5px #919191;
+
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  font-size: 18px;
+  transform: scale(0.7);
+
+}
+
+.buttontest2:hover {
+  background-color: white;
+
+
+}
+
+.buttontest2:active {
+  background-color: #989898;
+
+  transform: scale(0.7);
 }
