@@ -5,10 +5,10 @@ import pyrebase
 
 #link to firebase
 config = {
-    apiKey: "AIzaSyBeYE_UDmmz-k3_EuQJu2y5MQab4J2-13E",
-    authDomain: "spicy-mafia.firebaseapp.com",
-    databaseURL: "https://spicy-mafia.firebaseio.com",
-    storageBucket: "spicy-mafia.appspot.com",
+    'apiKey': "AIzaSyBeYE_UDmmz-k3_EuQJu2y5MQab4J2-13E",
+    'authDomain': "spicy-mafia.firebaseapp.com",
+    'databaseURL': "https://spicy-mafia.firebaseio.com",
+    'storageBucket': "spicy-mafia.appspot.com",
 }
 
 firebase = pyrebase.initialize_app(config)
@@ -43,7 +43,6 @@ def create_lobby(request):
 
 def get_lobby(request):
     ''' TODO: docstring '''
-
     if request.GET:
         id = request.GET.get('id')
         lobby = db.child("lobby_id").order_by_child("id").equal_to(id).get()
