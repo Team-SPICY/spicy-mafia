@@ -1,27 +1,47 @@
-import React, {Component} from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import Game from './components/Game'
+import Lobby from './components/Lobby'
+import WebSocketInstance from './services/WebSocket'
 
-class App extends Component {
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      roomID: '',
+      loggedIn: false
+    };
+  }
+
+  handleLoginSubmit = (username, roomID) => {
+    console.log(username, roomID)
+    this.setState({ loggedIn: true, username: username, roomID: roomID });
+    //connect to websockets, new websocker based on the roomID
+    WebSocketInstance.connect(username, roomID);
+  }
+
   render() {
+    const {
+      loggedIn,
+      username
+    } = this.state;
+
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        {
+          loggedIn ?
+            <Game
+              currentUser={username}
+            />
+            :
+            <Lobby
+              onSubmit={this.handleLoginSubmit}
+              usernameChangeHandler={this.usernameChangeHandler}
+              roomChangeHandler={this.roomChangeHandler}
+            />
+        }
       </div>
     );
   }
 }
-export default App;
