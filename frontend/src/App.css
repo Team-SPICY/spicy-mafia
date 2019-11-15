@@ -1,3 +1,9 @@
+html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
 .App {
   text-align: center;
   width:100vw;
@@ -6,6 +12,7 @@
   background: linear-gradient(180deg, rgba(252,146,83,1) 26%,
     rgba(255,163,84,1) 63%, rgba(255,193,124,1) 100%);
   touch-action: manipulation;
+  overflow: auto;
 }
 
 .App-logo {
@@ -30,19 +37,16 @@
 .background {
    background-size:cover
 }
-.card {
-  /* Add shadows to create the "card" effect */
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
-}
 
-/* On mouse-over, add a deeper shadow */
-.card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
 .cardimg {
   width: 100%;
   height: auto;
+
+  min-width: 70%;
+  min-height: auto;
+  max-height: 100%;
+  max-width: 80%;
+
 
   position: fixed;
   top: 50%;
