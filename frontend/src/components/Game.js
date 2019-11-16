@@ -11,7 +11,7 @@ export class Game extends Component{
     render(){
         return (
             <div className="App">
-                <img className="cardimg" src="/images/card.png" />
+                <Image src="/images/card.png" width={" "} height={"600"} />
                 <div >
                     <button className="buttontest">INSTRUCTIONS</button>
                     <button className="buttontest2"
