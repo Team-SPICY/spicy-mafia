@@ -12,7 +12,7 @@ class GameConsumer(AsyncWebsocketConsumer):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         
         self.room_group_name = 'chat_%s' % self.room_name
-        self.username = 'default'
+        self.username = ''
         # Join room group
         await self.channel_layer.group_add(
             self.room_group_name,
@@ -22,6 +22,8 @@ class GameConsumer(AsyncWebsocketConsumer):
         print('accepted connection')
         
     async def disconnect(self, close_code):
+        print('self: ',self.username)
+        print(close_code)   
         await self.channel_layer.group_send(
             #broadcast that you have left
             self.room_group_name,
@@ -46,10 +48,14 @@ class GameConsumer(AsyncWebsocketConsumer):
     #recieve message that player has disconnected
     async def leaving(self, event):
         message = event['message']
-
+        print(f'ln51: user leaving: {message}')
+        
+        #put a pyrebase function to remove self.username into room
+        print('pyrebase do something')
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
-            'leaving': message
+            'command': 'leaving',
+            'user': message
         }))
 
     #broadcast that new player joined
@@ -57,14 +63,21 @@ class GameConsumer(AsyncWebsocketConsumer):
         print('new user joining game')
         username = event['username']
         print('user joining: ',username)
+        
+        #put a pyrebase function to insert new player into room
+
         #send to group(broadcast)
         await self.channel_layer.group_send(
             self.room_group_name,
             {
                 'type': 'new_user',
                 'username': username
-            }
+            }   
         )
+
+    async def set_user(self, event):
+        print(f'setting user name! {event}')
+        self.username = event['username']
 
     #receive new user from group(joining() was broadcasted)
     async def new_user(self, event):
@@ -91,4 +104,5 @@ class GameConsumer(AsyncWebsocketConsumer):
         'new_message': chat_message,
         'leaving': leaving,
         'joining': joining,
+        'set_user': set_user,
     }
