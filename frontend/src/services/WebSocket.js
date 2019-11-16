@@ -23,8 +23,13 @@ class WebSocketService {
         this.socketRef = new WebSocket(path);
         this.socketRef.onopen = () => {
             console.log(`WebSocket open for ${username} in room ${roomID}`);
+            //set username
+            this.sendMessage({
+                'command': 'set_user',
+                'username': username
+            });
         };
-
+        //recieve message from websocket
         this.socketRef.onmessage = e => {
             this.socketNewMessage(e.data);
         };
@@ -40,9 +45,11 @@ class WebSocketService {
     }
 
     socketNewMessage(data) {
-        console.log('new websocker mssg from self: ', data)
         const parsedData = JSON.parse(data);
         const command = parsedData.command;
+        console.log('new websocket mssg from self: ', parsedData);
+
+        console.log(command, parsedData)
         if (Object.keys(this.callbacks).length === 0) {
             return;
         }
@@ -54,6 +61,9 @@ class WebSocketService {
         }
         if (command === 'cycle_change') {
             this.callbacks[command](parsedData.message);
+        }
+        if (command === 'leaving') {
+            this.callbacks[command](parsedData.user);
         }
     }
 
@@ -71,10 +81,11 @@ class WebSocketService {
         this.callbacks['cycle_change'] = cycleChangeCallBack;
         this.callbacks['vote'] = voteCallBack;
         this.callbacks['new_user'] = newUserCallBack;
-        this.callbacks['disconnect'] = disconnectCallBack;
+        this.callbacks['leaving'] = disconnectCallBack;
     }
     //send data to websocket in consumers.py
     sendMessage(data) {
+        console.log('sending message: ', data)
         try {
             this.socketRef.send(JSON.stringify({ ...data }));
         }

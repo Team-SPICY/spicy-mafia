@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import './Lobby.css';
+import './Homepage.css';
 
 
 
-export default class LobbyFrom extends Component {
+export default class HomepageFrom extends Component {
 
     constructor(props) {
         super(props);
@@ -29,8 +29,7 @@ export default class LobbyFrom extends Component {
 
         return (
             <div className="login">
-
-                < form onSubmit={() => this.props.onSubmit(this.state.username, this.state.roomID)
+                < form onSubmit={(e) => this.props.onSubmit(this.state.username, this.state.roomID, e)
                 } className="form" >
                     <input
                         type="text"
@@ -46,9 +45,11 @@ export default class LobbyFrom extends Component {
                         maxLength="4"
                         required />
                     <button className="submit" type="submit" value="Submit">
-                        Let's Play
+                        Join A Game
                             </button>
+                    <button onClick={(e) => this.props.createGameSubmit(e, this.state.username)} className="submit" type="submit" value="submit">Create a Game</button>
                 </form>
+
             </div >
         );
     }

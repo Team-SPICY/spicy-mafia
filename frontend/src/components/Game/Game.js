@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import './Game.css';
+import axios from 'axios'
+import Player_List from "./Player_list";
+import Image from "react-bootstrap/Image";
 
 import WebSocketInstance from '../../services/WebSocket'
 
@@ -7,14 +10,24 @@ export default class Game extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            Users: []
+            users: [],
+            playersShow: false
         };
 
         this.waitForSocketConnection(() => {
+            //hit lobby api to get users in lobby and set state
+            axios.get('http://127.0.0.1:8000/api/lobby/')
+                .then(res => {
+                    const rooms = res['data'];
+                    console.log('rooms: ', rooms);
+                    const db_users = rooms[this.props.roomID]['players'];
+                    console.log('users from api: ', db_users);
+                    this.setState({ users: [...this.state.users, ...db_users] });
+                    console.log(`users: ${this.state.users}`);
+                })
             WebSocketInstance.joining(this.props.currentUser);
             WebSocketInstance.addCallbacks(this.handleVote.bind(this), this.handleCycleChange.bind(this), this.addUser.bind(this), this.disconnect.bind(this));
         });
-        //firebase call for users in room
     }
 
     waitForSocketConnection(callback) {
@@ -45,20 +58,18 @@ export default class Game extends Component {
 
     //call when websokcet receinves message that user has disconeccted
     disconnect(user) {
+        console.log(`removing user ${user} from user list!`);
         this.setState({
-            Users: this.state.Users.filter(function (filteree) {
+            users: this.state.users.filter(function (filteree) {
                 return filteree !== user
             })
         });
+        console.log('users: ', this.state.users);
     }
 
     addUser(user) {
-        console.log('adding user to state: ', this.state.Users);
-        this.setState({ Users: [...this.state.Users, user] });
-    }
-
-    setUsers(users) {
-        this.setState({ Users: users });
+        console.log('adding user to state: ', user, this.state.users);
+        this.setState({ users: [...this.state.users, user] });
     }
 
     messageChangeHandler = (event) => {
@@ -84,8 +95,9 @@ export default class Game extends Component {
     //call this when a new user joins in real time
     renderUsers = () => {
         const currentUser = this.props.currentUser;
-        console.log(currentUser, this.state.Users);
-        return this.state.Users.map((user, i) => <li key={user} className={user === currentUser ? 'me' : 'him'}> <p>{user}</p></li>);
+        const users = this.state.users;
+        console.log(currentUser, users);
+        return users.map((user, i) => <li key={user} className={user === currentUser ? 'me' : 'him'}> <p>{user}</p></li>);
     }
 
     renderMessages = (messages) => {
@@ -94,19 +106,25 @@ export default class Game extends Component {
     }
 
     render() {
-        const users = this.state.Users
+        const {
+            users,
+        } = this.state;
         return (
-
-            <div className='chat'>
-                <div className='users'>
-                    <h2>Users</h2>
-                    <ul className='user_list'>
-                        {
-                            users &&
-                            this.renderUsers(users)
-                        }
-                    </ul>
+            <div className="App">
+                <h1>Room: <b>{this.props.roomID}</b></h1>
+                <img className="cardimg" src="/images/card.png" />
+                <div >
+                    <button className="buttontest">INSTRUCTIONS</button>
+                    <button className="buttontest2"
+                        onClick={() => this.setState({ playersShow: true })}>PLAYER LIST</button>
+                    <Player_List
+                        users={users}
+                        currentUser={this.props.currentUser}
+                        show={this.state.playersShow}
+                        onHide={() => this.setState({ playersShow: false })}
+                    />
                 </div>
+
             </div>
         );
     }
