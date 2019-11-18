@@ -91,7 +91,6 @@
   font-size: 18px;
   transform: scale(1);
 
-
 }
 
 .buttonJoin:hover {
@@ -105,6 +104,13 @@
 
   transform: scale(1);
 }
-.Button{
-  display: block;
+
+input[type=text] {
+
+  width: 70%;
+  border-radius: 8px;
+}
+
+label{
+  color: red;
 }
