@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Image from "react-bootstrap/Image";
 import "./Game.css";
 import {Button} from "react-bootstrap";
-import Player_List from "../Player_list";
+import Player_List from "../Players/Player_list";
 
 export class Game extends Component{
     constructor(props){
