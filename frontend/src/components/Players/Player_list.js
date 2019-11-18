@@ -15,17 +15,17 @@ class Player_List extends Component{
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
             >
-                <Modal.Header closeButton className = "style">
-                    <Modal.Title id="contained-modal-title-vcenter" className = "style">
+                <Modal.Header closeButton >
+                    <Modal.Title id="contained-modal-title-vcenter" className = "style" >
                         Players Alive
                     </Modal.Title>
                 </Modal.Header>
-                <Modal.Body className = "style">
+                <Modal.Body >
                     <div className={"container"} >
                         LIST OF PLAYERS
                     </div>
                 </Modal.Body>
-                <Modal.Footer className = "style">
+                <Modal.Footer >
                     <Button variant = {'outline-dark'} onClick={this.props.onHide}>Close</Button>
                 </Modal.Footer>
             </Modal>
