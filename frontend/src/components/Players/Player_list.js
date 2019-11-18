@@ -16,7 +16,7 @@ class Player_List extends Component{
                 centered
             >
                 <Modal.Header closeButton >
-                    <Modal.Title id="contained-modal-title-vcenter" className = "style" >
+                    <Modal.Title id="contained-modal-title-vcenter"  >
                         Players Alive
                     </Modal.Title>
                 </Modal.Header>
