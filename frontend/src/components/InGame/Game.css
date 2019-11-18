@@ -60,3 +60,9 @@
 .i_button:hover {
     background-color: #515151;
 }
+ .card_container{
+    position: center;
+     left : -30px;
+     border-right-width: thick;
+     bottom: 30px;
+ }
