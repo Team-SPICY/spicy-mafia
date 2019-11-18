@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import Image from "react-bootstrap/Image";
-import Player_List from "./Player_list";
+import "./Game.css";
+import {Button} from "react-bootstrap";
+import Player_List from "../Player_list";
 
 export class Game extends Component{
     constructor(props){
@@ -10,11 +12,13 @@ export class Game extends Component{
 
     render(){
         return (
-            <div className="App">
-                <Image src="/images/card.png" width={" "} height={"600"} />
+            <div className="Nightime">
+
+                <Image src="/images/card.png" width={" "} height = {"600"} className={"img"}/>
+
                 <div >
-                    <button className="buttontest">INSTRUCTIONS</button>
-                    <button className="buttontest2"
+                    <button variant={"secondary"} type={"button"} className = "i_button">INSTRUCTIONS</button>
+                    <button className = "p_button"
                             onClick={()=> this.setState({playersShow:true})}>PLAYER LIST</button>
                     <Player_List
                         show = {this.state.playersShow}
