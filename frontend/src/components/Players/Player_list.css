@@ -1,3 +1,9 @@
 .style {
     background-color: #cfcfcf;
 }
+
+.modal_header{
+    color: #8c0705;
+    background-color: #cfcfcf;
+    position: center;
+}
