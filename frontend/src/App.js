@@ -92,5 +92,8 @@ export default class App extends Component {
       </div>
     );
   }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7fcf6c3167d5cd2500ca9947e13bb41e5dabbbde
 }

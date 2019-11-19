@@ -3,9 +3,11 @@ import './Game.css';
 import axios from 'axios'
 import PlayerList from "./PlayerList";
 import FlipCard from '@kennethormandy/react-flipcard';
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7fcf6c3167d5cd2500ca9947e13bb41e5dabbbde
 import Image from "react-bootstrap/Image";
-
 import WebSocketInstance from '../../services/WebSocket'
 
 export default class Game extends Component {
