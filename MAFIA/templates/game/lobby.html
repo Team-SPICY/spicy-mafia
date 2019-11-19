@@ -1,0 +1,20 @@
+<!-- chat/templates/chat/index.html -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>{{Title}}</title>
+</head>
+
+<body>
+    <form method='post' action="{% url 'index'%}">{% csrf_token %}
+        {{form}}
+        <input type="submit" value="Go">
+
+    </form>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
+</body>
+
+</html>

@@ -1,27 +1,110 @@
-import React, {Component} from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import Game from './components/Game'
+import Home from './components/Home'
+import WebSocketInstance from './services/WebSocket'
+import axios from 'axios'
+import Card from 'react-bootstrap/Card';
 
-class App extends Component {
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      roomID: '',
+      loggedIn: false,
+    };
+  }
+
+  usernameChangeHandler = (event) => {
+    console.log('e, ', event)
+    console.log('value: ', event.target.value)
+    this.setState({
+      username: event.target.value
+    })
+  }
+
+  roomChangeHandler = (event) => {
+    this.setState({
+      roomID: event.target.value
+    })
+  }
+
+  handleLoginSubmit = (e) => {
+    if (this.state.username === '') {
+      alert('Enter A Username!');
+    }
+    else {
+      console.log('handling login submit')
+      e.preventDefault();
+      const roomID = this.state.roomID;
+      const username = this.state.username;
+      console.log(username, roomID);
+      axios.get('http://127.0.0.1:8000/api/lobby/')
+        .then(res => {
+          const rooms = res['data'];
+          console.log('rooms: ', rooms);
+          if (roomID in rooms) {
+            //connect to websockets, new websocket based on the roomID
+            WebSocketInstance.connect(username, roomID);
+            this.setState({ loggedIn: true, username: username, roomID: roomID });
+            console.log(`room ${roomID} is in api/lobby[rooms], users: ${this.state.users}`);
+          }
+          else {
+            alert('room does not exist!');
+          }
+        })
+    }
+  }
+
+  handleCreateGame = () => {
+    const username = this.state.username;
+    var roomID;
+    if (username.length === 0) {
+      alert('Enter a username!');
+    }
+    else {
+      console.log('game being made for: ', username);
+      //hit lobby api and use the returned lobby room number for roomID
+      axios.post('http://127.0.0.1:8000/api/lobby/')
+        .then(res => {
+          roomID = res['data'][0]['lobby_id'];
+          console.log('resposnse from post to api: ', res, ' roomID: ', roomID);
+          this.setState({ loggedIn: true, username: username, roomID: roomID });
+
+        })
+
+
+      WebSocketInstance.connect(username, roomID);
+    }
+
+  }
+
   render() {
+    const {
+      loggedIn,
+      username,
+      roomID,
+    } = this.state;
+
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        {
+          loggedIn ?
+            <Game
+              currentUser={username}
+              roomID={roomID}
+            />
+            :
+            <Home
+              handleLoginSubmit={this.handleLoginSubmit}
+              handleCreateGame={this.handleCreateGame}
+              usernameChangeHandler={this.usernameChangeHandler}
+              roomChangeHandler={this.roomChangeHandler}
+            />
+        }
       </div>
     );
   }
+
 }
-export default App;
