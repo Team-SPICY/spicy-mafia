@@ -18,19 +18,19 @@
     z-index: 0;
     width: 100%;
     height: auto;
-  
+
     min-width: 70%;
     min-height: auto;
     max-height: 100%;
     max-width: 80%;
-  
-  
+
+
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
-  
+
   .buttonGroupJH{
     display: block;
   }
@@ -38,7 +38,7 @@
     padding: 15px 25px;
     vertical-align: middle;
     transform: scale(1);
-  
+
     /* Style */
     font-size: 24px;
     font-weight: bold;
@@ -51,33 +51,33 @@
     border: none;
     border-radius: 15px;
     box-shadow: 0 5px #919191;
-  
+
     display: block;
     left: 30px;
     position: absolute;
     bottom: 30px;
     font-size: 18px;
     transform: scale(1);
-  
-  
+
+
   }
-  
+
   .buttonHost:hover {
     background-color: white;
-  
-  
+
+
   }
-  
+
   .buttonHost:active {
     background-color: #989898;
-  
+
     transform: scale(1);
   }
   .buttonJoin {
     padding: 15px 25px;
     vertical-align: middle;
     transform: scale(1);
-  
+
     /* Style */
     font-size: 24px;
     font-weight: bold;
@@ -90,34 +90,34 @@
     border: none;
     border-radius: 15px;
     box-shadow: 0 5px #919191;
-  
+
     display: block;
     position: absolute;
     right: 30px;
     bottom: 30px;
     font-size: 18px;
     transform: scale(1);
-  
+
   }
-  
+
   .buttonJoin:hover {
     background-color: white;
-  
-  
+
+
   }
-  
+
   .buttonJoin:active {
     background-color: #989898;
-  
+
     transform: scale(1);
   }
-  
+
   input[type=text] {
-  
+
     width: 70%;
     border-radius: 8px;
   }
-  
+
   label{
     color: red;
   }
