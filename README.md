@@ -3,7 +3,9 @@ Websocket has been integrated, try it out!
 # Introduction
 Hello
 # Requirements
--Make sure you have: `django, django channels, django rest frame work, pip install redis and have it running, pip install django-cors-headers`. For react make sure you `npm install react-bootstrap bootstrap` and `npm install --save @kennethormandy/react-flipcard`
+- Make sure you have: `django, django channels, django restframework, django-cors-headers, redis` and `pip install channels_redis` 
+ and have redis running. For react make sure you `npm install react-bootstrap bootstrap` and 
+  `npm install --save @kennethormandy/react flipcard`
 
  
 
@@ -16,7 +18,6 @@ Hello
 ## How to Run it?
   - in MAFIA/ `python manage.py runserver`
   -in front-end `npm start`
-  - in a new terminal window, make sure you have redis running, use the command `redis-server`
   Navigate on your web beowser to where you have your react app(proboably localhost:3000) and you should see our web app!
   You should have react app and django running. Any problems or errors with Django or React? Slack Brandon!
 
