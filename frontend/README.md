@@ -43,8 +43,6 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Requirements
-You must install the node_modules folder before running the react webapp. Enter the command, "npm install" to do so while in the front end directory.  In addition, install yarn in order to run the webapp.
 ### Code Splitting
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
@@ -61,17 +59,10 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/ma
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
 
-### Running the React Webapp
-You must input the command, "yarn start", to run the webapp 
 ### Deployment
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
 
-
 ### `npm run build` fails to minify
+
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-
-
-
-
-
