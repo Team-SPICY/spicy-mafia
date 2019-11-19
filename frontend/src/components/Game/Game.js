@@ -21,7 +21,7 @@ export default class Game extends Component {
                 .then(res => {
                     const rooms = res['data'];
                     console.log('rooms: ', rooms);
-                    const db_users = rooms[this.props.roomID]['players'];
+                    const db_users = Object.keys(rooms[this.props.roomID]['players']);
                     console.log('users from api: ', db_users);
                     this.setState({ users: [...this.state.users, ...db_users] });
                     console.log(`users: ${this.state.users}`);

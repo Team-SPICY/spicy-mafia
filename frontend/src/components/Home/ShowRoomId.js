@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
+import Modal from 'react-bootstrap/Modal'
 import InputGroup from 'react-bootstrap/InputGroup'
 import { FormControl } from 'react-bootstrap';
 
@@ -11,27 +11,38 @@ export class ShowRoomId extends Component {
     }
 
     render() {
-
         return (
-            <div className="login">
-                <Form>
-                    <Form.Group onSubmit={(e) => this.props.onSubmit(this.props.username, this.props.roomID, e)} className="roomCode" >
-                        <Form.Label>Room Code</Form.Label>
-                        <Form.Control size="sm" type="text" placeholder="Enter the phrase" />
-                        <Form.Text className="text-muted">
-                            Enter A Room
-                        </Form.Text>
-                    </Form.Group>
+            <Modal
+                {...this.props}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        Enter the Secret Phrase
+            </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <input
+                        type="text"
+                        onChange={this.props.roomChangeHandler}
+                        placeholder="Enter Room PIN"
+                        minLength="4"
+                        maxLength="4"
+                        required />
+                </Modal.Body>
+                <Modal.Footer>
                     <ButtonGroup>
-                        <Button onClick={this.props.onHide} size="sm" variant="light" className="close">
+                        <Button onClick={() => this.props.onHide()} size="sm" variant="light" className="submit" type="submit" value="Submit">
                             CANCEL
-                            </Button>
-                        <Button onClick={(e) => this.props.onSubmit(this.props.username, this.props.roomID, e)} size="sm" variant="light" className="submit">
+                        </Button>
+                        <Button onClick={(e) => this.props.handleLoginSubmit(e)} size="sm" variant="light" className="submit" type="submit" value="Submit">
                             CONFIRM
-                            </Button>
+                    </Button>
                     </ButtonGroup>
-                </Form>
-            </div >
+                </Modal.Footer>
+            </Modal>
         );
     }
 }

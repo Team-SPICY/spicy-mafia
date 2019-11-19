@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
-import {Modal, Button} from 'react-bootstrap'
+import React, { Component } from 'react';
+import { Modal, Button } from 'react-bootstrap'
 
-class Player_List extends Component{
+class Player_List extends Component {
     constructor(props) {
         super(props);
 
     }
     render() {
-        return(
+        return (
             <Modal
                 {...this.props}
                 size="lg"
@@ -16,7 +16,7 @@ class Player_List extends Component{
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        Players Alive
+                        Players
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -25,7 +25,7 @@ class Player_List extends Component{
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant = {'outline-dark'} onClick={this.props.onHide}>Close</Button>
+                    <Button variant={'outline-dark'} onClick={this.props.onHide}>Close</Button>
                 </Modal.Footer>
             </Modal>
         );

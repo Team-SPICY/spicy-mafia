@@ -20,6 +20,7 @@ export class Home extends Component {
             <div className="Homescreen">
 
                 <div>
+                    <img className="homeLogo" src="/images/MafiaHomeLogo.png" />
                     <div className="usernameInput">
                         <label>USERNAME
                         <input type="text" name="name" type="text"
@@ -30,8 +31,6 @@ export class Home extends Component {
                             />
                         </label>
                     </div>
-
-                    <img className="homeLogo" src="/images/MafiaHomeLogo.png" />
                     <Button onClick={() => this.props.handleCreateGame(this.props.username)} className="buttonHost">HOST</Button>
                     <Button onClick={() => this.setState({ roomIDShow: true })} className="buttonJoin">JOIN</Button>
 
@@ -40,7 +39,7 @@ export class Home extends Component {
                     <ShowRoomId
                         show={this.state.roomIDShow}
                         roomChangeHandler={this.props.roomChangeHandler}
-                        onSubmit={this.props.handleLoginSubmit}
+                        handleLoginSubmit={this.props.handleLoginSubmit}
                         onHide={() => this.setState({ roomIDShow: false })}
                     /> : null
                 }

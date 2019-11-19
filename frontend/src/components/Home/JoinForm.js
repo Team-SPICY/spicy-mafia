@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Homepage.css';
+import './HomeScreen.css';
 import { Button, ButtonGroup, Form, } from 'react-bootstrap'
 
 
@@ -13,12 +13,18 @@ export default class HomepageFrom extends Component {
     }
 
     render() {
-
         return (
-            <div className="login">
-                < Form onSubmit={(e) => this.props.onSubmit(this.state.username, this.state.roomID, e)
-                } className="roomCode" >
-                    <h2>ROOM CODE</h2>
+            <Modal
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        Enter the Secret Phrase
+                </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
                     <input
                         type="text"
                         onChange={this.roomChangeHandler}
@@ -26,17 +32,18 @@ export default class HomepageFrom extends Component {
                         minLength="4"
                         maxLength="4"
                         required />
-                    <ButtonGroup><Button size="sm" variant="light" className="submit" type="submit" value="Submit">
-                        CANCEL
-                            </Button>
+                </Modal.Body>
+                <Modal.Footer>
+                    <ButtonGroup>
                         <Button size="sm" variant="light" className="submit" type="submit" value="Submit">
-                            CONFIRM
+                            CANCEL
                             </Button>
+                        <Button onClick={(e) => this.props.onSubmit(this.state.username, this.state.roomID, e)} size="sm" variant="light" className="submit" type="submit" value="Submit">
+                            CONFIRM
+                        </Button>
                     </ButtonGroup>
+                </Modal.Footer>
+            </Modal>
 
-                </Form>
-
-            </div >
         );
     }
-}
