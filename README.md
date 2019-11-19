@@ -7,8 +7,7 @@ Hello
  and have redis running. For react make sure you `npm install react-bootstrap bootstrap` and 
   `npm install --save @kennethormandy/react flipcard`
 
-Requirements
-Make sure you have django channels, django, django rest frame work, pip install django-webpack-loader ,pip install redis and have it running, pip install django-cors-headers.
+ 
 
 - If you are NOT running django on 127.0.0.1:8000 that needs to be reflected in the config file that gives the react app the API route of 
   const API_PATH = 'ws://127.0.0.1:8000/ws/game';
