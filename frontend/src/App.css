@@ -3,4 +3,38 @@ html {
   height: 100%;
   overflow: hidden;
   position: relative;
+<<<<<<< HEAD
+=======
+}
+.App {
+  text-align: center;
+  width:100vw;
+  height:100vh;
+  background: rgb(252,146,83);
+  background: linear-gradient(180deg, rgba(252,146,83,1) 26%,
+    rgba(255,163,84,1) 63%, rgba(255,193,124,1) 100%);
+  touch-action: manipulation;
+  overflow: auto;
+}
+
+
+.background {
+   background-size:cover
+}
+
+.cardimg {
+  width: 100%;
+  height: auto;
+
+  min-width: 70%;
+  min-height: auto;
+  max-height: 100%;
+  max-width: 80%;
+
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+>>>>>>> origin/front-end
 }

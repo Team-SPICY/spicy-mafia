@@ -1,0 +1,68 @@
+.Nightime{
+    text-align: center;
+    width:100vw;
+    height:100vh;
+    background: rgb(0,0,0);
+    background: linear-gradient(180deg, rgba(0,0,0,1) 26%,
+    rgba(27,27,27,1) 63%, rgba(50,50,50,1) 100%);
+    touch-action: manipulation;
+    overflow: auto;
+}
+
+.Daytime {
+    text-align: center;
+    width:100vw;
+    height:100vh;
+    background: rgb(252,146,83);
+    background: linear-gradient(180deg, rgba(252,146,83,1) 26%,
+    rgba(255,163,84,1) 63%, rgba(255,193,124,1) 100%);
+    touch-action: manipulation;
+    overflow: auto;
+}
+
+.img {
+    position: relative;
+}
+
+.i_button {
+    position : relative;
+    font-size: 20px;
+    cursor: pointer;
+    text-align: center;
+    color: #d0d0d6;
+    background-color: #606060;
+    border: #606060;
+    border-radius: 10px;
+    box-shadow: 0 2px #000000;
+    left: -12px;
+    bottom: 12px;
+}
+
+.p_button {
+    position: relative;
+    font-size: 20px;
+    cursor: pointer;
+    text-align: center;
+    color: #d0d0d6;
+    background-color: #606060;
+    border: #606060;
+    border-radius: 10px;
+    box-shadow: 0 2px #000000;
+    right: 0px;
+    bottom: 12px;
+    box-sizing: inherit;
+}
+
+.p_button:hover {
+    background-color: #515151;
+}
+
+.i_button:hover {
+    background-color: #515151;
+}
+ .card_container{
+    position: center;
+     left : -30px;
+     border-right-width: thick;
+     bottom: 30px;
+ }

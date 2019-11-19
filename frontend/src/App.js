@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { Component } from 'react';
+=======
+import React, {Component} from 'react';
+>>>>>>> origin/front-end
 import './App.css';
 import Game from './components/Game'
 import Home from './components/Home'
@@ -66,6 +70,7 @@ export default class App extends Component {
 
   }
 
+<<<<<<< HEAD
   render() {
     const {
       loggedIn,
@@ -92,5 +97,19 @@ export default class App extends Component {
       </div>
     );
   }
+=======
+import {Home} from "./components/Home/HomeScreen.js";
+
+class App extends Component {
+    render() {
+            return (
+              <div>
+                <Home/>
+
+              </div>
+
+          );
+      }
+>>>>>>> origin/front-end
 }
 
