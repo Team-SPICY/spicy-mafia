@@ -16,11 +16,10 @@ Including another URLconf
 from django.conf.urls import include
 from django.urls import path
 from django.contrib import admin
-from django.contrib import admin
 from .router import router
 
 urlpatterns = [
+    #path('lobby/', include('lobby.urls', namespace='lobby')),
     path('admin/', admin.site.urls),
-    path('game/',include('game.urls')),
     path('api/', include(router.urls))
 ]
