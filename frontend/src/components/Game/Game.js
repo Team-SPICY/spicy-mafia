@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import './Game.css';
 import axios from 'axios'
-import Player_List from "./Player_list";
+import PlayerList from "./PlayerList";
+import FlipCard from 'react-flipcard';
+
 import Image from "react-bootstrap/Image";
 
 import WebSocketInstance from '../../services/WebSocket'
@@ -11,7 +13,8 @@ export default class Game extends Component {
         super(props);
         this.state = {
             users: [],
-            playersShow: false
+            playersShow: false,
+            gameState: 'night'
         };
 
         this.waitForSocketConnection(() => {
@@ -109,22 +112,29 @@ export default class Game extends Component {
         const {
             users,
         } = this.state;
+
         return (
-            <div className="App">
-                <h1>Room: <b>{this.props.roomID}</b></h1>
-                <img className="cardimg" src="/images/card.png" />
-                <div >
-                    <button className="buttontest">INSTRUCTIONS</button>
-                    <button className="buttontest2"
+            <div className="Nightime">
+                <FlipCard >
+                    <div >
+                        <Image src="/images/card.png" width={" "} height={"600"} />
+                    </div>
+                    <div >
+                        <Image src="/images/card.png" width={" "} height={"600"} />
+                    </div>
+
+                </FlipCard>
+                <div>
+                    <button variant={"secondary"} type={"button"} className="i_button">INSTRUCTIONS</button>
+                    <button className="p_button"
                         onClick={() => this.setState({ playersShow: true })}>PLAYER LIST</button>
-                    <Player_List
+                    <PlayerList
                         users={users}
                         currentUser={this.props.currentUser}
                         show={this.state.playersShow}
                         onHide={() => this.setState({ playersShow: false })}
                     />
                 </div>
-
             </div>
         );
     }

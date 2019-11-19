@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, Button, ListGroup } from 'react-bootstrap'
 
-class Player_List extends Component {
+class PlayerList extends Component {
     constructor(props) {
         super(props);
 
@@ -44,4 +44,4 @@ class Player_List extends Component {
 
 }
 
-export default Player_List;
+export default PlayerList;

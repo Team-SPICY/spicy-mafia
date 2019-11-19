@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Game from './components/Game'
-import Homepage from './components/Homepage'
+import Home from './components/Home'
 import WebSocketInstance from './services/WebSocket'
 import axios from 'axios'
 import Card from 'react-bootstrap/Card';
@@ -16,7 +16,22 @@ export default class App extends Component {
     };
   }
 
+  usernameChangeHandler = (event) => {
+    console.log('e, ', event)
+    console.log('value: ', event.target.value)
+    this.setState({
+      username: event.target.value
+    })
+  }
+
+  roomChangeHandler = (event) => {
+    this.setState({
+      roomID: event.target.value
+    })
+  }
+
   handleLoginSubmit = (username, roomID, e) => {
+    console.log('handling login submit')
     e.preventDefault();
     console.log(username, roomID);
     axios.get('http://127.0.0.1:8000/api/lobby/')
@@ -35,7 +50,8 @@ export default class App extends Component {
       })
   }
 
-  handleCreateGame = (username) => {
+  handleCreateGame = () => {
+    const username = this.state.username;
     if (username.length === 0) {
       alert('Enter a username!');
     }
@@ -66,9 +82,9 @@ export default class App extends Component {
               roomID={roomID}
             />
             :
-            <Homepage
+            <Home
               onSubmit={this.handleLoginSubmit}
-              createGameSubmit={this.handleCreateGame}
+              handleCreateGame={this.handleCreateGame}
               usernameChangeHandler={this.usernameChangeHandler}
               roomChangeHandler={this.roomChangeHandler}
             />
