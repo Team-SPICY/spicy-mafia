@@ -3,7 +3,7 @@ Websocket has been integrated, try it out!
 Introduction
 
 Requirements
-Make sure you have django channels, django, django rest frame work, pip install redis and have it running, pip install django-cors-headers.
+Make sure you have django channels, django, django rest frame work, pip install django-webpack-loader ,pip install redis and have it running, pip install django-cors-headers.
 
 - If you are running django not on 127.0.0.1:8000 that needs to be reflected in the config file that gives the API route of 
   const API_PATH = 'ws://127.0.0.1:8000/ws/game';
