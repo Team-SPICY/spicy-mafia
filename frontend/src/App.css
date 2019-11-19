@@ -3,10 +3,6 @@ html {
   height: 100%;
   overflow: hidden;
   position: relative;
-<<<<<<< HEAD
-
-=======
->>>>>>> 7fcf6c3167d5cd2500ca9947e13bb41e5dabbbde
 }
 .App {
   text-align: center;
@@ -38,8 +34,5 @@ html {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-<<<<<<< HEAD
 
-=======
->>>>>>> 7fcf6c3167d5cd2500ca9947e13bb41e5dabbbde
 }
