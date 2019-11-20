@@ -89,6 +89,22 @@ class GameConsumer(AsyncWebsocketConsumer):
             'username': username
         }))
 
+    '''
+    voter : user who voted
+    voted : user who was voted to be
+    receive : vote from group(send_vote(data) was broadcasted)
+    '''
+    async def send_vote(self, event):
+        voter = event['voter']
+        voted = event['voted']
+        print(f'new vote recvd: {event}')
+        # Send username to WebSocket
+        await self.send(text_data=json.dumps({
+            'command': 'vote',
+            'voter': voter,
+            'voted': voted
+        }))
+
     # Receive message from room group
     async def chat_message(self, event):
         print('recieving mssg!')
@@ -105,4 +121,5 @@ class GameConsumer(AsyncWebsocketConsumer):
         'leaving': leaving,
         'joining': joining,
         'set_user': set_user,
+        'send_vote':send_vote,
     }
