@@ -49,11 +49,31 @@ class LobbyViewSet(viewsets.ViewSet):
                 break
             id = ''
             retry += 1
-        data ={"lobbies/" + id: {"numMafia": 0, "numOther": 0, 'players': {0:None}}}
+        data ={"lobbies/" + id: {"numMafia": 0, "numOther": 0, 'isActive': False}}
+        #when a user presses create game, they are automatically assinged to be the host
+        if request.data['user']:
+            data["lobbies/" + id]['players'] = {request.data['user']: "host"}
         db.update(data)
         #we can change this line below, but keep it for now until we figure out 
         # what out player objects are going to look like in the database
-        data = {"lobbies/" + id + "/players": {0:""}}
-        db.update(data)
         #return a response of the created lobby id so the front end can start the game
-        return Response([{'lobby_id':id}])
+        return Response({'lobby_id':id})
+    
+    def update(self, request, pk=None):
+        lobby_keys = db.child('lobbies').shallow().get().val()
+        if pk in lobby_keys:
+            if 'user' in request.data:
+                user = request.data['user']
+                keys = db.child('lobbies/' + pk + '/players').get().val()
+                if user in keys:
+                    return Response({"is_valid_user":False})#username already present
+                else:
+                    #data = {"lobbies/" + pk + "/players": {user:"civilian"}}
+                    data = {user:"civilian"}
+                    db.child('lobbies').child(pk).child('players').update(data)
+                    #db.update(data)
+                    return Response({"is_valid_user": True})
+            elif 'start_game' in request.data:
+                game_bool = request.data['start_game']
+                data = {'isActive': True}
+                db.child('lobbies').child(pk).update(data)
