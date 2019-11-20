@@ -77,3 +77,4 @@ class LobbyViewSet(viewsets.ViewSet):
                 game_bool = request.data['start_game']
                 data = {'isActive': True}
                 db.child('lobbies').child(pk).update(data)
+                return Response({"game_activated": True})
