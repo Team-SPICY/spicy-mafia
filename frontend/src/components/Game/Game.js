@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import './Game.css';
 import axios from 'axios'
 import PlayerList from "./PlayerList";
-import FlipCard from '@kennethormandy/react-flipcard';
+import UserNightComponent from '../UserComponents';
+import UserDayComponent from '../UserComponents';
+import Flipcard from '@kennethormandy/react-flipcard'
+import '@kennethormandy/react-flipcard/dist/Flipcard.css'
 
 import Image from "react-bootstrap/Image";
 import WebSocketInstance from '../../services/WebSocket'
@@ -13,7 +16,11 @@ export default class Game extends Component {
         this.state = {
             users: [],
             playersShow: false,
-            gameState: 'night'
+            gameState: 'Nightime',
+            role: 'Civilian',
+            isHost: false,
+            flipped: false,
+
         };
 
         this.waitForSocketConnection(() => {
@@ -28,7 +35,7 @@ export default class Game extends Component {
                     console.log(`users: ${this.state.users}`);
                 })
             WebSocketInstance.joining(this.props.currentUser);
-            WebSocketInstance.addCallbacks(this.handleVote.bind(this), this.handleCycleChange.bind(this), this.addUser.bind(this), this.disconnect.bind(this));
+            WebSocketInstance.addCallbacks(this.handleVoteRecieved.bind(this), this.handleCycleChange.bind(this), this.addUser.bind(this), this.disconnect.bind(this), this.setRole.bind(this));
         });
     }
 
@@ -48,17 +55,51 @@ export default class Game extends Component {
             }, 100); // wait 100 milisecond for the connection...
     }
 
-    //handle a vote submitted
-    handleVote() {
+    //call back when websocket recieves role
+    setRole(role) {
+        this.setState({ role: role });
+    }
+
+    //handle votes from sherrif or nurse
+    handleSpecialAbility() {
+        console.log('handling special ability');
+
+        //send to api vote
+
+    }
+
+    handleQuizVote() {
+        console.log('handling quiz vote');
+    }
+
+    //handle a vote recieved from websocket
+    handleVoteRecieved(parsedData) {
+        const voter = parsedData.voter;
+        const voted = parsedData.voter;
+        //based on the game cycle pass this vote to appropriate function
+        //if day cycle pass vote to handle fucntion to render to vote list
+        //if night cycle, check what role this player is(should be mafia) 
+    }
+
+    //handle a vote submitted 
+    handleVote(voter, voted) {
+        const data = {
+            'command': 'send_vote',
+            'voter': voter,
+            'voted': voted,
+        };
+        //send vote to websocket
+        WebSocketInstance.sendVote(data);
         console.log('vote submmitted');
     }
 
-    //handle day night cycle change
-    handleCycleChange() {
+    //handle day night cycle change, param state should be the new state to enter
+    handleCycleChange(state) {
         console.log('cycle change initiated');
+        this.setState({ state: state });
     }
 
-    //call when websokcet receinves message that user has disconeccted
+    //call when websocket receinves message that user has disconeccted
     disconnect(user) {
         console.log(`removing user ${user} from user list!`);
         this.setState({
@@ -74,66 +115,48 @@ export default class Game extends Component {
         this.setState({ users: [...this.state.users, user] });
     }
 
-    messageChangeHandler = (event) => {
-        this.setState({
-            message: event.target.value
-        })
-    }
-
-    sendMessageHandler = (e, message) => {
-        const messageObject = {
-            from: this.props.currentUser,
-            text: message
-        };
-        WebSocketInstance.newChatMessage(messageObject);
-        this.setState({
-            message: ''
-        })
-        e.preventDefault();
-    }
-    //call this after getting users from firebase
-    //renderUsers = (users) => { }
-
-    //call this when a new user joins in real time
-    renderUsers = () => {
-        const currentUser = this.props.currentUser;
-        const users = this.state.users;
-        console.log(currentUser, users);
-        return users.map((user, i) => <li key={user} className={user === currentUser ? 'me' : 'him'}> <p>{user}</p></li>);
-    }
-
-    renderMessages = (messages) => {
-        const currentUser = this.props.currentUser;
-        return messages.map((message, i) => <li key={message.id} className={message.author === currentUser ? 'me' : 'him'}> <h4 className='author'>{message.author} </h4><p>{message.content}</p></li>);
-    }
-
     render() {
-        const {
-            users,
-        } = this.state;
+
 
         return (
-            <div className="Nightime">
-                <FlipCard >
-                    <div >
-                        <Image src="/images/card.png" width={" "} height={"600"} />
-                    </div>
-                    <div >
-                        <Image src="/images/card.png" width={" "} height={"600"} />
-                    </div>
+            <div>
+                {
+                    this.state.gameState === 'Lobby' ?
+                        <div className="Lobby">
+                            <h1>LOBBY</h1>
+                        </div>
+                        :
+                        this.state.gameState === 'Nightime' ?
+                            <UserNightComponent
+                                role={this.state.role}
+                                handleVote={this.handleVote}
+                                handleQuizVote={this.handleQuizVote}
+                                handleVoteRecieved={this.handleVoteRecieved}
+                                handleSpecialAbility={this.handleSpecialAbility}
+                            />
+                            :
+                            <UserDayComponent
+                                handleVote={this.handleVote}
+                                handleVoteRecieved={this.handleVoteRecieved}
+                            />
+                }
 
-                </FlipCard>
-                <div>
-                    <button variant={"secondary"} type={"button"} className="i_button">INSTRUCTIONS</button>
-                    <button className="p_button"
-                        onClick={() => this.setState({ playersShow: true })}>PLAYER LIST</button>
-                    <PlayerList
-                        users={users}
-                        currentUser={this.props.currentUser}
-                        show={this.state.playersShow}
-                        onHide={() => this.setState({ playersShow: false })}
-                    />
-                </div>
+                {
+                    this.state.gameState !== 'Lobby' ?
+                        <div>
+                            <button variant={"secondary"} type={"button"} className="i_button">INSTRUCTIONS</button>
+                            <button className="p_button"
+                                onClick={() => this.setState({ playersShow: true })}>PLAYER LIST</button>
+                            <PlayerList
+                                users={this.state.users}
+                                currentUser={this.props.currentUser}
+                                show={this.state.playersShow}
+                                onHide={() => this.setState({ playersShow: false })}
+                            />
+                        </div>
+                        :
+                        null
+                }
             </div>
         );
     }

@@ -73,8 +73,6 @@ export default class App extends Component {
           this.setState({ loggedIn: true, username: username, roomID: roomID });
 
         })
-
-
       WebSocketInstance.connect(username, roomID);
     }
 
