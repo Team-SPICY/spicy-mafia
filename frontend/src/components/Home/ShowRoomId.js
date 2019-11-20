@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import InputGroup from 'react-bootstrap/InputGroup'
 import { FormControl } from 'react-bootstrap';
+import './ShowRoomId.css'
 
 export class ShowRoomId extends Component {
     constructor(props) {
@@ -20,7 +21,7 @@ export class ShowRoomId extends Component {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        Enter the Secret Phrase
+                        ENTER THE SECRET PHRASE
             </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
