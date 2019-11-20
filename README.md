@@ -3,7 +3,7 @@ Websocket has been integrated, try it out!
 # Introduction
 Hello
 # Requirements
-- Make sure you have: `django, django channels, django rest frame work, django-cors-headers, redis` and `pip install channels_redis` 
+- Make sure you have: `django, django channels, django restframework, django-cors-headers, redis` and `pip install channels_redis` 
  and have redis running. For react make sure you `npm install react-bootstrap bootstrap` and 
   `npm install --save @kennethormandy/react flipcard`
 
