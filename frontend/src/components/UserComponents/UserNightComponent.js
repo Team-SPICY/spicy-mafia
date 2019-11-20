@@ -24,6 +24,7 @@ export default class UserNightComponent extends Component {
     componentDidMount() {
         this.setBackground();
     }
+
     //render function for nurse
     setBackground() {
         console.log('setting role: ', this.props.role)
@@ -56,7 +57,6 @@ export default class UserNightComponent extends Component {
                         <p>{this.state.description}</p>
                     </div>
                     <div >
-                        <Image src={this.state.backgroundSrc} width={" "} height={"600"} />
                         {
                             //add some voting function here through importing Vote components
                         }

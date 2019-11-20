@@ -111,8 +111,10 @@ export default class Game extends Component {
     }
 
     addUser(user) {
-        console.log('adding user to state: ', user, this.state.users);
-        this.setState({ users: [...this.state.users, user] });
+        if (user !== this.props.currentUser) {
+            console.log('adding user to state: ', user, this.state.users);
+            this.setState({ users: [...this.state.users, user] });
+        }
     }
 
     render() {

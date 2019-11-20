@@ -13,6 +13,7 @@ export default class App extends Component {
       username: '',
       roomID: '',
       loggedIn: false,
+      isHost: false,
     };
   }
 
@@ -45,10 +46,18 @@ export default class App extends Component {
           const rooms = res['data'];
           console.log('rooms: ', rooms);
           if (roomID in rooms) {
-            //connect to websockets, new websocket based on the roomID
-            WebSocketInstance.connect(username, roomID);
-            this.setState({ loggedIn: true, username: username, roomID: roomID });
-            console.log(`room ${roomID} is in api/lobby[rooms], users: ${this.state.users}`);
+            axios.put('http://127.0.0.1:8000/api/lobby/', { 'user': username })
+              .then(res => {
+                if (res['is_valid_user'] === true) {
+                  this.setState({ loggedIn: true, username: username, roomID: roomID, isHost: false });
+                  //connect to websockets, new websocket based on the roomID
+                  WebSocketInstance.connect(username, roomID);
+                  console.log(`room ${roomID} is in api/lobby[rooms], users: ${this.state.users}`);
+                }
+                else {
+                  alert(`Username ${username} taken already!`);
+                }
+              })
           }
           else {
             alert('room does not exist!');
@@ -66,11 +75,11 @@ export default class App extends Component {
     else {
       console.log('game being made for: ', username);
       //hit lobby api and use the returned lobby room number for roomID
-      axios.post('http://127.0.0.1:8000/api/lobby/')
+      axios.post('http://127.0.0.1:8000/api/lobby/', { 'user': username })
         .then(res => {
           roomID = res['data'][0]['lobby_id'];
           console.log('resposnse from post to api: ', res, ' roomID: ', roomID);
-          this.setState({ loggedIn: true, username: username, roomID: roomID });
+          this.setState({ loggedIn: true, username: username, roomID: roomID, isHost: true });
 
         })
       WebSocketInstance.connect(username, roomID);
