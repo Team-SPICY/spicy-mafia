@@ -49,6 +49,7 @@ export default class App extends Component {
         .then(res => {
           const rooms = res['data'];
           console.log('rooms: ', rooms);
+<<<<<<< HEAD
           if (roomID in rooms && rooms[roomID]['isActive'] === false) { //if room user provided is true then try to enter room
             axios.put(`http://127.0.0.1:8000/api/lobby/${roomID}/`, { 'user': username })
               .then(res2 => {
@@ -59,6 +60,16 @@ export default class App extends Component {
 
                   //connect to websockets, new websocket based on the roomID
                   WebSocketInstance.connect(username, roomID);
+=======
+          if (roomID in rooms) {
+            axios.put('http://127.0.0.1:8000/api/lobby/', { 'user': username })
+              .then(res => {
+                if (res['is_valid_user'] === true) {
+                  this.setState({ loggedIn: true, username: username, roomID: roomID, isHost: false });
+                  //connect to websockets, new websocket based on the roomID
+                  WebSocketInstance.connect(username, roomID);
+                  console.log(`room ${roomID} is in api/lobby[rooms], users: ${this.state.users}`);
+>>>>>>> 304174920f4a81cf80b45ce75d125c456d0d46af
                 }
                 else {
                   alert(`Username ${username} taken already!`);
@@ -86,9 +97,15 @@ export default class App extends Component {
           roomID = res['data']['lobby_id'];
           console.log('resposnse from post to api: ', res, ' roomID: ', roomID);
           this.setState({ loggedIn: true, username: username, roomID: roomID, isHost: true });
+<<<<<<< HEAD
           WebSocketInstance.connect(username, roomID);
         })
 
+=======
+
+        })
+      WebSocketInstance.connect(username, roomID);
+>>>>>>> 304174920f4a81cf80b45ce75d125c456d0d46af
     }
   }
 
