@@ -80,10 +80,10 @@ export default class Game extends Component {
         const voted = parsedData.voter;
         //based on the game cycle pass this vote to appropriate function
         //if day cycle pass vote to handle fucntion to render to vote list
-        //if night cycle, check what role this player is(should be mafia) 
+        //if night cycle, check what role this player is(should be mafia)
     }
 
-    //handle a vote submitted 
+    //handle a vote submitted
     handleVote(voter, voted) {
         const data = {
             'command': 'send_vote',
