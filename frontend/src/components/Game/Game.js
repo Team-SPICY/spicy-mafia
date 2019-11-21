@@ -4,14 +4,7 @@ import axios from 'axios'
 import PlayerList from "./PlayerList";
 import UserNightComponent from '../UserComponents';
 import UserDayComponent from '../UserComponents';
-<<<<<<< HEAD
-
 import Flipcard from '@kennethormandy/react-flipcard'
-import { Modal, Button, ListGroup } from 'react-bootstrap'
-
-=======
-import Flipcard from '@kennethormandy/react-flipcard'
->>>>>>> 304174920f4a81cf80b45ce75d125c456d0d46af
 import '@kennethormandy/react-flipcard/dist/Flipcard.css'
 
 import Image from "react-bootstrap/Image";
@@ -23,18 +16,12 @@ export default class Game extends Component {
         this.state = {
             users: [],
             playersShow: false,
-<<<<<<< HEAD
-            gameState: 'Lobby',
-            role: 'Civilian',
-            isHost: false,
-            flipped: false,
-=======
+
             gameState: 'Nightime',
             role: 'Civilian',
             isHost: false,
             flipped: false,
 
->>>>>>> 304174920f4a81cf80b45ce75d125c456d0d46af
         };
 
         this.waitForSocketConnection(() => {
@@ -92,10 +79,10 @@ export default class Game extends Component {
         const voted = parsedData.voter;
         //based on the game cycle pass this vote to appropriate function
         //if day cycle pass vote to handle fucntion to render to vote list
-        //if night cycle, check what role this player is(should be mafia) 
+        //if night cycle, check what role this player is(should be mafia)
     }
 
-    //handle a vote submitted 
+    //handle a vote submitted
     handleVote(voter, voted) {
         const data = {
             'command': 'send_vote',
@@ -126,43 +113,7 @@ export default class Game extends Component {
 
     addUser(user) {
         if (user !== this.props.currentUser) {
-<<<<<<< HEAD
-            this.setState({ users: [...this.state.users, user] });
-            console.log('adding user to state: ', user, this.state.users);
 
-        }
-    }
-
-    render() {
-        return (
-            <div>
-                {
-                    this.state.gameState === 'Lobby' ?
-                        <div className="Lobby">
-                            <h1>LOBBY</h1>
-
-                            {
-                                //insert lobby here component here
-                            }
-
-                        </div>
-                        :
-                        this.state.gameState === 'Nightime' ?
-                            <UserNightComponent
-                                role={this.state.role}
-                                handleVote={this.handleVote}
-                                handleQuizVote={this.handleQuizVote}
-                                handleVoteRecieved={this.handleVoteRecieved}
-                                handleSpecialAbility={this.handleSpecialAbility}
-                            />
-                            :
-                            <UserDayComponent
-                                handleVote={this.handleVote}
-                                handleVoteRecieved={this.handleVoteRecieved}
-                            />
-                }
-
-=======
             console.log('adding user to state: ', user, this.state.users);
             this.setState({ users: [...this.state.users, user] });
         }
@@ -194,7 +145,6 @@ export default class Game extends Component {
                             />
                 }
 
->>>>>>> 304174920f4a81cf80b45ce75d125c456d0d46af
                 {
                     this.state.gameState !== 'Lobby' ?
                         <div>
