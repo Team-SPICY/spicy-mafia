@@ -14,144 +14,131 @@
     z-index: 1;
 }
 
-.homeLogo{
-  z-index: 0;
-  width: 100%;
-  height: auto;
+.buttonContainer{
+  /* background: orange; */
+  position: relative;
+  height: 70vh;
+  width: auto;
+  border-radius: 20px;
+  padding-top: 65px;
 
-  /* min-width: 70%;
-  min-height: auto;
-  max-height: 80%;
-  max-width: inherit; */
-  padding-left: 0px;
 
 
 }
 
+/* Style for button*/
+.buttonContainer Button{
 
+  padding: 12px;
+  width: 200px;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: white;
+  background: rgb(144,142,142);
+  background: linear-gradient(180deg, rgba(144,142,142,1) 26%, rgba(102,101,101,1) 63%, rgba(66,66,66,1) 100%);
+  border: none;
+  border-radius: 20px;
+  /* box-shadow: 0 5px #919191; */
+
+}
+
+
+.buttonContainer Button:active {
+  background-color: #989898 !important;
+  color: red;
+  transform: scale(1);
+}
+.buttonContainer Button:hover {
+  color:red;
+  background-color: white;
+}
+
+/* button position for host btn */
 .buttonHost{
-  padding: 15px 25px;
-  vertical-align: middle;
-  transform: scale(1);
-
-  /* Style */
-  font-size: 24px;
-  font-weight: bold;
-  cursor: pointer;
-  text-align: center;
-  text-decoration: none;
-  outline: none;
-  color: black;
-  background-color: white;
-  border: none;
-  border-radius: 15px;
-  box-shadow: 0 5px #919191;
 
   display: block;
-  left: 30px;
   position: absolute;
-  bottom: 30px;
+
+  left: 15vw;
   font-size: 18px;
   transform: scale(1);
 
 
 }
 
-.buttonHost:hover {
-  background-color: white;
-
-
-}
-
-.buttonHost:active {
-  background-color: #989898;
-
-  transform: scale(1);
-}
+/* button position for join btn */
 .buttonJoin {
-  padding: 15px 25px;
-  vertical-align: middle;
-  transform: scale(1);
-
-  /* Style */
-  font-size: 24px;
-  font-weight: bold;
-  cursor: pointer;
-  text-align: center;
-  text-decoration: none;
-  outline: none;
-  color: black;
-  background-color: white;
-  border: none;
-  border-radius: 15px;
-  box-shadow: 0 5px #919191;
 
   display: block;
   position: absolute;
-  right: 30px;
-  bottom: 30px;
+  right: 15vw;
   font-size: 18px;
   transform: scale(1);
-
 }
 
-.buttonJoin:hover {
-  background-color: white;
 
-
-}
-
-.buttonJoin:active {
-  background-color: #989898;
-
-  transform: scale(1);
-}
 
 input[type=text] {
   width: 70%;
+  height: 50px;
   border: none;
-  border-radius: 8px;
+  border-radius: 14px;
   outline:none;
+  font-size: 19px;
+
+}
+input{
+  text-align:center;
+
 }
 
 .inputContainer{
   position:relative;
-  background: blue;
+  /* background: blue; */
+  border-radius: 20px;
 }
+
 .homeLogoContainer{
   position: relative;
-  height: 80vh;
+  height: 65vh;
   width: auto;
 
-
-  background: red;
-
+  /* background: red; */
+  border-radius: 20px;
 }
-
 .homeLogoContainer img{
   width: auto;
   height: 52vh;
   margin-top: 50px;
 
-margin-bottom: 50px;
-  background: purple
+  margin-bottom: 50px;
+  /* background: purple; */
+  border-radius: 20px;
+
+    /* z-index: 0;
+    width: 100%;
+    height: auto;
+    min-width: 70%;
+    min-height: auto;
+    max-height: 80%;
+    max-width: inherit; */
 }
 
-.buttonContainer{
-  background: purple;
-}
 
-
-.homeContainer{
-
-}
 .HomeScreen{
   position: absolute;
   height: 100px0
 }
 
 label{
-  color: red;
+  font-size: 20px;
+  color: rgb(182,33,15);
+  color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%, rgba(52,2,2,1) 100%);
+  font-weight: bold;
 }
 
 .room-popup {

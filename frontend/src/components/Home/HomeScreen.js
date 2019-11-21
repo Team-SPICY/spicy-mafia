@@ -14,7 +14,6 @@ export class Home extends Component {
             roomIDShow: false,
         };
     }
-
     render() {
         return (
             <div className="Homescreen">
@@ -30,7 +29,7 @@ export class Home extends Component {
                           <label>USERNAME
                           <input type="text" name="name" type="text"
                                   onChange={this.props.usernameChangeHandler}
-                                  placeholder="Don't use your real name..."
+                                  placeholder="Who are you?"
                                   minLength="3"
                                   maxLength="10"
                               />
@@ -38,11 +37,13 @@ export class Home extends Component {
                       </div>
                     </div>
 
-                    <div className="buttonContainer">
-                      
-                      <Button onClick={() => this.props.handleCreateGame(this.props.username)} className="buttonHost">HOST</Button>
-                      <Button onClick={() => this.setState({ roomIDShow: true })} className="buttonJoin">JOIN</Button>
-                    </div>
+                <div className ="buttonContainer">
+
+
+                  <Button onClick={() => this.props.handleCreateGame(this.props.username)} className="buttonHost">HOST</Button>
+                  <Button onClick={() => this.setState({ roomIDShow: true })} className="buttonJoin">JOIN</Button>
+
+                </div>
 
                 </div>
                 {this.state.roomIDShow ?
