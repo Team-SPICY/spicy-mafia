@@ -4,7 +4,10 @@ import axios from 'axios'
 import PlayerList from "./PlayerList";
 import UserNightComponent from '../UserComponents';
 import UserDayComponent from '../UserComponents';
+
 import Flipcard from '@kennethormandy/react-flipcard'
+import { Modal, Button, ListGroup } from 'react-bootstrap'
+
 import '@kennethormandy/react-flipcard/dist/Flipcard.css'
 
 import Image from "react-bootstrap/Image";
@@ -16,11 +19,10 @@ export default class Game extends Component {
         this.state = {
             users: [],
             playersShow: false,
-            gameState: 'Nightime',
+            gameState: 'Lobby',
             role: 'Civilian',
             isHost: false,
             flipped: false,
-
         };
 
         this.waitForSocketConnection(() => {
@@ -112,20 +114,24 @@ export default class Game extends Component {
 
     addUser(user) {
         if (user !== this.props.currentUser) {
-            console.log('adding user to state: ', user, this.state.users);
             this.setState({ users: [...this.state.users, user] });
+            console.log('adding user to state: ', user, this.state.users);
+
         }
     }
 
     render() {
-
-
         return (
             <div>
                 {
                     this.state.gameState === 'Lobby' ?
                         <div className="Lobby">
                             <h1>LOBBY</h1>
+
+                            {
+                                //insert lobby here component here
+                            }
+
                         </div>
                         :
                         this.state.gameState === 'Nightime' ?
