@@ -22,7 +22,7 @@ class PlayerList extends Component {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        Players Alive
+                        Players
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>

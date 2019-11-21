@@ -57,10 +57,10 @@ class WebSocketService {
             this.callbacks[command](parsedData.username);
         }
         if (command === 'vote') {
-            this.callbacks[command](parsedData.messages);
+            this.callbacks[command](parsedData);
         }
         if (command === 'cycle_change') {
-            this.callbacks[command](parsedData.message);
+            this.callbacks[command](parsedData);
         }
         if (command === 'leaving') {
             this.callbacks[command](parsedData.user);
@@ -71,6 +71,10 @@ class WebSocketService {
     joining(username) {
         console.log('sending message to websokcet to broadcast')
         this.sendMessage({ command: 'joining', 'username': username });
+    }
+
+    sendVote(data) {
+        this.sendMessage(data);
     }
 
     newChatMessage(message) {
