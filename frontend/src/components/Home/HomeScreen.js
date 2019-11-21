@@ -24,7 +24,8 @@ export class Home extends Component {
                       <img className="homeLogo" src="/images/MafiaHomeLogo.png" />
                     </div>
 
-                    <div className="inputContainer">
+                    <div className= "inputContainer">
+                    <div>
                       <div className="usernameInput">
                           <label>USERNAME
                           <input type="text" name="name" type="text"
@@ -36,13 +37,12 @@ export class Home extends Component {
                           </label>
                       </div>
                     </div>
+                    </div>
+
 
                 <div className ="buttonContainer">
-
-
                   <Button onClick={() => this.props.handleCreateGame(this.props.username)} className="buttonHost">HOST</Button>
                   <Button onClick={() => this.setState({ roomIDShow: true })} className="buttonJoin">JOIN</Button>
-
                 </div>
 
                 </div>
