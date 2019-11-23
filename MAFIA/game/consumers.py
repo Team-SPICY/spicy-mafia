@@ -1,16 +1,28 @@
 # chat/consumers.py
 from channels.generic.websocket import AsyncWebsocketConsumer
 import json
+import pyrebase
+
+#link to firebase
+config = {
+    'apiKey': "AIzaSyBeYE_UDmmz-k3_EuQJu2y5MQab4J2-13E",
+    'authDomain': "spicy-mafia.firebaseapp.com",
+    'databaseURL': "https://spicy-mafia.firebaseio.com",
+    'storageBucket': "spicy-mafia.appspot.com",
+}
+firebase = pyrebase.initialize_app(config)
+db = firebase.database()
+
 '''
 Things to do:
 add voting receiving and broadcasting function for elimination
 '''
 class GameConsumer(AsyncWebsocketConsumer):
-    
+
     async def connect(self):
         print('connecting! ', self.scope)
         self.room_name = self.scope['url_route']['kwargs']['room_name']
-        
+
         self.room_group_name = 'chat_%s' % self.room_name
         self.username = ''
         # Join room group
@@ -20,10 +32,11 @@ class GameConsumer(AsyncWebsocketConsumer):
         )
         await self.accept()
         print('accepted connection')
-        
+
     async def disconnect(self, close_code):
         print('self: ',self.username)
-        print(close_code)   
+        print(close_code)
+        db.child("lobbies").child(self.room_name).child("players").child(self.username).remove()
         await self.channel_layer.group_send(
             #broadcast that you have left
             self.room_group_name,
@@ -49,7 +62,7 @@ class GameConsumer(AsyncWebsocketConsumer):
     async def leaving(self, event):
         message = event['message']
         print(f'ln51: user leaving: {message}')
-        
+
         #put a pyrebase function to remove self.username into room
         print('pyrebase do something')
         # Send message to WebSocket
@@ -63,7 +76,7 @@ class GameConsumer(AsyncWebsocketConsumer):
         print('new user joining game')
         username = event['username']
         print('user joining: ',username)
-        
+
         #put a pyrebase function to insert new player into room
 
         #send to group(broadcast)
@@ -72,7 +85,7 @@ class GameConsumer(AsyncWebsocketConsumer):
             {
                 'type': 'new_user',
                 'username': username
-            }   
+            }
         )
 
     async def set_user(self, event):
