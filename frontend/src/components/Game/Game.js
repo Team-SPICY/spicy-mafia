@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Game.css';
 import axios from 'axios'
 import PlayerList from "./PlayerList";
+import Lobby from '../Lobby/Lobby'
 import UserNightComponent from '../UserComponents';
 import UserDayComponent from '../UserComponents';
 
@@ -126,11 +127,15 @@ export default class Game extends Component {
                 {
                     this.state.gameState === 'Lobby' ?
                         <div className="Lobby">
-                            <h1>LOBBY</h1>
 
-                            {
-                                //insert lobby here component here
-                            }
+                              <button variant={"secondary"} type={"button"} className="i_button">INSTRUCTIONS</button>
+                              <button className="p_button">START</button>
+                              <Lobby
+                                users={this.state.users}
+                                currentUser={this.props.currentUser}
+                                show={this.state.playersShow}
+                                onHide={() => this.setState({ playersShow: false })}
+                                />
 
                         </div>
                         :
