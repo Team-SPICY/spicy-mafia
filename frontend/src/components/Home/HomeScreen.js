@@ -14,7 +14,9 @@ export class Home extends Component {
             roomIDShow: false,
         };
     }
+
     render() {
+
         return (
             <div className="Homescreen">
 
@@ -24,26 +26,25 @@ export class Home extends Component {
                       <img className="homeLogo" src="/images/MafiaHomeLogo.png" />
                     </div>
 
-                    <div className="inputContainer">
+                    <label>USERNAME  </label>
+                    <div className= "inputContainer">
                       <div className="usernameInput">
-                          <label>USERNAME
+
                           <input type="text" name="name" type="text"
                                   onChange={this.props.usernameChangeHandler}
                                   placeholder="Who are you?"
                                   minLength="3"
                                   maxLength="10"
                               />
-                          </label>
+
                       </div>
                     </div>
 
-                <div className ="buttonContainer">
 
-
-                  <Button onClick={() => this.props.handleCreateGame(this.props.username)} className="buttonHost">HOST</Button>
-                  <Button onClick={() => this.setState({ roomIDShow: true })} className="buttonJoin">JOIN</Button>
-
-                </div>
+                  <div className ="buttonContainer">
+                    <Button onClick={() => this.props.handleCreateGame(this.props.username)} className="buttonHost">HOST</Button>
+                    <Button onClick={() => this.setState({ roomIDShow: true })} className="buttonJoin">JOIN</Button>
+                  </div>
 
                 </div>
                 {this.state.roomIDShow ?
@@ -58,4 +59,5 @@ export class Home extends Component {
         );
     }
 }
+
 export default Home;

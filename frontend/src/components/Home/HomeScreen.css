@@ -1,3 +1,4 @@
+
 .App{
   text-align: center;
   width:100vw;
@@ -11,24 +12,26 @@
 }
 
 .usernameInput{
-    z-index: 1;
+  z-index: 1;
 }
+
 
 .buttonContainer{
   /* background: orange; */
   position: relative;
-  height: 70vh;
-  width: auto;
   border-radius: 20px;
-  padding-top: 65px;
+  padding-top: 30px;
 
 
-
+  text-align: center;
 }
 
 /* Style for button*/
 .buttonContainer Button{
-
+  margin-top: 10px;
+  /* margin-right: 100px;
+  margin-left: 100px;
+  align-self: center; */
   padding: 12px;
   width: 200px;
   font-size: 24px;
@@ -48,7 +51,6 @@
 
 
 .buttonContainer Button:active {
-  background-color: #989898 !important;
   color: red;
   transform: scale(1);
 }
@@ -61,9 +63,7 @@
 .buttonHost{
 
   display: block;
-  position: absolute;
-
-  left: 15vw;
+  margin: 0 auto;
   font-size: 18px;
   transform: scale(1);
 
@@ -74,8 +74,7 @@
 .buttonJoin {
 
   display: block;
-  position: absolute;
-  right: 15vw;
+  margin: 0 auto;
   font-size: 18px;
   transform: scale(1);
 }
@@ -83,12 +82,13 @@
 
 
 input[type=text] {
-  width: 70%;
+  width: 200px;
   height: 50px;
   border: none;
   border-radius: 14px;
   outline:none;
   font-size: 19px;
+  font-weight: bold;
 
 }
 input{
@@ -104,7 +104,7 @@ input{
 
 .homeLogoContainer{
   position: relative;
-  height: 65vh;
+  height: 50vh;
   width: auto;
 
   /* background: red; */
@@ -112,7 +112,7 @@ input{
 }
 .homeLogoContainer img{
   width: auto;
-  height: 52vh;
+  height: 45vh;
   margin-top: 50px;
 
   margin-bottom: 50px;
@@ -128,37 +128,14 @@ input{
     max-width: inherit; */
 }
 
+.homeContainer{
 
-.HomeScreen{
-  position: absolute;
-  height: 100px0
 }
+
 
 label{
   font-size: 20px;
   color: rgb(182,33,15);
   color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%, rgba(52,2,2,1) 100%);
   font-weight: bold;
-}
-
-.room-popup {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-  background-color: rgba(0,0,0, 0.5);
-}
-.popup_inner {
-  position: absolute;
-  left: 25%;
-  right: 25%;
-  top: 25%;
-  bottom: 25%;
-  margin: auto;
-  border-radius: 20px;
-  background: white;
 }

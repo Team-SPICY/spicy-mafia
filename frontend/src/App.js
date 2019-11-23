@@ -49,15 +49,16 @@ export default class App extends Component {
         .then(res => {
           const rooms = res['data'];
           console.log('rooms: ', rooms);
-
-          if (roomID in rooms) {
-            axios.put('http://127.0.0.1:8000/api/lobby/', { 'user': username })
-              .then(res => {
-                if (res['is_valid_user'] === true) {
+          if (roomID in rooms && rooms[roomID]['isActive'] === false) { //if room user provided is true then try to enter room
+            axios.put(`http://127.0.0.1:8000/api/lobby/${roomID}/`, { 'user': username })
+              .then(res2 => {
+                console.log('responce from joining, is valid username?', res2)
+                if (res2['data']['is_valid_user'] === true) {
+                  //room is valid to join so update the state
                   this.setState({ loggedIn: true, username: username, roomID: roomID, isHost: false });
+
                   //connect to websockets, new websocket based on the roomID
                   WebSocketInstance.connect(username, roomID);
-                  console.log(`room ${roomID} is in api/lobby[rooms], users: ${this.state.users}`);
                 }
                 else {
                   alert(`Username ${username} taken already!`);
@@ -85,10 +86,9 @@ export default class App extends Component {
           roomID = res['data']['lobby_id'];
           console.log('resposnse from post to api: ', res, ' roomID: ', roomID);
           this.setState({ loggedIn: true, username: username, roomID: roomID, isHost: true });
-
-
+          WebSocketInstance.connect(username, roomID);
         })
-      WebSocketInstance.connect(username, roomID);
+
     }
   }
 
