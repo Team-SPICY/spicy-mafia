@@ -15,23 +15,24 @@ export class ShowRoomId extends Component {
         return (
             <Modal
                 {...this.props}
-                size="lg"
+                size="sm"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
             >
-                <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-title-vcenter">
-                        ENTER THE SECRET PHRASE
+                <Modal.Header >
+                    <Modal.Title>
+                        SECRET PHRASE
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <input
                         type="text"
                         onChange={this.props.roomChangeHandler}
-                        placeholder="Enter Room PIN"
+                        placeholder="What's the password?"
                         minLength="4"
                         maxLength="4"
-                        required />
+                        required
+                        />
                 </Modal.Body>
                 <Modal.Footer>
                     <ButtonGroup>

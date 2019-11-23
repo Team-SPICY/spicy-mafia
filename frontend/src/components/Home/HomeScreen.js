@@ -26,7 +26,7 @@ export class Home extends Component {
                       <img className="homeLogo" src="/images/MafiaHomeLogo.png" />
                     </div>
 
-                    <label>USERNAME  </label>
+                    <label>USERNAME</label>
                     <div className= "inputContainer">
                       <div className="usernameInput">
 
