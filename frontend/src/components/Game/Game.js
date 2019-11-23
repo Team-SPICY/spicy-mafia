@@ -13,6 +13,7 @@ import '@kennethormandy/react-flipcard/dist/Flipcard.css'
 
 import Image from "react-bootstrap/Image";
 import WebSocketInstance from '../../services/WebSocket'
+import Instructions from './Instructions'
 
 export default class Game extends Component {
     constructor(props) {
@@ -24,6 +25,7 @@ export default class Game extends Component {
             role: 'Civilian',
             isHost: false,
             flipped: false,
+            instructionShow: false
         };
 
         this.waitForSocketConnection(() => {
@@ -128,8 +130,12 @@ export default class Game extends Component {
                     this.state.gameState === 'Lobby' ?
                         <div className="Lobby">
 
-                              <button variant={"secondary"} type={"button"} className="i_button">INSTRUCTIONS</button>
-                              <button className="p_button">START</button>
+                              <button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="i_button">INSTRUCTIONS</button>
+                              <Instructions
+                                show={this.state.instructionShow}
+                                onHide={() => this.setState({ instructionShow: false })}
+                              />
+                              <button onClick={() => this.setState({ gameState: 'Game' })} className="p_button">START</button>
                               <Lobby
                                 users={this.state.users}
                                 currentUser={this.props.currentUser}
@@ -157,7 +163,11 @@ export default class Game extends Component {
                 {
                     this.state.gameState !== 'Lobby' ?
                         <div>
-                            <button variant={"secondary"} type={"button"} className="i_button">INSTRUCTIONS</button>
+                            <button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="i_button">INSTRUCTIONS</button>
+                            <Instructions
+                              show={this.state.instructionShow}
+                              onHide={() => this.setState({ instructionShow: false })}
+                            />
                             <button className="p_button"
                                 onClick={() => this.setState({ playersShow: true })}>PLAYER LIST</button>
                             <PlayerList
