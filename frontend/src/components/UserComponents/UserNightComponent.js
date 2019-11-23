@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import Flipcard from '@kennethormandy/react-flipcard'
+import FlipCard from 'react-flipcard';
 import { Card, Button, ListGroup } from 'react-bootstrap'
-import '@kennethormandy/react-flipcard/dist/Flipcard.css'
+
 
 import Image from "react-bootstrap/Image";
 import WebSocketInstance from '../../services/WebSocket'
@@ -50,7 +50,7 @@ export default class UserNightComponent extends Component {
     render() {
         return (
             <div className="Nightime">
-                <Flipcard >
+                <FlipCard >
                     <div >
                         <Image src={this.state.backgroundSrc} width={" "} height={"600"} />
                         <h3>Description</h3>
@@ -61,7 +61,7 @@ export default class UserNightComponent extends Component {
                             //add some voting function here through importing Vote components
                         }
                     </div>
-                </Flipcard>
+                </FlipCard>
             </div>
         );
     }
