@@ -5,6 +5,7 @@ import PlayerList from "./PlayerList";
 import Lobby from '../Lobby/Lobby'
 import UserNightComponent from '../UserComponents';
 import UserDayComponent from '../UserComponents';
+import '../UserComponents/Cycles.css'
 
 import Flipcard from '@kennethormandy/react-flipcard'
 import { Modal, Button, ListGroup } from 'react-bootstrap'
