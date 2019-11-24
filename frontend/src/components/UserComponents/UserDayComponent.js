@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import './Cycles.css';
-import 'react-flipcard';
+import FlipCard from 'react-flipcard';
 import Image from "react-bootstrap/Image";
 import WebSocketInstance from '../../services/WebSocket'
 
