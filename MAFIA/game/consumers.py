@@ -2,6 +2,7 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
 import json
 import pyrebase
+import random
 
 #link to firebase
 config = {
@@ -77,8 +78,6 @@ class GameConsumer(AsyncWebsocketConsumer):
         username = event['username']
         print('user joining: ',username)
 
-        #put a pyrebase function to insert new player into room
-
         #send to group(broadcast)
         await self.channel_layer.group_send(
             self.room_group_name,
@@ -128,6 +127,80 @@ class GameConsumer(AsyncWebsocketConsumer):
             'message': message
         }))
 
+    async def new_role(self, event):
+        users = event['users']
+        await self.send(text_data=json.dumps({
+            'command': 'set_roles',
+            'role': users[self.username]
+        }))
+
+    async def set_roles(self, event):
+        host_name = event['host_name']
+        print(host_name)
+        players = db.child("lobbies").child(self.room_name).child("players").get().val()
+        player_list = list(players) #first index is host so we wont set that
+        player_list.remove(host_name) #don't reset host
+        print("players exluding host: " + str(player_list))
+        r_index = random.randint(0, len(player_list)-1)
+        random_player = player_list[r_index]
+        player_list.remove(random_player)
+        db.child("lobbies").child(self.room_name).child("players").update({random_player:"sheriff"})
+        r_index = random.randint(0, len(player_list)-1)
+        random_player = player_list[r_index]
+        player_list.remove(random_player)
+        db.child("lobbies").child(self.room_name).child("players").update({random_player:"nurse"})
+        length_players = len(players) - 1 #don't count host as a player to set
+        num_mafia = 0
+        while num_mafia < length_players//3: #just choose some ratio of mafia, can change later
+            r_index = random.randint(0, len(player_list)-1)
+            random_player = player_list[r_index]
+            player_list.remove(random_player)
+            db.child("lobbies").child(self.room_name).child("players").update({random_player:"mafia"})
+            num_mafia += 1
+        db.child("lobbies").child(self.room_name).update({"numMafia":num_mafia})
+        db.child("lobbies").child(self.room_name).update({"numOther":length_players - num_mafia})
+        players = db.child("lobbies").child(self.room_name).child("players").get().val()
+        await self.channel_layer.group_send(
+            self.room_group_name,
+            {
+                'type': 'new_role',
+                'users': dict(players)
+            }
+        )
+
+    async def new_cycle(self, event):
+        cycle = event['cycle']
+        print(f'new cycle: {cycle}')
+        # Send cycle to cycle_change method on client side to distribute cycles
+        await self.send(text_data=json.dumps({
+            'command': 'cycle_change',
+            'cycle': cycle
+        }))
+
+    async def change_cycle(self, event):
+        print("change cycle")
+        cycle = event['cycle']
+        num_mafia = db.child("lobbies").child(self.room_name).child("numMafia").get().val()
+        num_civilian = db.child("lobbies").child(self.room_name).child("numOther").get().val()
+        print(cycle)
+        if cycle == 'Nightime':
+            cycle = "Daytime"
+        else:
+            cycle = "Nightime"
+        if num_mafia >= num_civilian:
+            cycle = "mafia_win"
+        elif num_mafia == 0:
+            cycle = "civilian_win"
+        #self reference the new cycle method
+        await self.channel_layer.group_send(
+            self.room_group_name,
+            {
+                'type': 'new_cycle',
+                'cycle': cycle
+            }
+        )
+        
+
     #key-values so receiveing function knows what to do
     commands = {
         'new_message': chat_message,
@@ -135,4 +208,6 @@ class GameConsumer(AsyncWebsocketConsumer):
         'joining': joining,
         'set_user': set_user,
         'send_vote':send_vote,
+        'change_cycle': change_cycle,
+        'set_roles': set_roles
     }
