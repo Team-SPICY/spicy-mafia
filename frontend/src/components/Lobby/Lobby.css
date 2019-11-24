@@ -14,9 +14,7 @@
   border-radius: 20px;
 }
 .list-group-item{
-  background: rgb(99,99,99);
-  background: radial-gradient(circle, rgba(99,99,99,1) 45%,
-    rgba(99,99,99,1) 76%, rgba(82,81,81,1) 100%);
+
   border-radius: 5px;
   font-size: 20px;
 }
