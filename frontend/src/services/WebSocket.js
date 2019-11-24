@@ -57,10 +57,14 @@ class WebSocketService {
             this.callbacks[command](parsedData.username);
         }
         if (command === 'vote') {
+            console.log('vote recieved: ', parsedData);
             this.callbacks[command](parsedData);
         }
         if (command === 'cycle_change') {
-            this.callbacks[command](parsedData);
+            this.callbacks[command](parsedData.cycle);
+        }
+        if (command === 'set_roles') {
+            this.callbacks[command](parsedData.role, parsedData.roles)
         }
         if (command === 'leaving') {
             this.callbacks[command](parsedData.user);
@@ -75,17 +79,19 @@ class WebSocketService {
 
     sendVote(data) {
         this.sendMessage(data);
+        console.log('websokcet sending vote: ', data);
     }
 
     newChatMessage(message) {
         this.sendMessage({ command: 'new_message', from: message.from, text: message.text });
     }
 
-    addCallbacks(voteCallBack, cycleChangeCallBack, newUserCallBack, disconnectCallBack) {
+    addCallbacks(voteCallBack, cycleChangeCallBack, newUserCallBack, disconnectCallBack, roleCallBack) {
         this.callbacks['cycle_change'] = cycleChangeCallBack;
         this.callbacks['vote'] = voteCallBack;
         this.callbacks['new_user'] = newUserCallBack;
         this.callbacks['leaving'] = disconnectCallBack;
+        this.callbacks['set_roles'] = roleCallBack;
     }
     //send data to websocket in consumers.py
     sendMessage(data) {
@@ -101,6 +107,7 @@ class WebSocketService {
     state() {
         return this.socketRef.readyState;
     }
+
 
     waitForSocketConnection(callback) {
         const socket = this.socketRef;
