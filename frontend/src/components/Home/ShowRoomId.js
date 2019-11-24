@@ -18,30 +18,29 @@ export class ShowRoomId extends Component {
                 size="sm"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
+
             >
-                <Modal.Header >
-                    <Modal.Title>
-                        SECRET PHRASE
-                    </Modal.Title>
-                </Modal.Header>
+
                 <Modal.Body>
-                    <input
+                    <h1 className="labelModal">SECRET PHRASE</h1>
+                    <input className="roomIdInput"
                         type="text"
                         onChange={this.props.roomChangeHandler}
                         placeholder="What's the password?"
                         minLength="4"
                         maxLength="4"
                         required
+                        autofocus="true"
                         />
                 </Modal.Body>
                 <Modal.Footer>
-                    <ButtonGroup>
-                        <Button onClick={() => this.props.onHide()} size="sm" variant="light" className="submit" type="submit" value="Submit">
+                    <ButtonGroup className="roomIdBG">
+                        <Button onClick={() => this.props.onHide()} size="sm" variant="light" className="cancel" type="submit" value="Submit">
                             CANCEL
                         </Button>
                         <Button onClick={(e) => this.props.handleLoginSubmit(e)} size="sm" variant="light" className="submit" type="submit" value="Submit">
                             CONFIRM
-                    </Button>
+                        </Button>
                     </ButtonGroup>
                 </Modal.Footer>
             </Modal>

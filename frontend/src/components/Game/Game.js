@@ -131,19 +131,21 @@ export default class Game extends Component {
                     this.state.gameState === 'Lobby' ?
                         <div className="Lobby">
 
-                              <button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="i_button">INSTRUCTIONS</button>
-                              <Instructions
-                                show={this.state.instructionShow}
-                                onHide={() => this.setState({ instructionShow: false })}
-                              />
-                              <button onClick={() => this.setState({ gameState: 'Game' })} className="p_button">START</button>
-                              <Lobby
-                                users={this.state.users}
-                                currentUser={this.props.currentUser}
-                                show={this.state.playersShow}
-                                onHide={() => this.setState({ playersShow: false })}
-                                />
+                            <Instructions
+                              show={this.state.instructionShow}
+                              onHide={() => this.setState({ instructionShow: false })}
+                            />
 
+                            <Lobby
+                              users={this.state.users}
+                              currentUser={this.props.currentUser}
+                              show={this.state.playersShow}
+                              onHide={() => this.setState({ playersShow: false })}
+                              />
+                            <div className="lobbyButtonContainer">
+                              <button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="instructionsButton">INSTRUCTIONS</button>
+                              <button onClick={() => this.setState({ gameState: 'Game' })} className="startButton">START</button>
+                            </div>
                         </div>
                         :
                         this.state.gameState === 'Nightime' ?

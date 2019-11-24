@@ -1,3 +1,48 @@
-input{
+.modal-header{
   text-align: center;
+}
+.roomIdInput{
+  width: 200px;
+  height: 50px;
+  border: none;
+  border-radius: 10px;
+  outline:none;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+  color: rgb(182,33,15);
+  color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%, rgba(52,2,2,1) 100%);
+  background: black;
+}
+
+.modal-body, .modal-footer{
+  text-align: center;
+  border-top: 2px;
+  border-style: hidden;
+  background: linear-gradient(180deg, rgba(99,99,99,1) 52%,
+    rgba(99,99,99,1) 76%, rgba(82,81,81,1) 100%);
+  background-blend-mode: multiply;
+}
+.roomIdBG Button{
+
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: white;
+  background: rgb(144,142,142);
+  background: linear-gradient(180deg, rgba(144,142,142,1) 26%,
+    rgba(102,101,101,1) 63%, rgba(66,66,66,1) 100%);
+  border: none;
+  border-radius: 10px;
+}
+.roomIdBG{
+  text-align: center;
+}
+.labelModal{
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
 }

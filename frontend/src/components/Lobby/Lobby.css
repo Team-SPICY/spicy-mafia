@@ -1,6 +1,58 @@
 .listContainer{
-    max-height: 300px;
+    /* background: red; */
+    position: relative;
+    width: 500px;
+    margin: 0 auto;
+    max-height: 500px;
+    text-align: center;
     margin-bottom: 10px;
+    border-radius: 20px;
     overflow:scroll;
     -webkit-overflow-scrolling: touch;
+}
+.list-group{
+  border-radius: 20px;
+}
+.list-group-item{
+  background: rgb(99,99,99);
+  background: radial-gradient(circle, rgba(99,99,99,1) 45%,
+    rgba(99,99,99,1) 76%, rgba(82,81,81,1) 100%);
+  border-radius: 5px;
+  font-size: 20px;
+}
+.list-group-item p{
+  font-weight: bold;
+  color: white;
+}
+
+.lobbyLogo{
+  padding-top: 50px;
+  width: 300px;
+  height: auto;
+}
+
+.lobbyLogoContainer{
+  position: relative;
+}
+
+.lobbyButtonContainer{
+  position: relative;
+  /* background: red; */
+}
+.Lobby button{
+  margin: 10px;
+  padding: 12px;
+  width: 200px;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: white;
+  background: rgb(144,142,142);
+  background: linear-gradient(180deg, rgba(144,142,142,1) 26%, rgba(102,101,101,1) 63%, rgba(66,66,66,1) 100%);
+  border: none;
+  border-radius: 20px;
+
 }
