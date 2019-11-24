@@ -5,10 +5,9 @@ import PlayerList from "./PlayerList";
 import UserNightComponent from '../UserComponents';
 import UserDayComponent from '../UserComponents';
 
-import Flipcard from '@kennethormandy/react-flipcard'
 import { Modal, Button, ListGroup } from 'react-bootstrap'
 
-import '@kennethormandy/react-flipcard/dist/Flipcard.css'
+import FlipCard from 'react-flipcard';
 
 import Image from "react-bootstrap/Image";
 import WebSocketInstance from '../../services/WebSocket'
@@ -16,13 +15,23 @@ import WebSocketInstance from '../../services/WebSocket'
 export default class Game extends Component {
     constructor(props) {
         super(props);
+        //bind handle vot function
+        this.handleVoteRecieved = this.handleVoteRecieved.bind(this);
+        this.handleVote = this.handleVote.bind(this);
+
         this.state = {
             users: [],
+            //update alive users after a gameState change(someone is killed/executed)
+            aliveUsers: [],
+            //have a list of mafiosos so that these users arent rendered in the MafiaVote.js component
+            mafiosos: [],
             playersShow: false,
-            gameState: 'Lobby',
-            role: 'Civilian',
+            gameState: 'Nightime',
+            role: 'Mafia',
             isHost: false,
             flipped: false,
+            votedFor: [],
+            prevVote: "",
         };
 
         this.waitForSocketConnection(() => {
@@ -33,7 +42,7 @@ export default class Game extends Component {
                     console.log('rooms: ', rooms);
                     const db_users = Object.keys(rooms[this.props.roomID]['players']);
                     console.log('users from api: ', db_users);
-                    this.setState({ users: [...this.state.users, ...db_users] });
+                    this.setState({ users: [...this.state.users, ...db_users], aliveUsers: [...db_users] });
                     console.log(`users: ${this.state.users}`);
                 })
             WebSocketInstance.joining(this.props.currentUser);
@@ -74,24 +83,54 @@ export default class Game extends Component {
         console.log('handling quiz vote');
     }
 
-    //handle a vote recieved from websocket
+    //handle a vote recieved from websocket should only be for mafia at night or execution for daytime
     handleVoteRecieved(parsedData) {
         const voter = parsedData.voter;
-        const voted = parsedData.voter;
-        //based on the game cycle pass this vote to appropriate function
-        //if day cycle pass vote to handle fucntion to render to vote list
-        //if night cycle, check what role this player is(should be mafia)
+        const voted = parsedData.voted;
+
+        //user that was previously voted for
+        const prev_voted = parsedData.prev_voted;
+        //list of user that have been voted for
+        var voted_for = this.state.votedFor;
+
+        console.log('vote recieved for: ', voted);
+        //If the vote is during night then it must be coming from the Mafia
+        if (this.state.gameState === 'Nightime') {
+            //remove previous vote from votedFor list
+            if (prev_voted !== "") {
+                console.log('prev voted: ', prev_voted);
+                var index = voted_for.indexOf(prev_voted);
+                voted_for.splice(index, 1);
+            }
+            //insert new vote into list
+            voted_for = [...voted_for, voted];
+            this.setState({ votedFor: voted_for });
+            console.log('new state for votes: ', this.state.votedFor)
+        }
+
+        //else the vote is during the day so we are executing somebody
+
     }
 
     //handle a vote submitted
     handleVote(voter, voted) {
+        var prev_vote;
+        console.log('prev vote: ', this.state.prevVote);
+        if (this.state.prevVote === "") {
+            prev_vote = "";
+        }
+        else {
+            prev_vote = this.state.prevVote;
+        }
         const data = {
-            'command': 'send_vote',
+            'command': 'new_vote',
             'voter': voter,
             'voted': voted,
+            'prev_vote': prev_vote,
         };
+        this.setState({ prevVote: voted });
         //send vote to websocket
-        WebSocketInstance.sendVote(data);
+        WebSocketInstance.sendMessage(data);
         console.log('vote submmitted');
     }
 
@@ -136,34 +175,21 @@ export default class Game extends Component {
                         :
                         this.state.gameState === 'Nightime' ?
                             <UserNightComponent
+                                votedFor={this.state.votedFor}
                                 role={this.state.role}
                                 handleVote={this.handleVote}
                                 handleQuizVote={this.handleQuizVote}
                                 handleVoteRecieved={this.handleVoteRecieved}
-                                handleSpecialAbility={this.handleSpecialAbility}
+                                aliveUsers={this.state.aliveUsers}
+                                currentUser={this.props.currentUser}
+                                prevVote={this.state.prevVote}
+                                mafiosos={this.state.mafiosos}
                             />
                             :
                             <UserDayComponent
                                 handleVote={this.handleVote}
                                 handleVoteRecieved={this.handleVoteRecieved}
                             />
-                }
-
-                {
-                    this.state.gameState !== 'Lobby' ?
-                        <div>
-                            <button variant={"secondary"} type={"button"} className="i_button">INSTRUCTIONS</button>
-                            <button className="p_button"
-                                onClick={() => this.setState({ playersShow: true })}>PLAYER LIST</button>
-                            <PlayerList
-                                users={this.state.users}
-                                currentUser={this.props.currentUser}
-                                show={this.state.playersShow}
-                                onHide={() => this.setState({ playersShow: false })}
-                            />
-                        </div>
-                        :
-                        null
                 }
             </div>
         );

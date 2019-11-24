@@ -52,6 +52,7 @@ class GameConsumer(AsyncWebsocketConsumer):
         
         #put a pyrebase function to remove self.username into room
         print('pyrebase do something')
+
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
             'command': 'leaving',
@@ -75,6 +76,24 @@ class GameConsumer(AsyncWebsocketConsumer):
             }   
         )
 
+ #broadcast that new vote has been submitted
+    async def new_vote(self, event):
+        print('new vote :',event)
+        voter = event['voter']
+        voted = event['voted']
+        prev_vote = event['prev_vote']
+
+        #send to group(broadcast)
+        await self.channel_layer.group_send(
+            self.room_group_name,
+            {
+                'type': 'send_vote',
+                'voter': voter,
+                'voted': voted,
+                'prev_vote': prev_vote,
+            }   
+        )
+
     async def set_user(self, event):
         print(f'setting user name! {event}')
         self.username = event['username']
@@ -95,14 +114,17 @@ class GameConsumer(AsyncWebsocketConsumer):
     receive : vote from group(send_vote(data) was broadcasted)
     '''
     async def send_vote(self, event):
+        print('sending vote to self: ',event , self.username)
         voter = event['voter']
         voted = event['voted']
+        prev_vote = event['prev_vote']
         print(f'new vote recvd: {event}')
         # Send username to WebSocket
         await self.send(text_data=json.dumps({
             'command': 'vote',
             'voter': voter,
-            'voted': voted
+            'voted': voted,
+            'prev_voted': prev_vote,
         }))
 
     # Receive message from room group
@@ -121,5 +143,5 @@ class GameConsumer(AsyncWebsocketConsumer):
         'leaving': leaving,
         'joining': joining,
         'set_user': set_user,
-        'send_vote':send_vote,
+        'new_vote': new_vote,
     }

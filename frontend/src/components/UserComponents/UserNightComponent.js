@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import Flipcard from '@kennethormandy/react-flipcard'
-import { Card, Button, ListGroup } from 'react-bootstrap'
-import '@kennethormandy/react-flipcard/dist/Flipcard.css'
+import FlipCard from 'react-flipcard';
+import { Card, Button, ListGroup } from 'react-bootstrap';
+
+import MafiaVote from '../Vote';
 
 import Image from "react-bootstrap/Image";
 import WebSocketInstance from '../../services/WebSocket'
 
-export default class UserNightComponent extends Component {
+export class UserNightComponent extends Component {
     constructor(props) {
         super(props);
+        console.log('loggin props for usernightcomp: ', props);
         this.state = {
             voted: false,
             flipped: false,
@@ -46,23 +48,32 @@ export default class UserNightComponent extends Component {
 
     }
 
+    changeVoteHandler = (e) => {
+        this.setState({
+            voted: e.target.value
+        });
+    }
+
+    recieveVoteHandler(data) {
+        console.log('someone has voted for something');
+    }
 
     render() {
         return (
-            <div className="Nightime">
-                <Flipcard >
-                    <div >
-                        <Image src={this.state.backgroundSrc} width={" "} height={"600"} />
-                        <h3>Description</h3>
-                        <p>{this.state.description}</p>
-                    </div>
-                    <div >
-                        {
-                            //add some voting function here through importing Vote components
-                        }
-                    </div>
-                </Flipcard>
-            </div>
+            <div>
+                <MafiaVote
+                    votedFor={this.props.votedFor}
+                    role={this.props.role}
+                    handleVote={this.props.handleVote}
+                    handleQuizVote={this.props.handleQuizVote}
+                    handleVoteRecieved={this.props.handleVoteRecieved}
+                    aliveUsers={this.props.aliveUsers}
+                    mafiosos={this.props.mafiosos}
+                    currentUser={this.props.currentUser}
+                    prevVote={this.props.prevVote}
+                />
+            </div >
         );
     }
 }
+export default UserNightComponent;
