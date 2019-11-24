@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import FlipCard from 'react-flipcard';
-import { Card, Button, ListGroup } from 'react-bootstrap'
+import {Card, Button, ListGroup, Container} from 'react-bootstrap'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col';
 
 
 import Image from "react-bootstrap/Image";
@@ -10,9 +12,14 @@ import WebSocketInstance from '../../services/WebSocket'
 export default class UserNightComponent extends Component {
     constructor(props) {
         super(props);
+        this.handleKeyDown = this.handleKeyDown.bind(this);
+        this.handleOnFlip  = this.handleOnFlip.bind(this);
+        this.showFront     = this.showFront.bind(this);
+        this.showBack      = this.showBack.bind(this);
+        this.backButton    = React.createRef();
         this.state = {
             voted: false,
-            flipped: false,
+            isFlipped: false,
             backgroundSrc: '',
             description: '',
             NurseDescription: 'You Are A Nurse',
@@ -23,6 +30,27 @@ export default class UserNightComponent extends Component {
     }
     componentDidMount() {
         this.setBackground();
+    }
+
+    showBack() {
+        this.setState({isFlipped : true});
+    }
+
+    showFront() {
+        this.setState( {isFlipped : false});
+    }
+
+
+    handleOnFlip(flipped) {
+        if (flipped) {
+            this.backButton.current.focus();
+        }
+    }
+
+    handleKeyDown(e) {
+        if (this.state.isFlipped && e.keyCode === 27) {
+            this.showFront();
+        }
     }
 
     //render function for nurse
@@ -49,20 +77,25 @@ export default class UserNightComponent extends Component {
 
     render() {
         return (
-            <div className="Nightime">
-                <FlipCard >
-                    <div >
-                        <Image src={this.state.backgroundSrc} width={" "} height={"600"} />
-                        <h3>Description</h3>
-                        <p>{this.state.description}</p>
+                <Container fluid={true}>
+                    <Row>
+                        <Col xs = {6} md = {7}>
+                <FlipCard
+                    disabled = {true}
+                    flipped = {this.state.isFlipped}
+                    onFlip  = {this.handleOnFlip}
+                    onKeyDown = {this.handleKeyDown}
+                    >
+                    <div onClick={this.showBack} >
+                        <img src ={this.state.backgroundSrc} width={" "} height={"600"}/>
                     </div>
-                    <div >
-                        {
-                            //add some voting function here through importing Vote components
-                        }
+                    <div ref={this.backButton} onClick={this.showFront} >
+                        <img src ={this.state.backgroundSrc} width={" "} height={"600"}  />
                     </div>
                 </FlipCard>
-            </div>
+                        </Col>
+                    </Row>
+                </Container>
         );
     }
 }
