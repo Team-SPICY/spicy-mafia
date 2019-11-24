@@ -60,9 +60,15 @@
 .i_button:hover {
     background-color: #515151;
 }
- .card_container{
-    position: center;
-     left : -30px;
-     border-right-width: thick;
-     bottom: 30px;
- }
+
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.card_container {
+    position: relative;
+    right: 50%;
+}

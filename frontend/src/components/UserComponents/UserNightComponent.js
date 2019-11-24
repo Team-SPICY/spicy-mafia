@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import FlipCard from 'react-flipcard';
-import { Card, Button, ListGroup } from 'react-bootstrap';
+import {Card, Button, ListGroup, Container} from 'react-bootstrap'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col';
+
 
 import MafiaVote from '../Vote';
 
@@ -11,10 +14,14 @@ import WebSocketInstance from '../../services/WebSocket'
 export class UserNightComponent extends Component {
     constructor(props) {
         super(props);
-        console.log('loggin props for usernightcomp: ', props);
+        this.handleKeyDown = this.handleKeyDown.bind(this);
+        this.handleOnFlip  = this.handleOnFlip.bind(this);
+        this.showFront     = this.showFront.bind(this);
+        this.showBack      = this.showBack.bind(this);
+        this.backButton    = React.createRef();
         this.state = {
             voted: false,
-            flipped: false,
+            isFlipped: false,
             backgroundSrc: '',
             description: '',
             NurseDescription: 'You Are A Nurse',
@@ -25,6 +32,27 @@ export class UserNightComponent extends Component {
     }
     componentDidMount() {
         this.setBackground();
+    }
+
+    showBack() {
+        this.setState({isFlipped : true});
+    }
+
+    showFront() {
+        this.setState( {isFlipped : false});
+    }
+
+
+    handleOnFlip(flipped) {
+        if (flipped) {
+            this.backButton.current.focus();
+        }
+    }
+
+    handleKeyDown(e) {
+        if (this.state.isFlipped && e.keyCode === 27) {
+            this.showFront();
+        }
     }
 
     //render function for nurse
@@ -60,7 +88,21 @@ export class UserNightComponent extends Component {
 
     render() {
         return (
-            <div>
+                <Container fluid={true}>
+                    <Row>
+                        <Col xs = {6} md = {7}>
+                <FlipCard
+                    disabled = {true}
+                    flipped = {this.state.isFlipped}
+                    onFlip  = {this.handleOnFlip}
+                    onKeyDown = {this.handleKeyDown}
+                    >
+                    <div onClick={this.showBack} >
+          
+                        <img src ={this.state.backgroundSrc} width={" "} height={"600"}/>
+                    </div>
+                    <div ref={this.backButton} onClick={this.showFront} >
+           <div>
                 <MafiaVote
                     votedFor={this.props.votedFor}
                     role={this.props.role}
@@ -73,6 +115,13 @@ export class UserNightComponent extends Component {
                     prevVote={this.props.prevVote}
                 />
             </div >
+                        <img src ={this.state.backgroundSrc} width={" "} height={"600"}  />
+                    </div>
+                </FlipCard>
+                        </Col>
+                    </Row>
+                </Container>
+
         );
     }
 }

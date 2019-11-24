@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Game.css';
 import axios from 'axios'
 import PlayerList from "./PlayerList";
+import Lobby from '../Lobby/Lobby'
 import UserNightComponent from '../UserComponents';
 import UserDayComponent from '../UserComponents';
 
@@ -11,6 +12,7 @@ import FlipCard from 'react-flipcard';
 
 import Image from "react-bootstrap/Image";
 import WebSocketInstance from '../../services/WebSocket'
+import Instructions from './Instructions'
 
 export default class Game extends Component {
     constructor(props) {
@@ -26,7 +28,8 @@ export default class Game extends Component {
             //have a list of mafiosos so that these users arent rendered in the MafiaVote.js component
             mafiosos: [],
             playersShow: false,
-            gameState: 'Nightime',
+            gameState: 'Lobby',
+            //isHost: false,
             role: 'Mafia',
             isHost: false,
             flipped: false,
@@ -46,7 +49,11 @@ export default class Game extends Component {
                     console.log(`users: ${this.state.users}`);
                 })
             WebSocketInstance.joining(this.props.currentUser);
-            WebSocketInstance.addCallbacks(this.handleVoteRecieved.bind(this), this.handleCycleChange.bind(this), this.addUser.bind(this), this.disconnect.bind(this), this.setRole.bind(this));
+            WebSocketInstance.addCallbacks(this.handleVoteRecieved.bind(this), 
+                                           this.handleCycleChange.bind(this), 
+                                           this.addUser.bind(this), 
+                                           this.disconnect.bind(this), 
+                                           this.setRole.bind(this));
         });
     }
 
@@ -71,6 +78,18 @@ export default class Game extends Component {
         this.setState({ role: role });
     }
 
+    startGame() {
+        var lobby = "http://127.0.0.1:8000/api/lobby/" + this.props.roomID + "/"
+        axios.put(lobby, { 'start_game': true })
+            .then(res2 => {
+                console.log('response from starting game', res2)
+                if (res2['data']["game_activated"] === true) {
+                    //send a message to the server websocket to change cycles
+                    WebSocketInstance.sendMessage({'command': 'set_roles', 'host_name': this.props.currentUser});
+                    WebSocketInstance.sendMessage({'command': 'change_cycle', 'cycle':this.state.gameState});
+                }
+            })
+        }
     //handle votes from sherrif or nurse
     handleSpecialAbility() {
         console.log('handling special ability');
@@ -135,9 +154,9 @@ export default class Game extends Component {
     }
 
     //handle day night cycle change, param state should be the new state to enter
-    handleCycleChange(state) {
+    handleCycleChange(cycle) {
         console.log('cycle change initiated');
-        this.setState({ state: state });
+        this.setState({ gameState: cycle });
     }
 
     //call when websocket receinves message that user has disconeccted
@@ -165,11 +184,33 @@ export default class Game extends Component {
                 {
                     this.state.gameState === 'Lobby' ?
                         <div className="Lobby">
-                            <h1>LOBBY</h1>
-
-                            {
-                                //insert lobby here component here
-                            }
+                            <h1>SECRET CODE: {this.props.roomID}</h1>
+                            <Lobby
+                                    users={this.state.users}
+                                    currentUser={this.props.currentUser}
+                                    show={this.state.playersShow}
+                                    onHide={() => this.setState({ playersShow: false })}
+                                    />
+                                {this.props.isHost === true ?
+                                <div className="Lobby">
+                                    <button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="i_button">INSTRUCTIONS</button>
+                                    <Instructions
+                                    show={this.state.instructionShow}
+                                    onHide={() => this.setState({ instructionShow: false })}
+                                    />
+                                    {/* <button onClick={() => this.setState({ gameState: 'Nightime' })} className="p_button">START</button>*/}
+                                    <button onClick={() => this.startGame()} className="p_button">START</button>
+    
+                                </div>
+                                :
+                                <div className="Lobby">
+                                <button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="i_button">INSTRUCTIONS</button>
+                                    <Instructions
+                                    show={this.state.instructionShow}
+                                    onHide={() => this.setState({ instructionShow: false })}
+                                    />
+                                </div>}
+                
 
                         </div>
                         :
@@ -180,6 +221,8 @@ export default class Game extends Component {
                                 handleVote={this.handleVote}
                                 handleQuizVote={this.handleQuizVote}
                                 handleVoteRecieved={this.handleVoteRecieved}
+                                handleSpecialAbility={this.handleSpecialAbility}
+                                handleCycleChange={this.handleCycleChange}
                                 aliveUsers={this.state.aliveUsers}
                                 currentUser={this.props.currentUser}
                                 prevVote={this.state.prevVote}

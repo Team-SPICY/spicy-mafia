@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import Flipcard from '@kennethormandy/react-flipcard'
-import '@kennethormandy/react-flipcard/dist/Flipcard.css'
-
+import './Cycles.css';
+import 'react-flipcard';
 import Image from "react-bootstrap/Image";
 import WebSocketInstance from '../../services/WebSocket'
 
@@ -16,7 +15,7 @@ export default class UserDayComponent extends Component {
     }
     render() {
         return (
-            <div>
+            <div className={"Daytime"}>
                 Day card
             </div>
         );

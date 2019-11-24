@@ -7,7 +7,7 @@
   background: linear-gradient(180deg, rgba(0,0,0,1) 26%,
   rgba(27,27,27,1) 63%, rgba(50,50,50,1) 100%);
   touch-action: manipulation;
-  overflow: hidden;
+  overflow: auto;
   z-index: -1;
 }
 
@@ -17,10 +17,8 @@
 
 
 .buttonContainer{
-  background: orange;
+  /* background: orange; */
   position: relative;
-  height: 29vh;
-  width: auto;
   border-radius: 20px;
   padding-top: 30px;
 
@@ -84,7 +82,7 @@
 
 
 input[type=text] {
-  width: 70%;
+  width: 200px;
   height: 50px;
   border: none;
   border-radius: 14px;
@@ -100,21 +98,21 @@ input{
 
 .inputContainer{
   position:relative;
-  background: blue;
+  /* background: blue; */
   border-radius: 20px;
 }
 
 .homeLogoContainer{
   position: relative;
-  height: 60vh;
+  height: 50vh;
   width: auto;
 
-  background: red;
+  /* background: red; */
   border-radius: 20px;
 }
 .homeLogoContainer img{
   width: auto;
-  height: 52vh;
+  height: 45vh;
   margin-top: 50px;
 
   margin-bottom: 50px;
@@ -130,6 +128,9 @@ input{
     max-width: inherit; */
 }
 
+.homeContainer{
+
+}
 
 
 label{
