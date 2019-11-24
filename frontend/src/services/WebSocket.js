@@ -57,6 +57,7 @@ class WebSocketService {
             this.callbacks[command](parsedData.username);
         }
         if (command === 'vote') {
+            console.log('vote recieved: ', parsedData);
             this.callbacks[command](parsedData);
         }
         if (command === 'cycle_change') {
@@ -78,6 +79,7 @@ class WebSocketService {
 
     sendVote(data) {
         this.sendMessage(data);
+        console.log('websokcet sending vote: ', data);
     }
 
     newChatMessage(message) {

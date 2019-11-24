@@ -56,7 +56,7 @@ export default class App extends Component {
                 if (res2['data']['is_valid_user'] === true) {
                   //room is valid to join so update the state
                   this.setState({ loggedIn: true, username: username, roomID: roomID, isHost: false });
-
+                  console.log('set state');
                   //connect to websockets, new websocket based on the roomID
                   WebSocketInstance.connect(username, roomID);
                 }

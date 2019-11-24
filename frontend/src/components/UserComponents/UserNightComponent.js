@@ -6,10 +6,12 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col';
 
 
+import MafiaVote from '../Vote';
+
 import Image from "react-bootstrap/Image";
 import WebSocketInstance from '../../services/WebSocket'
 
-export default class UserNightComponent extends Component {
+export class UserNightComponent extends Component {
     constructor(props) {
         super(props);
         this.handleKeyDown = this.handleKeyDown.bind(this);
@@ -74,6 +76,15 @@ export default class UserNightComponent extends Component {
 
     }
 
+    changeVoteHandler = (e) => {
+        this.setState({
+            voted: e.target.value
+        });
+    }
+
+    recieveVoteHandler(data) {
+        console.log('someone has voted for something');
+    }
 
     render() {
         return (
@@ -87,15 +98,31 @@ export default class UserNightComponent extends Component {
                     onKeyDown = {this.handleKeyDown}
                     >
                     <div onClick={this.showBack} >
+          
                         <img src ={this.state.backgroundSrc} width={" "} height={"600"}/>
                     </div>
                     <div ref={this.backButton} onClick={this.showFront} >
+           <div>
+                <MafiaVote
+                    votedFor={this.props.votedFor}
+                    role={this.props.role}
+                    handleVote={this.props.handleVote}
+                    handleQuizVote={this.props.handleQuizVote}
+                    handleVoteRecieved={this.props.handleVoteRecieved}
+                    aliveUsers={this.props.aliveUsers}
+                    mafiosos={this.props.mafiosos}
+                    currentUser={this.props.currentUser}
+                    prevVote={this.props.prevVote}
+                />
+            </div >
                         <img src ={this.state.backgroundSrc} width={" "} height={"600"}  />
                     </div>
                 </FlipCard>
                         </Col>
                     </Row>
                 </Container>
+
         );
     }
 }
+export default UserNightComponent;
