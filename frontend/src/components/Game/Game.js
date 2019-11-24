@@ -6,12 +6,7 @@ import Lobby from '../Lobby/Lobby'
 import UserNightComponent from '../UserComponents';
 import UserDayComponent from '../UserComponents';
 import '../UserComponents/Cycles.css'
-
-import Flipcard from '@kennethormandy/react-flipcard'
 import { Modal, Button, ListGroup } from 'react-bootstrap'
-
-import '@kennethormandy/react-flipcard/dist/Flipcard.css'
-
 import Image from "react-bootstrap/Image";
 import WebSocketInstance from '../../services/WebSocket'
 import Instructions from './Instructions'

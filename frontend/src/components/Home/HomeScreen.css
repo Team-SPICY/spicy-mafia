@@ -11,11 +11,6 @@
   z-index: -1;
 }
 
-.usernameInput{
-  z-index: 1;
-}
-
-
 .buttonContainer{
   /* background: orange; */
   position: relative;
@@ -52,7 +47,7 @@
 
 .buttonContainer Button:active {
   color: rgb(182,33,15);
-  color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%, 
+  color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%,
     rgba(52,2,2,1) 100%);
   transform: scale(1);
 }
@@ -96,13 +91,13 @@
 }
 .usernameInput input{
   text-align:center;
-
 }
 
 .inputContainer{
   position:relative;
   /* background: blue; */
   border-radius: 20px;
+
 }
 
 .homeLogoContainer{

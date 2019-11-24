@@ -15,7 +15,16 @@
   background: black;
 }
 
-.modal-body, .modal-footer{
+.modal-footer{
+  background-color: gray;
+  width: inherit;
+  padding-right: 44px;
+  border: none;
+  outline: none;
+
+}
+
+.modal-body{
   text-align: center;
   border-top: 2px;
   border-style: hidden;
@@ -24,8 +33,8 @@
   background-blend-mode: multiply;
 }
 .roomIdBG Button{
-
-  font-size: 18px;
+  padding: 10px 20px 10px 20px;
+  font-size: 15px;
   font-weight: bold;
   cursor: pointer;
   text-align: center;
