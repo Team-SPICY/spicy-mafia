@@ -64,7 +64,7 @@ class WebSocketService {
             this.callbacks[command](parsedData.cycle);
         }
         if (command === 'set_roles') {
-            this.callbacks[command](parsedData.role)
+            this.callbacks[command](parsedData.role, parsedData.roles)
         }
         if (command === 'leaving') {
             this.callbacks[command](parsedData.user);
@@ -107,7 +107,7 @@ class WebSocketService {
     state() {
         return this.socketRef.readyState;
     }
-    
+
 
     waitForSocketConnection(callback) {
         const socket = this.socketRef;

@@ -153,7 +153,8 @@ class GameConsumer(AsyncWebsocketConsumer):
         users = event['users']
         await self.send(text_data=json.dumps({
             'command': 'set_roles',
-            'role': users[self.username]
+            'role': users[self.username],
+            'roles': users
         }))
 
     async def set_roles(self, event):
@@ -179,6 +180,14 @@ class GameConsumer(AsyncWebsocketConsumer):
             player_list.remove(random_player)
             db.child("lobbies").child(self.room_name).child("players").update({random_player:"mafia"})
             num_mafia += 1
+        #set at least 1 mafia member
+        if(num_mafia == 0):
+            r_index = random.randint(0, len(player_list)-1)
+            random_player = player_list[r_index]
+            player_list.remove(random_player)
+            db.child("lobbies").child(self.room_name).child("players").update({random_player:"mafia"})
+            num_mafia += 1
+        
         db.child("lobbies").child(self.room_name).update({"numMafia":num_mafia})
         db.child("lobbies").child(self.room_name).update({"numOther":length_players - num_mafia})
         players = db.child("lobbies").child(self.room_name).child("players").get().val()
@@ -231,6 +240,6 @@ class GameConsumer(AsyncWebsocketConsumer):
         'set_user': set_user,
         'send_vote':send_vote,
         'change_cycle': change_cycle,
-        'set_roles': set_roles
+        'set_roles': set_roles,
         'new_vote': new_vote,
     }

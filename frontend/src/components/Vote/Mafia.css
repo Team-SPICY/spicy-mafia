@@ -7,3 +7,15 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.me-mafia-li{
+    color: rgb(182,33,15);
+    color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%, rgba(52,2,2,1) 100%);
+    font-weight: bold;
+}
+
+.mafia-li{
+    color: rgb(182,33,15);
+    color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%, rgba(52,2,2,1) 100%);
+
+}

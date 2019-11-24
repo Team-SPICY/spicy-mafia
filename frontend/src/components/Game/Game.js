@@ -24,13 +24,13 @@ export default class Game extends Component {
         this.state = {
             users: [],
             //update alive users after a gameState change(someone is killed/executed)
-            aliveUsers: [],
+            aliveUsers: {},
             //have a list of mafiosos so that these users arent rendered in the MafiaVote.js component
             mafiosos: [],
             playersShow: false,
             gameState: 'Lobby',
             //isHost: false,
-            role: 'Mafia',
+            role: 'civilian',
             isHost: false,
             flipped: false,
             votedFor: [],
@@ -45,15 +45,15 @@ export default class Game extends Component {
                     console.log('rooms: ', rooms);
                     const db_users = Object.keys(rooms[this.props.roomID]['players']);
                     console.log('users from api: ', db_users);
-                    this.setState({ users: [...this.state.users, ...db_users], aliveUsers: [...db_users] });
+                    this.setState({ users: [...this.state.users, ...db_users] });
                     console.log(`users: ${this.state.users}`);
                 })
             WebSocketInstance.joining(this.props.currentUser);
-            WebSocketInstance.addCallbacks(this.handleVoteRecieved.bind(this), 
-                                           this.handleCycleChange.bind(this), 
-                                           this.addUser.bind(this), 
-                                           this.disconnect.bind(this), 
-                                           this.setRole.bind(this));
+            WebSocketInstance.addCallbacks(this.handleVoteRecieved.bind(this),
+                this.handleCycleChange.bind(this),
+                this.addUser.bind(this),
+                this.disconnect.bind(this),
+                this.setRole.bind(this));
         });
     }
 
@@ -74,8 +74,11 @@ export default class Game extends Component {
     }
 
     //call back when websocket recieves role
-    setRole(role) {
-        this.setState({ role: role });
+    setRole(role, roles) {
+        this.setState({ role: role, aliveUsers: roles });
+        console.log(roles)
+        //set civilian users
+
     }
 
     startGame() {
@@ -85,11 +88,11 @@ export default class Game extends Component {
                 console.log('response from starting game', res2)
                 if (res2['data']["game_activated"] === true) {
                     //send a message to the server websocket to change cycles
-                    WebSocketInstance.sendMessage({'command': 'set_roles', 'host_name': this.props.currentUser});
-                    WebSocketInstance.sendMessage({'command': 'change_cycle', 'cycle':this.state.gameState});
+                    WebSocketInstance.sendMessage({ 'command': 'set_roles', 'host_name': this.props.currentUser });
+                    WebSocketInstance.sendMessage({ 'command': 'change_cycle', 'cycle': this.state.gameState });
                 }
             })
-        }
+    }
     //handle votes from sherrif or nurse
     handleSpecialAbility() {
         console.log('handling special ability');
@@ -186,31 +189,31 @@ export default class Game extends Component {
                         <div className="Lobby">
                             <h1>SECRET CODE: {this.props.roomID}</h1>
                             <Lobby
-                                    users={this.state.users}
-                                    currentUser={this.props.currentUser}
-                                    show={this.state.playersShow}
-                                    onHide={() => this.setState({ playersShow: false })}
-                                    />
-                                {this.props.isHost === true ?
+                                users={this.state.users}
+                                currentUser={this.props.currentUser}
+                                show={this.state.playersShow}
+                                onHide={() => this.setState({ playersShow: false })}
+                            />
+                            {this.props.isHost === true ?
                                 <div className="Lobby">
                                     <button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="i_button">INSTRUCTIONS</button>
                                     <Instructions
-                                    show={this.state.instructionShow}
-                                    onHide={() => this.setState({ instructionShow: false })}
+                                        show={this.state.instructionShow}
+                                        onHide={() => this.setState({ instructionShow: false })}
                                     />
                                     {/* <button onClick={() => this.setState({ gameState: 'Nightime' })} className="p_button">START</button>*/}
                                     <button onClick={() => this.startGame()} className="p_button">START</button>
-    
+
                                 </div>
                                 :
                                 <div className="Lobby">
-                                <button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="i_button">INSTRUCTIONS</button>
+                                    <button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="i_button">INSTRUCTIONS</button>
                                     <Instructions
-                                    show={this.state.instructionShow}
-                                    onHide={() => this.setState({ instructionShow: false })}
+                                        show={this.state.instructionShow}
+                                        onHide={() => this.setState({ instructionShow: false })}
                                     />
                                 </div>}
-                
+
 
                         </div>
                         :
