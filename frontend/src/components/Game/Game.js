@@ -36,6 +36,9 @@ export default class Game extends Component {
             isHost: false,
             flipped: false,
             prevVote: "",
+            mafia_kill: false,
+            successful_investigation: false,
+            is_alive: true
         };
 
         this.waitForSocketConnection(() => {
@@ -54,7 +57,8 @@ export default class Game extends Component {
                 this.handleCycleChange.bind(this),
                 this.addUser.bind(this),
                 this.disconnect.bind(this),
-                this.setRole.bind(this));
+                this.setRole.bind(this),
+                this.updatePlayers.bind(this));
         });
     }
 
@@ -95,6 +99,32 @@ export default class Game extends Component {
                 }
             })
     }
+
+    resolve_votes() {
+        if (this.state.gameState === "Nightime") {
+            WebSocketInstance.sendMessage({ 'command': 'resolve_votes', 
+                                            'cycle': this.state.gameState,
+                                            'role': this.state.role,
+                                            'alive_users': this.state.aliveUsers,
+                                            'mafia_votes': this.state.mafiaVotes,
+                                            'sheriff_votes': this.state.sheriffVotes,
+                                            'nurse_votes': this.state.nurseVotes})
+        }
+        else { //game state will be Daytime
+            console.log('under construction')
+        }
+        WebSocketInstance.sendMessage({ 'command': 'change_cycle', 'cycle': this.state.gameState })
+    }
+
+    updatePlayers(mafia_kill, successful_investigation, alive_users) {
+        console.log("updating results from previous cycle");
+        console.log("new_alive_players ", alive_users);
+        this.setState({ mafia_kill: mafia_kill, successful_investigation: successful_investigation ,aliveUsers: alive_users });
+        if (!(this.props.currentUser in alive_users)) {
+            this.setState({is_alive: false})
+        }
+    }
+
     //handle votes from sherrif or nurse
     handleSpecialAbility() {
         console.log('handling special ability');
@@ -184,6 +214,9 @@ export default class Game extends Component {
     //handle day night cycle change, param state should be the new state to enter
     handleCycleChange(cycle) {
         console.log('cycle change initiated');
+        if (cycle === "Daytime") {
+            this.setState({nurseVotes: [],sheriffVotes: [],mafiaVotes: []})
+        }
         this.setState({ gameState: cycle });
     }
 
@@ -210,59 +243,70 @@ export default class Game extends Component {
         return (
             <div>
                 {
-                    this.state.gameState === 'Lobby' ?
-                        <div className="Lobby">
-                            <h1>SECRET CODE: {this.props.roomID}</h1>
-                            <Lobby
-                                users={this.state.users}
-                                currentUser={this.props.currentUser}
-                                show={this.state.playersShow}
-                                onHide={() => this.setState({ playersShow: false })}
-                            />
-                            {this.props.isHost === true ?
-                                <div className="Lobby">
-                                    <button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="i_button">INSTRUCTIONS</button>
-                                    <Instructions
-                                        show={this.state.instructionShow}
-                                        onHide={() => this.setState({ instructionShow: false })}
-                                    />
-                                    {/* <button onClick={() => this.setState({ gameState: 'Nightime' })} className="p_button">START</button>*/}
-                                    <button onClick={() => this.startGame()} className="p_button">START</button>
+                    this.state.is_alive === true ? 
+                        this.state.gameState === 'Lobby' ?
+                            <div className="Lobby">
+                                <h1>SECRET CODE: {this.props.roomID}</h1>
+                                <Lobby
+                                    users={this.state.users}
+                                    currentUser={this.props.currentUser}
+                                    show={this.state.playersShow}
+                                    onHide={() => this.setState({ playersShow: false })}
+                                />
+                                {this.props.isHost === true ?
+                                    <div className="Lobby">
+                                        <button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="i_button">INSTRUCTIONS</button>
+                                        <Instructions
+                                            show={this.state.instructionShow}
+                                            onHide={() => this.setState({ instructionShow: false })}
+                                        />
+                                        <button onClick={() => this.startGame()} className="p_button">START</button>
 
-                                </div>
-                                :
-                                <div className="Lobby">
-                                    <button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="i_button">INSTRUCTIONS</button>
-                                    <Instructions
-                                        show={this.state.instructionShow}
-                                        onHide={() => this.setState({ instructionShow: false })}
-                                    />
-                                </div>}
+                                    </div>
+                                    :
+                                    <div className="Lobby">
+                                        <button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="i_button">INSTRUCTIONS</button>
+                                        <Instructions
+                                            show={this.state.instructionShow}
+                                            onHide={() => this.setState({ instructionShow: false })}
+                                        />
+                                    </div>}
 
 
-                        </div>
-                        :
-                        this.state.gameState === 'Nightime' ?
-                            <UserNightComponent
-                                mafiaVotes={this.state.mafiaVotes}
-                                nurseVotes={this.state.nurseVotes}
-                                sheriffVotes={this.state.sheriffVotes}
-                                role={this.state.role}
-                                handleVote={this.handleVote}
-                                handleQuizVote={this.handleQuizVote}
-                                handleSpecialAbility={this.handleSpecialAbility}
-                                handleCycleChange={this.handleCycleChange}
-                                aliveUsers={this.state.aliveUsers}
-                                currentUser={this.props.currentUser}
-                                prevVote={this.state.prevVote}
-                            />
+                            </div>
                             :
-                            <UserDayComponent
-                                handleVote={this.handleVote}
-                                handleVoteRecieved={this.handleVoteRecieved}
-                            />
-                }
-            </div>
-        );
-    }
+                            this.state.gameState === 'Nightime' ?
+                                this.props.isHost === true ?
+                                    <button onClick={() => this.resolve_votes()} className="p_button">Change Cycle</button>
+                                    :
+                                    <UserNightComponent
+                                        mafiaVotes={this.state.mafiaVotes}
+                                        nurseVotes={this.state.nurseVotes}
+                                        sheriffVotes={this.state.sheriffVotes}
+                                        role={this.state.role}
+                                        handleVote={this.handleVote}
+                                        handleQuizVote={this.handleQuizVote}
+                                        handleSpecialAbility={this.handleSpecialAbility}
+                                        handleCycleChange={this.handleCycleChange}
+                                        aliveUsers={this.state.aliveUsers}
+                                        currentUser={this.props.currentUser}
+                                        prevVote={this.state.prevVote}
+                                        />
+                                
+                                
+                                :
+                                this.props.isHost === true ?
+                                <button onClick={() => WebSocketInstance.sendMessage({ 'command': 'change_cycle', 'cycle': this.state.gameState })} className="p_button">Change Cycle</button>
+                                :
+                                <UserDayComponent
+                                    handleVote={this.handleVote}
+                                    handleVoteRecieved={this.handleVoteRecieved}
+                                />
+                    :
+                    <p>you are dead</p>
+                            
+                    }
+                </div>
+            );
+        }
 }
