@@ -10,7 +10,7 @@ class Lobby extends Component {
         const currentUser = this.props.currentUser;
         console.log(currentUser, this.props.users);
         return this.props.users.map((user, i) => <ListGroup.Item key={user}
-          className={user === currentUser ? "me" : 'other'}> <p> {user}</p>
+          className={user === currentUser ? "me" : 'other'}><p>{user}</p>
             </ListGroup.Item>);
     }
 

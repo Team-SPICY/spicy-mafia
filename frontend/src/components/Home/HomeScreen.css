@@ -49,12 +49,16 @@
   color: rgb(182,33,15);
   color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%,
     rgba(52,2,2,1) 100%);
+  background: gray;
   transform: scale(1);
 }
 .buttonContainer Button:hover {
-  color: rgb(182,33,15);
-  color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%, rgba(52,2,2,1) 100%);
+  background: -webkit-linear-gradient(#861704, #9f3a14);
+
   background-color: white;
+}
+.buttonContainer Button:focus {
+  outline: 0;
 }
 
 /* button position for host btn */
@@ -117,23 +121,17 @@
   /* background: purple; */
   border-radius: 20px;
 
-    /* z-index: 0;
-    width: 100%;
-    height: auto;
-    min-width: 70%;
-    min-height: auto;
-    max-height: 80%;
-    max-width: inherit; */
+
 }
 
 .homeContainer{
-
 }
 
 
 label{
   font-size: 20px;
-  color: rgb(182,33,15);
-  color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%, rgba(52,2,2,1) 100%);
+  background: -webkit-linear-gradient(#861704, #9f3a14);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   font-weight: bold;
 }

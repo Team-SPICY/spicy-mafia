@@ -24,6 +24,7 @@
 }
 
 .roomIDBody{
+
   background-color: black;
   text-align: center;
   padding: 10px 0 15px 0;
@@ -47,6 +48,19 @@
     rgba(102,101,101,1) 63%, rgba(66,66,66,1) 100%);
   border: none;
   border-radius: 10px;
+  box-shadow: 0px 10px 10px 5px rgba(0, 0, 0, 0.05);
+}
+.roombIdBG Button:active {
+  color: rgb(182,33,15);
+  color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%,
+    rgba(52,2,2,1) 100%);
+  background: gray;
+  transform: scale(1);
+}
+.roomIdBG Button:hover {
+  background: -webkit-linear-gradient(#861704, #9f3a14);
+  color: white;
+  background-color: white;
 }
 .roomIdBG{
   text-align: center;

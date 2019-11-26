@@ -89,14 +89,14 @@
   transform: scale(1);
 }
 .Lobby button:hover {
-  color: rgb(182,33,15);
-  color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%, rgba(52,2,2,1) 100%);
+  background: -webkit-linear-gradient(#861704, #9f3a14);
 
   background-color: white;
 }
 .Lobby button:disabled{
   color: white;
   cursor:not-allowed;
+  background: gray;
 
 }
 
@@ -114,10 +114,11 @@
   /* background: red; */
   padding-top: 0px;
   padding-bottom: -50px;
-
+  font-size: 20px;
   font-weight: bold;
-  color: rgb(182,33,15);
-  color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%, rgba(52,2,2,1) 100%);
+  background: -webkit-linear-gradient(#861704, #9f3a14);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 
 }
 
@@ -131,8 +132,9 @@
   margin-top: -10px;
   padding-top: 0px;
   font-size: 30px;
-  color: rgb(182,33,15);
-  color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%, rgba(52,2,2,1) 100%);
+  background: -webkit-linear-gradient(#861704, #9f3a14);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .secretCodeContainer p{
   margin: 15px 0 4px 0;
