@@ -26,15 +26,15 @@ export default class Game extends Component {
             users: [],
             //update alive users after a gameState change(someone is killed/executed)
             aliveUsers: {},
-            //have a list of mafiosos so that these users arent rendered in the MafiaVote.js component
-            mafiosos: [],
+            nurseVotes: [],
+            sheriffVotes: [],
+            mafiaVotes: [],
             playersShow: false,
             gameState: 'Lobby',
             //isHost: false,
             role: 'civilian',
             isHost: false,
             flipped: false,
-            votedFor: [],
             prevVote: "",
         };
 
@@ -76,8 +76,9 @@ export default class Game extends Component {
 
     //call back when websocket recieves role
     setRole(role, roles) {
+
         this.setState({ role: role, aliveUsers: roles });
-        console.log(roles)
+        console.log("role for user: ", role, roles)
         //set civilian users
 
     }
@@ -113,22 +114,45 @@ export default class Game extends Component {
 
         //user that was previously voted for
         const prev_voted = parsedData.prev_voted;
-        //list of user that have been voted for
-        var voted_for = this.state.votedFor;
+
+        //list of user that have been voted for, this will be set based on the role of the voter
+        var voted_for;
 
         console.log('vote recieved for: ', voted);
-        //If the vote is during night then it must be coming from the Mafia
+        //If the vote is during night then it must be coming from the Mafia, Sheriff or Nurse
         if (this.state.gameState === 'Nightime') {
-            //remove previous vote from votedFor list
-            if (prev_voted !== "") {
-                console.log('prev voted: ', prev_voted);
-                var index = voted_for.indexOf(prev_voted);
-                voted_for.splice(index, 1);
+            const role = this.state.aliveUsers[voter];
+            if (role === 'mafia') {
+                //set what list we are looking at based on role of voter
+                voted_for = this.state.mafiaVotes;
+                //remove previous vote from votedFor list
+                if (prev_voted !== "") {
+                    console.log('prev voted: ', prev_voted);
+                    var index = voted_for.indexOf(prev_voted);
+                    voted_for.splice(index, 1);
+                }
+                //insert new vote into list
+                voted_for = [...voted_for, voted];
+                this.setState({ mafiaVotes: voted_for });
+                console.log('new state for votes: ', this.state.votedFor)
+            } else if (role === 'sheriff') {
+                voted_for = this.state.sheriffVotes;
+                if (prev_voted !== "") {
+                    var index = voted_for.indexOf(prev_voted);
+                    voted_for.splice(index, 1);
+                }
+                voted_for = [...voted_for, voted];
+                this.setState({ sheriffVotes: voted_for });
+
+            } else if (role === 'nurse') {
+                voted_for = this.state.nurseVotes;
+                if (prev_voted !== "") {
+                    var index = voted_for.indexOf(prev_voted);
+                    voted_for.splice(index, 1);
+                }
+                voted_for = [...voted_for, voted];
+                this.setState({ nurseVotes: voted_for });
             }
-            //insert new vote into list
-            voted_for = [...voted_for, voted];
-            this.setState({ votedFor: voted_for });
-            console.log('new state for votes: ', this.state.votedFor)
         }
 
         //else the vote is during the day so we are executing somebody
@@ -220,17 +244,17 @@ export default class Game extends Component {
                         :
                         this.state.gameState === 'Nightime' ?
                             <UserNightComponent
-                                votedFor={this.state.votedFor}
+                                mafiaVotes={this.state.mafiaVotes}
+                                nurseVotes={this.state.nurseVotes}
+                                sheriffVotes={this.state.sheriffVotes}
                                 role={this.state.role}
                                 handleVote={this.handleVote}
                                 handleQuizVote={this.handleQuizVote}
-                                handleVoteRecieved={this.handleVoteRecieved}
                                 handleSpecialAbility={this.handleSpecialAbility}
                                 handleCycleChange={this.handleCycleChange}
                                 aliveUsers={this.state.aliveUsers}
                                 currentUser={this.props.currentUser}
                                 prevVote={this.state.prevVote}
-                                mafiosos={this.state.mafiosos}
                             />
                             :
                             <UserDayComponent

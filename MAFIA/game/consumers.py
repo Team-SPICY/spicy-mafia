@@ -151,6 +151,7 @@ class GameConsumer(AsyncWebsocketConsumer):
 
     async def new_role(self, event):
         users = event['users']
+        print('boradcasting role as: ',users[self.username])
         await self.send(text_data=json.dumps({
             'command': 'set_roles',
             'role': users[self.username],
@@ -232,7 +233,7 @@ class GameConsumer(AsyncWebsocketConsumer):
         )
         
 
-    #key-values so receiveing function knows what to do
+    #key-values so receiveing function knows what to do, map a command to a function
     commands = {
         'new_message': chat_message,
         'leaving': leaving,
