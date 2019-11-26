@@ -1,29 +1,58 @@
 .listContainer{
   /* background: red; */
+
+  box-shadow: 0px 10px 10px 5px rgba(0, 0, 0, 0.05);
   position: relative;
-  width: 500px;
   margin: 0 auto;
-  max-height: 500px;
+  width: 450px;
+  height: 450px;
+  max-height: 450px;
   text-align: center;
   margin-bottom: 10px;
   overflow:scroll;
   -webkit-overflow-scrolling: touch;
+  border-style: double;
+  border: 1px;
+
+  border-radius: 20px;
+  background: rgba(19,19,19,1);
+
+
+}
+.listPlayersContainer{
+
+}
+.me{
+  font-weight: bolder;
+  background: rgb(75,75,75);
+  background: radial-gradient(circle, rgba(75,75,75,1) 45%,
+    rgba(57,57,57,1) 76%, rgba(19,19,19,1) 100%);
+  color: red;
+}
+.other{
+  margin: 0 auto;
+  font-weight: bold;
+  background: rgb(99,99,99);
+  background: radial-gradient(circle, rgba(99,99,99,1) 45%,
+    rgba(99,99,99,1) 76%, rgba(82,81,81,1) 100%);
 }
 
 .list-group-item{
-  border-radius: 10px;
   font-size: 20px;
+  padding-top: 25px;
+  font-stretch: ultra-condensed;
+
 }
 .list-group-item p{
   color: white;
-;
 }
 
 .lobbyLogo{
-  padding-top: 50px;
-  padding-bottom: 30px;
-  width: 300px;
+  width: 350px;
   height: auto;
+  padding: 40px 20px 0px 20px;
+  margin-bottom: 1px;
+  /* background: blue; */
 }
 
 .lobbyLogoContainer{
@@ -31,12 +60,12 @@
 }
 
 .lobbyButtonContainer{
-  position: relative;
   /* background: red; */
+  margin-top: -10px;
 }
 .Lobby button{
-  margin: 10px;
-  padding: 12px;
+  margin: 5px;
+  padding: ;
   width: 200px;
   font-size: 20px;
   font-weight: bold;
@@ -49,16 +78,64 @@
   background: linear-gradient(180deg, rgba(144,142,142,1) 26%, rgba(102,101,101,1) 63%, rgba(66,66,66,1) 100%);
   border: none;
   border-radius: 15px;
+  box-shadow: 0px 10px 10px 5px rgba(0, 0, 0, 0.05);
 
 }
 .Lobby button:active {
   color: rgb(182,33,15);
   color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%,
     rgba(52,2,2,1) 100%);
+  background: gray;
   transform: scale(1);
 }
 .Lobby button:hover {
   color: rgb(182,33,15);
   color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%, rgba(52,2,2,1) 100%);
+
   background-color: white;
+}
+.Lobby button:disabled{
+  color: white;
+  cursor:not-allowed;
+
+}
+
+.Lobby{
+  /* background: purple; */
+
+}
+
+.numPlayersContainer{
+  /* background: blue; */
+  padding: 10px 0 5px 0;
+}
+
+.numPlayersContainer p{
+  /* background: red; */
+  padding-top: 0px;
+  padding-bottom: -50px;
+
+  font-weight: bold;
+  color: rgb(182,33,15);
+  color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%, rgba(52,2,2,1) 100%);
+
+}
+
+.secretCodeContainer{
+  position: relative;
+  /* background: yellow; */
+
+}
+
+.secretCodeContainer h1{
+  margin-top: -10px;
+  padding-top: 0px;
+  font-size: 30px;
+  color: rgb(182,33,15);
+  color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%, rgba(52,2,2,1) 100%);
+}
+.secretCodeContainer p{
+  margin: 15px 0 4px 0;
+  font-size: 20px;
+  color: white;
 }

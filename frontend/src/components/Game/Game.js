@@ -188,44 +188,41 @@ export default class Game extends Component {
                 {
                     this.state.gameState === 'Lobby' ?
                         <div className="Lobby">
-                            <h1>SECRET CODE: {this.props.roomID}</h1>
-                            <Lobby
-                                users={this.state.users}
-                                currentUser={this.props.currentUser}
-                                show={this.state.playersShow}
-                                onHide={() => this.setState({ playersShow: false })}
-                            />
-                            {this.props.isHost === true ?
-                                <div className="Lobby">
-                                    <button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="i_button">INSTRUCTIONS</button>
-                                    <Instructions
-                                        show={this.state.instructionShow}
-                                        onHide={() => this.setState({ instructionShow: false })}
-                                    />
-                                    {/* <button onClick={() => this.setState({ gameState: 'Nightime' })} className="p_button">START</button>*/}
-                                    <button onClick={() => this.startGame()} className="p_button">START</button>
 
-                                </div>
-                                :
-                                <div className="Lobby">
-                                    <button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="i_button">INSTRUCTIONS</button>
-                                    <Instructions
-                                        show={this.state.instructionShow}
-                                        onHide={() => this.setState({ instructionShow: false })}
-                                    />
-                                </div>}
-
-
-                            <Lobby
+                          <Lobby
                               users={this.state.users}
                               currentUser={this.props.currentUser}
                               show={this.state.playersShow}
                               onHide={() => this.setState({ playersShow: false })}
-                              />
-                            <div className="lobbyButtonContainer">
-                              <button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="instructionsButton">INSTRUCTIONS</button>
-                              <button onClick={() => this.setState({ gameState: 'Game' })} className="startButton">START</button>
-                            </div>
+                          />
+                          {this.props.isHost === true ?
+                              <div className="Lobby">
+                                <div className="lobbyButtonContainer">
+                                  <Button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="instructionsButton">INSTRUCTIONS</Button>
+                                  <Button onClick={() => this.startGame()} className="startButton">START</Button>
+                                  <Instructions
+                                      show={this.state.instructionShow}
+                                      onHide={() => this.setState({ instructionShow: false })}
+                                  />
+                                  {/* <button onClick={() => this.setState({ gameState: 'Nightime' })} className="p_button">START</button>*/}
+                                </div>
+
+                              </div>
+                              :
+                              <div className="Lobby">
+                                <div className="lobbyButtonContainer">
+                                  <Button className="startButton" disabled>STARTING SOON...</Button>
+                                  <Button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="instructionsButton">INSTRUCTIONS</Button>
+                                  <Instructions
+                                      show={this.state.instructionShow}
+                                      onHide={() => this.setState({ instructionShow: false })}
+                                  />
+                                </div>
+                              </div>}
+                              <div className="secretCodeContainer">
+                                <p>SECRET CODE:</p>
+                                <h1> {this.props.roomID}</h1>
+                              </div>
                         </div>
                         :
                         this.state.gameState === 'Nightime' ?

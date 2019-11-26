@@ -10,12 +10,13 @@ class Lobby extends Component {
         const currentUser = this.props.currentUser;
         console.log(currentUser, this.props.users);
         return this.props.users.map((user, i) => <ListGroup.Item key={user}
-          className={user === currentUser ? "me" : 'other'}> <p><Badge pill variant="light">{i+1}</Badge> {user}</p>
+          className={user === currentUser ? "me" : 'other'}> <p> {user}</p>
             </ListGroup.Item>);
     }
 
 
     render() {
+
         return (
 
             <div>
@@ -24,12 +25,14 @@ class Lobby extends Component {
               </div>
 
               <div className="listContainer">
-                <ListGroup bsPrefix="yes" variant="flush">{
+                <ListGroup bsPrefix="listPlayersContainer" variant="flush">{
                   this.renderUsers()
                 }</ListGroup>
-
               </div>
-              <p>this.props.map(i)</p>
+
+              <div className="numPlayersContainer">
+                <p>{this.props.users.length} SUSPECT(S)</p>
+              </div>
             </div>
         );
     }

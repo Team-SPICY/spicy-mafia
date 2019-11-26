@@ -21,7 +21,7 @@ export class ShowRoomId extends Component {
 
             >
 
-                <Modal.Body>
+                <Modal.Body bsPrefix="roomIDBody">
                     <h1 className="labelModal">SECRET PHRASE</h1>
                     <input className="roomIdInput"
                         type="text"
@@ -33,12 +33,12 @@ export class ShowRoomId extends Component {
                         autofocus="true"
                         />
                 </Modal.Body>
-                <Modal.Footer>
-                    <ButtonGroup className="roomIdBG">
-                        <Button onClick={() => this.props.onHide()} size="sm" variant="light" className="cancel" type="submit" value="Submit">
+                <Modal.Footer bsPrefix="roomIDFooter">
+                    <ButtonGroup bsPrefix="roomIdBG">
+                        <Button onClick={() => this.props.onHide()} className="cancel" size="sm" variant="light"  type="submit" value="Submit">
                             CANCEL
                         </Button>
-                        <Button onClick={(e) => this.props.handleLoginSubmit(e)} size="sm" variant="light" className="submit" type="submit" value="Submit">
+                        <Button onClick={(e) => this.props.handleLoginSubmit(e)} className="Confirm" size="sm" variant="light"  type="submit" value="Submit">
                             CONFIRM
                         </Button>
                     </ButtonGroup>
