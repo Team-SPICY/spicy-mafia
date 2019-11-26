@@ -151,6 +151,7 @@ class GameConsumer(AsyncWebsocketConsumer):
 
     async def new_role(self, event):
         users = event['users']
+        print('boradcasting role as: ',users[self.username])
         await self.send(text_data=json.dumps({
             'command': 'set_roles',
             'role': users[self.username],
@@ -161,7 +162,7 @@ class GameConsumer(AsyncWebsocketConsumer):
         host_name = event['host_name']
         print(host_name)
         players = db.child("lobbies").child(self.room_name).child("players").get().val()
-        player_list = list(players) #first index is host so we wont set that
+        player_list = list(players) 
         player_list.remove(host_name) #don't reset host
         print("players exluding host: " + str(player_list))
         r_index = random.randint(0, len(player_list)-1)
@@ -231,8 +232,66 @@ class GameConsumer(AsyncWebsocketConsumer):
             }
         )
         
-
-    #key-values so receiveing function knows what to do
+    async def resolve_votes(self, event):
+        #use this to get the votes from the sheriff, nurse, mafia, civilian etc...
+        if event['cycle'] == "Nightime":
+            alive_users = event['alive_users']
+            og_length = len(alive_users)
+            mafia_votes = event['mafia_votes']
+            sheriff_votes = event['sheriff_votes']
+            sheriff_vote = {sheriff_votes[0]: alive_users[sheriff_votes[0]]} # store who the sheriff investigated in case they die
+            nurse_votes = event['nurse_votes']
+            player_votes = {}
+            for m_v in mafia_votes:
+                if m_v in player_votes:
+                    player_votes[m_v] += 1
+                else:
+                    player_votes[m_v] = 1
+            if len(player_votes) == 0: # mafia never voted, pick a random player to kill
+                available_to_kill = []
+                for k,v in alive_users.items():
+                    if v != 'host' and v != 'mafia':
+                        available_to_kill.append(k)
+                r_index = random.randint(0, len(available_to_kill)-1)
+                player_to_kill = available_to_kill[r_index]
+            elif len(player_votes) > 1:
+                mafia_votes = sorted(list(player_votes.items()))
+                player_to_kill = mafia_votes[-1][0]
+            else:
+                player_to_kill = mafia_votes[0]
+            num_civilian = db.child("lobbies").child(self.room_name).child("numOther").get().val()
+            if nurse_votes[0] != player_to_kill:
+                num_civilian -= 1
+                alive_users.pop(player_to_kill,0)
+                db.child("lobbies").child(self.room_name).update({"numOther":num_civilian})
+            length_alive = len(alive_users)
+            data = {'type': 'update_players', 'alive_players': alive_users}
+            if length_alive == og_length:
+                data['mafia_kill'] = False
+            else:
+                data['mafia_kill'] = True
+            if list(sheriff_vote.values())[0] == 'mafia':
+                data['successful_investigation'] = True
+            else:
+                data['successful_investigation'] = False
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                data
+            )
+    
+    async def update_players(self, event):
+        mafia_kill = event['mafia_kill']
+        successful_investigation = event['successful_investigation']
+        alive_users = event['alive_players']
+        #send to client side
+        await self.send(text_data=json.dumps({
+            'command': 'update_alive',
+            'mafia_kill': mafia_kill,
+            'successful_investigation': successful_investigation,
+            'alive_users': alive_users
+        }))
+    
+    #key-values so receiveing function knows what to do, map a command to a function
     commands = {
         'new_message': chat_message,
         'leaving': leaving,
@@ -242,4 +301,5 @@ class GameConsumer(AsyncWebsocketConsumer):
         'change_cycle': change_cycle,
         'set_roles': set_roles,
         'new_vote': new_vote,
+        'resolve_votes': resolve_votes
     }

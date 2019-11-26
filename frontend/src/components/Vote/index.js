@@ -1,3 +1,3 @@
-module.exports = require('./MafiaVote');
+module.exports = require('./Vote');
 
 
