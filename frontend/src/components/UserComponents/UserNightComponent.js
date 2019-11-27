@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-
-
 import Vote from '../Vote';
+import NarratorNight from '../NarratorNightComponent';
 
-import NarratorNight from './NarratorNight';
-
-export class UserNightComponent extends Component {
+class UserNightComponent extends Component {
     constructor(props) {
         super(props);
-
+        console.log('role for user: ', this.props.role);
         this.state = {
             voted: false,
             backgroundSrc: '',
@@ -17,6 +14,7 @@ export class UserNightComponent extends Component {
             SheriffDescription: 'You Are A Sheriff',
             CivilianDescription: 'You Are A Civilian',
             MafiaDescription: 'You Are A Mafioso',
+            HostDescription: 'You are the host. You observe all, but say nothing.'
         };
     }
     componentDidMount() {
@@ -37,8 +35,12 @@ export class UserNightComponent extends Component {
             this.setState({ backgroundSrc: "/images/NurseCard.png", description: this.state.NurseDescription });
 
         }
+        else if (role === 'mafia') {
+            this.setState({ backgroundSrc: "/images/MafiaCard.png", description: this.state.MafiaDescription });
+
+        }
         else {
-            this.setState({ backgroundSrc: "/images/card.png", description: this.state.MafiaDescription });
+            this.setState({ backgroundSrc: "/images/card.png", description: this.state.HostDescription });
         }
         console.log('set descriptions ', this.state.description)
 
@@ -50,32 +52,40 @@ export class UserNightComponent extends Component {
         });
     }
 
-    recieveVoteHandler(data) {
-        console.log('someone has voted for something');
-    }
-
     render() {
         return (
             <div>
-                {
-                    this.props.role !== 'host' ?
-                        <Vote
-                            backgroundSrc={this.state.backgroundSrc}
-                            mafiaVotes={this.props.mafiaVotes}
-                            sheriffVotes={this.props.sheriffVotes}
-                            nurseVotes={this.props.nurseVotes}
-                            role={this.props.role}
-                            handleVote={this.props.handleVote}
-                            handleQuizVote={this.props.handleQuizVote}
-                            aliveUsers={this.props.aliveUsers}
-                            currentUser={this.props.currentUser}
-                            prevVote={this.props.prevVote}
-                        />
-                        :
-                        <NarratorNight/>
+                {this.props.role === 'host' ?
+                    <NarratorNight
+                        backgroundSrc={this.state.backgroundSrc}
+                        mafiaVotes={this.props.mafiaVotes}
+                        sheriffVotes={this.props.sheriffVotes}
+                        civilianVotes={this.props.civilianVotes}
+                        nurseVotes={this.props.nurseVotes}
+                        role={this.props.role}
+                        handleVote={this.props.handleVote}
+                        handleQuizVote={this.props.handleQuizVote}
+                        aliveUsers={this.props.aliveUsers}
+                        currentUser={this.props.currentUser}
+                        prevVote={this.props.prevVote}
+                    />
+                    :
+                    <Vote
+                        backgroundSrc={this.state.backgroundSrc}
+                        mafiaVotes={this.props.mafiaVotes}
+                        sheriffVotes={this.props.sheriffVotes}
+                        civilianVotes={this.props.civilianVotes}
+                        nurseVotes={this.props.nurseVotes}
+                        role={this.props.role}
+                        handleVote={this.props.handleVote}
+                        handleQuizVote={this.props.handleQuizVote}
+                        aliveUsers={this.props.aliveUsers}
+                        currentUser={this.props.currentUser}
+                        prevVote={this.props.prevVote}
+                    />
+
                 }
             </div>
-
         );
     }
 }

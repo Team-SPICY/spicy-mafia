@@ -69,6 +69,7 @@ class WebSocketService {
         if (command === 'leaving') {
             this.callbacks[command](parsedData.user);
         }
+
         if (command === 'update_accused') {
             this.callbacks[command](parsedData.accused);
         }

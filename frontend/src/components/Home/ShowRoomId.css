@@ -1,3 +1,73 @@
-input{
+
+.roomIdInput{
+  width: 200px;
+  height: 50px;
+  border: none;
+  border-radius: 10px;
+  outline:none;
+  font-size: 17px;
+  font-weight: bold;
   text-align: center;
+  color: rgb(182,33,15);
+  color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%, rgba(52,2,2,1) 100%);
+  background: black;
+}
+
+.roomIDFooter{
+
+  background-color: red;
+  background: gray;
+  width: inherit;
+  border: none;
+  outline: none;
+
+}
+
+.roomIDBody{
+
+  background-color: black;
+  text-align: center;
+  padding: 10px 0 15px 0;
+  border-style: hidden;
+  background: linear-gradient(180deg, rgba(99,99,99,1) 52%,
+    rgba(99,99,99,1) 76%, rgba(82,81,81,1) 100%);
+  background-blend-mode: color;
+}
+.roomIdBG Button{
+  padding: 10px 20px 10px 20px;
+  margin: 0 10px 0 10px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: white;
+  background: rgb(144,142,142);
+  background: linear-gradient(180deg, rgba(144,142,142,1) 26%,
+    rgba(102,101,101,1) 63%, rgba(66,66,66,1) 100%);
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0px 10px 10px 5px rgba(0, 0, 0, 0.05);
+}
+.roombIdBG Button:active {
+  color: rgb(182,33,15);
+  color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%,
+    rgba(52,2,2,1) 100%);
+  background: gray;
+  transform: scale(1);
+}
+.roomIdBG Button:hover {
+  background: -webkit-linear-gradient(#861704, #9f3a14);
+  color: white;
+  background-color: white;
+}
+.roomIdBG{
+  text-align: center;
+  padding: 10px 10px 10px 10px;
+}
+.labelModal{
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
 }

@@ -1,2 +1,2 @@
-module.exports = require('./UserDayComponent')
-module.exports = require('./UserNightComponent')
+module.exports = require('./UserDayComponent');
+module.exports = require('./UserNightComponent');

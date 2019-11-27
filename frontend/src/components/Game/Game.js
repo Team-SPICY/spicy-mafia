@@ -131,7 +131,7 @@ export default class Game extends Component {
 
     resolve_votes() {
         if (this.state.gameState === "Nightime") {
-            WebSocketInstance.sendMessage({ 'command': 'resolve_votes', 
+            WebSocketInstance.sendMessage({ 'command': 'resolve_votes',
                                             'cycle': this.state.gameState,
                                             'role': this.state.role,
                                             'alive_users': this.state.aliveUsers,
@@ -270,10 +270,10 @@ export default class Game extends Component {
         return (
             <div>
                 {
-                    this.state.is_alive === true ? 
+                    this.state.is_alive === true ?
                         this.state.gameState === 'Lobby' ?
                             <div className="Lobby">
-                                <h1>SECRET CODE: {this.props.roomID}</h1>
+
                                 <Lobby
                                     users={this.state.users}
                                     currentUser={this.props.currentUser}
@@ -282,24 +282,27 @@ export default class Game extends Component {
                                 />
                                 {this.props.isHost === true ?
                                     <div className="Lobby">
-                                        <button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="i_button">INSTRUCTIONS</button>
+                                        <Button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="instructionsButton">INSTRUCTIONS</Button>
                                         <Instructions
                                             show={this.state.instructionShow}
                                             onHide={() => this.setState({ instructionShow: false })}
                                         />
-                                        <button onClick={() => this.startGame()} className="p_button">START</button>
+                                      <Button onClick={() => this.startGame()} className="startButton">START</Button>
 
                                     </div>
                                     :
                                     <div className="Lobby">
-                                        <button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="i_button">INSTRUCTIONS</button>
+                                        <Button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="instructionsButton">INSTRUCTIONS</Button>
+                                        <Button disabled={() => this.startGame()} className="startButton">STARTING SOON...</Button>
                                         <Instructions
                                             show={this.state.instructionShow}
                                             onHide={() => this.setState({ instructionShow: false })}
                                         />
                                     </div>}
-
-
+                                <div className="secretCodeContainer">
+                                  <p>SECRET CODE:</p>
+                                  <h1>{this.props.roomID}</h1>
+                                </div>
                             </div>
                             :
                             this.state.gameState === 'Nightime' ?
@@ -319,8 +322,8 @@ export default class Game extends Component {
                                         currentUser={this.props.currentUser}
                                         prevVote={this.state.prevVote}
                                         />
-                                
-                                
+
+
                                 :
                                 <UserDayComponent
                                     aliveUsers={this.state.aliveUsers}
@@ -332,8 +335,9 @@ export default class Game extends Component {
                                     gameState={this.state.gameState}
                                 />
                     :
-                    <p>you are dead</p>
-                            
+                    <div className="deadScreenContainer">
+                      <Image className="deadScreen" src="/images/DeadScreen.png"></Image>
+                    </div>
                     }
                 </div>
             );

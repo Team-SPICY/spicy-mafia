@@ -7,7 +7,7 @@ import Image from "react-bootstrap/Image";
 import NarratorDay from './NarratorDay';
 import DayVote from '../Vote/DayVote';
 
-export default class UserDayComponent extends Component {
+class UserDayComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -41,3 +41,4 @@ export default class UserDayComponent extends Component {
         );
     }
 }
+export default UserDayComponent;
