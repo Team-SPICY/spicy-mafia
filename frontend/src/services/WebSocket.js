@@ -75,6 +75,9 @@ class WebSocketService {
         if (command === 'update_trial_votes') {
             this.callbacks[command](parsedData.playername, parsedData.vote);
         }
+        if (command === 'update_alive') {
+            this.callbacks[command](parsedData.mafia_kill, parsedData.nurse_saved, parsedData.successful_investigation, parsedData.alive_users)
+        }
     }
 
     //should only be called in the begining when websocket first opened with new user
@@ -92,12 +95,13 @@ class WebSocketService {
         this.sendMessage({ command: 'new_message', from: message.from, text: message.text });
     }
 
-    addCallbacks(voteCallBack, cycleChangeCallBack, newUserCallBack, disconnectCallBack, roleCallBack, handleAcussed, handleTrialVote) {
+    addCallbacks(voteCallBack, cycleChangeCallBack, newUserCallBack, disconnectCallBack, roleCallBack, aliveCallBack, handleAcussed, handleTrialVote) {
         this.callbacks['cycle_change'] = cycleChangeCallBack;
         this.callbacks['vote'] = voteCallBack;
         this.callbacks['new_user'] = newUserCallBack;
         this.callbacks['leaving'] = disconnectCallBack;
         this.callbacks['set_roles'] = roleCallBack;
+        this.callbacks['update_alive'] = aliveCallBack;
         this.callbacks['update_accused'] = handleAcussed;
         this.callbacks['update_trial_votes'] = handleTrialVote;
     }
