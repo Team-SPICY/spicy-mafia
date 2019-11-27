@@ -27,9 +27,9 @@ class NewsFlash extends Component {
                     <div>
                         {
                             this.props.mafia_kill ?
-                                {this.props.mafia_kill}
+                                <p>{this.props.mafia_kill}</p>
                                 :
-                                {this.props.nurse_saved}
+                                <p>{this.props.nurse_saved}</p>
                         }
                     </div>
                 </Modal.Body>
