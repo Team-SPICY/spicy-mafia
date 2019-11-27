@@ -4,8 +4,8 @@
 /node_modules
 /.pnp
 .pnp.js
-/venv
-/env
+venv/
+env/
 .babelrc
 dump.rdb
 package-lock.json
