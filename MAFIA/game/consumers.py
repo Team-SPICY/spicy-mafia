@@ -360,10 +360,7 @@ class GameConsumer(AsyncWebsocketConsumer):
         'change_cycle': change_cycle,
         'set_roles': set_roles,
         'new_vote': new_vote,
-<<<<<<< HEAD
         'on_accusation': on_accusation,
         'on_trial_vote': on_trial_vote,
-=======
         'resolve_votes': resolve_votes
->>>>>>> front-end
     }
