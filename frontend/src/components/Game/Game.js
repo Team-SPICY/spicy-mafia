@@ -4,7 +4,7 @@ import axios from 'axios'
 import PlayerList from "./PlayerList";
 import Lobby from '../Lobby/Lobby'
 import UserNightComponent from '../UserComponents';
-import UserDayComponent from '../UserComponents';
+import UserDayComponent from '../UserComponents/UserDayComponent';
 import '../UserComponents/Cycles.css'
 
 import { Modal, Button, ListGroup } from 'react-bootstrap'
@@ -36,6 +36,8 @@ export default class Game extends Component {
             flipped: false,
             votedFor: [],
             prevVote: "",
+            accused: '',
+            trialVotes: {},
         };
 
         this.waitForSocketConnection(() => {
@@ -54,7 +56,10 @@ export default class Game extends Component {
                 this.handleCycleChange.bind(this),
                 this.addUser.bind(this),
                 this.disconnect.bind(this),
-                this.setRole.bind(this));
+                this.setRole.bind(this),
+                this.handleAccused.bind(this),
+                this.handleTrialVote.bind(this),
+            )
         });
     }
 
@@ -72,6 +77,20 @@ export default class Game extends Component {
                     component.waitForSocketConnection(callback);
                 }
             }, 100); // wait 100 milisecond for the connection...
+    }
+
+    // TODO: Test!!
+    // set state to new accused
+    handleAccused(accused_name) {
+
+        this.setState({accused: accused_name});
+        console.log(`Accused player: ${accused_name}`);
+    }
+
+    handleTrialVote(playername, vote) {
+        const votesCopy = this.state.trialVotes;
+        votesCopy[playername] = vote;
+        this.setState({trialVotes: votesCopy});
     }
 
     //call back when websocket recieves role
@@ -157,6 +176,7 @@ export default class Game extends Component {
         console.log('vote submmitted');
     }
 
+
     //handle day night cycle change, param state should be the new state to enter
     handleCycleChange(cycle) {
         console.log('cycle change initiated');
@@ -234,8 +254,11 @@ export default class Game extends Component {
                             />
                             :
                             <UserDayComponent
-                                handleVote={this.handleVote}
-                                handleVoteRecieved={this.handleVoteRecieved}
+                                aliveUsers={this.state.aliveUsers}
+                                role={this.state.role}
+                                accused={this.state.accused}
+                                currentUser={this.props.currentUser}
+                                trialVotes={this.state.trialVotes}
                             />
                 }
             </div>

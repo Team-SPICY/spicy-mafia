@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 
 import MafiaVote from '../Vote';
+import NarratorNight from './NarratorNight';
 
 
 export class UserNightComponent extends Component {
@@ -71,7 +72,10 @@ export class UserNightComponent extends Component {
                             prevVote={this.props.prevVote}
                         />
                         :
-                        <p>you are {this.props.role}</p>
+                        this.props.role === 'host' ?
+                        <NarratorNight/>
+                            :
+                            <p>you are {this.props.role}</p>
                 }
             </div>
 

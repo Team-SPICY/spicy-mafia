@@ -88,6 +88,55 @@ class GameConsumer(AsyncWebsocketConsumer):
             }
         )
 
+    async def on_accusation(self, event):
+        accused = event['accused']
+
+        print(f'sending to layer: {accused}')
+
+        await self.channel_layer.group_send(
+            self.room_group_name,
+            {
+                'type': 'update_accused',
+                'accused': accused,
+            }
+        )
+
+    async def update_accused(self, event):
+        accused = event['accused']
+
+        await self.send(text_data=json.dumps({
+            'command': 'update_accused',
+            'accused': accused,
+        }))
+
+    async def on_trial_vote(self, event):
+        
+        playername = event['playername']
+        vote = event['vote']
+
+        print(f'sending to layer: {playername} says {vote}')
+
+        await self.channel_layer.group_send(
+            self.room_group_name,
+            {
+                'type': 'update_trial_votes',
+                'playername': playername,
+                'vote': vote,
+            }
+        )
+
+    async def update_trial_votes(self, event):
+        playername = event['playername']
+        vote = event['vote']
+
+        print(f'sending to users: {playername} says {vote}')
+
+        await self.send(text_data=json.dumps({
+            'command': 'update_trial_votes',
+            'playername': playername,
+            'vote': vote,
+        }))
+
  #broadcast that new vote has been submitted
     async def new_vote(self, event):
         print('new vote :',event)
@@ -242,4 +291,6 @@ class GameConsumer(AsyncWebsocketConsumer):
         'change_cycle': change_cycle,
         'set_roles': set_roles,
         'new_vote': new_vote,
+        'on_accusation': on_accusation,
+        'on_trial_vote': on_trial_vote,
     }
