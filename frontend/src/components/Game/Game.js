@@ -275,17 +275,17 @@ export default class Game extends Component {
                                 />
                                 {this.props.isHost === true ?
                                     <div className="Lobby">
-                                        <button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="instructionsButton">INSTRUCTIONS</button>
+                                        <Button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="instructionsButton">INSTRUCTIONS</Button>
                                         <Instructions
                                             show={this.state.instructionShow}
                                             onHide={() => this.setState({ instructionShow: false })}
                                         />
-                                      <button onClick={() => this.startGame()} className="startButton">START</button>
+                                      <Button onClick={() => this.startGame()} className="startButton">START</Button>
 
                                     </div>
                                     :
                                     <div className="Lobby">
-                                        <button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="instructionsButton">INSTRUCTIONS</button>
+                                        <Button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="instructionsButton">INSTRUCTIONS</Button>
                                         <Button className="startButton" disabled>STARTING SOON...</Button>
                                         <Instructions
                                             show={this.state.instructionShow}
@@ -294,14 +294,14 @@ export default class Game extends Component {
                                     </div>}
                                     <div className="secretCodeContainer">
                                       <p>SECRET CODE:</p>
-                                      <h1> {this.props.roomID}</h1>
+                                      <h1>{this.props.roomID}</h1>
                                     </div>
 
                             </div>
                             :
                             this.state.gameState === 'Nightime' ?
                                 this.props.isHost === true ?
-                                    <button onClick={() => this.resolve_votes()} className="p_button">Change Cycle</button>
+                                    <Button onClick={() => this.resolve_votes()} className="p_button">Change Cycle</Button>
                                     :
                                     <UserNightComponent
                                         mafiaVotes={this.state.mafiaVotes}
