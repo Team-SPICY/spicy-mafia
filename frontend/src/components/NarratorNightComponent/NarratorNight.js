@@ -123,7 +123,7 @@ class NarratorNight extends Component {
                                         {this.renderCivilianStats()}
                                     </ListGroup>
                                 </div>
-                                <button onClick={() => this.props.resolveVotes()} className="p_button">Change Cycle</button>
+                                <button onClick={this.props.resolve_votes} className="p_button">Change Cycle</button>
 
                             </div>
                             <div ref={this.backButton} onClick={this.showFront} >
