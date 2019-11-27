@@ -4,7 +4,7 @@ import axios from 'axios'
 import PlayerList from "./PlayerList";
 import Lobby from '../Lobby/Lobby'
 import UserNightComponent from '../UserComponents';
-import UserDayComponent from '../UserComponents/UserDayComponent';
+import UserDayComponent from '../DayCycle/UserDayComponent';
 import '../UserComponents/Cycles.css'
 
 import { Modal, Button, ListGroup } from 'react-bootstrap'
@@ -14,6 +14,7 @@ import FlipCard from 'react-flipcard';
 import Image from "react-bootstrap/Image";
 import WebSocketInstance from '../../services/WebSocket'
 import Instructions from './Instructions'
+import DayVote from "../Vote/DayVote";
 
 export default class Game extends Component {
     constructor(props) {
@@ -323,6 +324,9 @@ export default class Game extends Component {
                                     accused={this.state.accused}
                                     currentUser={this.props.currentUser}
                                     trialVotes={this.state.trialVotes}
+                                    mafia_kill={this.state.mafia_kill}
+                                    nurse_saved={this.state.nurse_saved}
+                                    sheriff_inv={this.state.successful_investigation}
                                 />
                     :
                     <p>you are dead</p>
