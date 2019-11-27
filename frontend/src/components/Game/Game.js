@@ -37,6 +37,7 @@ export default class Game extends Component {
             flipped: false,
             prevVote: "",
             mafia_kill: false,
+            nurse_saved: false,
             successful_investigation: false,
             is_alive: true
         };
@@ -116,10 +117,10 @@ export default class Game extends Component {
         WebSocketInstance.sendMessage({ 'command': 'change_cycle', 'cycle': this.state.gameState })
     }
 
-    updatePlayers(mafia_kill, successful_investigation, alive_users) {
+    updatePlayers(mafia_kill, nurse_saved, successful_investigation, alive_users) {
         console.log("updating results from previous cycle");
         console.log("new_alive_players ", alive_users);
-        this.setState({ mafia_kill: mafia_kill, successful_investigation: successful_investigation ,aliveUsers: alive_users });
+        this.setState({ mafia_kill: mafia_kill, nurse_saved: nurse_saved, successful_investigation: successful_investigation ,aliveUsers: alive_users });
         if (!(this.props.currentUser in alive_users)) {
             this.setState({is_alive: false})
         }
@@ -215,7 +216,7 @@ export default class Game extends Component {
     handleCycleChange(cycle) {
         console.log('cycle change initiated');
         if (cycle === "Daytime") {
-            this.setState({nurseVotes: [],sheriffVotes: [],mafiaVotes: []})
+            this.setState({nurseVotes: [],sheriffVotes: [],mafiaVotes: [], mafia_kill: false, nurse_saved: false})
         }
         this.setState({ gameState: cycle });
     }

@@ -70,7 +70,7 @@ class WebSocketService {
             this.callbacks[command](parsedData.user);
         }
         if (command === 'update_alive') {
-            this.callbacks[command](parsedData.mafia_kill, parsedData.successful_investigation, parsedData.alive_users)
+            this.callbacks[command](parsedData.mafia_kill, parsedData.nurse_saved, parsedData.successful_investigation, parsedData.alive_users)
         }
     }
 

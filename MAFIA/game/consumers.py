@@ -260,6 +260,7 @@ class GameConsumer(AsyncWebsocketConsumer):
             else:
                 player_to_kill = mafia_votes[0]
             num_civilian = db.child("lobbies").child(self.room_name).child("numOther").get().val()
+            got_killed = {player_to_kill: alive_users[player_to_kill]}
             if nurse_votes[0] != player_to_kill:
                 num_civilian -= 1
                 alive_users.pop(player_to_kill,0)
@@ -268,8 +269,10 @@ class GameConsumer(AsyncWebsocketConsumer):
             data = {'type': 'update_players', 'alive_players': alive_users}
             if length_alive == og_length:
                 data['mafia_kill'] = False
+                data['nurse_saved'] = nurse_votes[0]
             else:
-                data['mafia_kill'] = True
+                data['mafia_kill'] = got_killed
+                data['nurse_saved'] = False
             if list(sheriff_vote.values())[0] == 'mafia':
                 data['successful_investigation'] = True
             else:
