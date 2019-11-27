@@ -267,6 +267,7 @@ export default class Game extends Component {
                     this.state.is_alive === true ?
                         this.state.gameState === 'Lobby' ?
                             <div className="Lobby">
+
                                 <Lobby
                                     users={this.state.users}
                                     currentUser={this.props.currentUser}
@@ -286,22 +287,21 @@ export default class Game extends Component {
                                     :
                                     <div className="Lobby">
                                         <Button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="instructionsButton">INSTRUCTIONS</Button>
-                                        <Button className="startButton" disabled>STARTING SOON...</Button>
+                                        <Button onClick={() => this.startGame()} className="startButton">START</Button>
                                         <Instructions
                                             show={this.state.instructionShow}
                                             onHide={() => this.setState({ instructionShow: false })}
                                         />
                                     </div>}
-                                    <div className="secretCodeContainer">
-                                      <p>SECRET CODE:</p>
-                                      <h1>{this.props.roomID}</h1>
-                                    </div>
-
+                                <div className="secretCodeContainer">
+                                  <p>SECRET CODE:</p>
+                                  <h1>{this.props.roomID}</h1>
+                                </div>
                             </div>
                             :
                             this.state.gameState === 'Nightime' ?
                                 this.props.isHost === true ?
-                                    <Button onClick={() => this.resolve_votes()} className="p_button">Change Cycle</Button>
+                                    <button onClick={() => this.resolve_votes()} className="p_button">Change Cycle</button>
                                     :
                                     <UserNightComponent
                                         mafiaVotes={this.state.mafiaVotes}
@@ -327,7 +327,7 @@ export default class Game extends Component {
                                     trialVotes={this.state.trialVotes}
                                 />
                     :
-                    <p>you are dead</p>
+                    <Image src="/images/DeadScreen.png"></Image>
 
                     }
                 </div>
