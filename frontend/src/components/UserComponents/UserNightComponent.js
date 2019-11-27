@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
 
-import MafiaVote from '../Vote';
+import Vote from '../Vote';
+
 
 
 export class UserNightComponent extends Component {
@@ -26,20 +27,20 @@ export class UserNightComponent extends Component {
     setBackground() {
         console.log('setting role: ', this.props.role)
         const role = this.props.role;
-        if (role === 'Civilian') {
+        if (role === 'civilian') {
             this.setState({ backgroundSrc: "/images/CivilianCard.png", description: this.state.CivilianDescription });
         }
-        else if (role === 'Sheriff') {
+        else if (role === 'sheriff') {
             this.setState({ backgroundSrc: "/images/SheriffCard.png", description: this.state.SheriffDescription });
         }
-        else if (role === 'Nurse') {
+        else if (role === 'nurse') {
             this.setState({ backgroundSrc: "/images/NurseCard.png", description: this.state.NurseDescription });
 
         }
         else {
             this.setState({ backgroundSrc: "/images/card.png", description: this.state.MafiaDescription });
         }
-        console.log('setting role: ', role, this.state.description)
+        console.log('set descriptions ', this.state.description)
 
     }
 
@@ -56,23 +57,18 @@ export class UserNightComponent extends Component {
     render() {
         return (
             <div>
-                {
-                    this.props.role === 'mafia' ?
-                        <MafiaVote
-                            backgroundSrc={this.state.backgroundSrc}
-                            votedFor={this.props.votedFor}
-                            role={this.props.role}
-                            handleVote={this.props.handleVote}
-                            handleQuizVote={this.props.handleQuizVote}
-                            handleVoteRecieved={this.props.handleVoteRecieved}
-                            aliveUsers={this.props.aliveUsers}
-                            mafiosos={this.props.mafiosos}
-                            currentUser={this.props.currentUser}
-                            prevVote={this.props.prevVote}
-                        />
-                        :
-                        <p>you are {this.props.role}</p>
-                }
+                <Vote
+                    backgroundSrc={this.state.backgroundSrc}
+                    mafiaVotes={this.props.mafiaVotes}
+                    sheriffVotes={this.props.sheriffVotes}
+                    nurseVotes={this.props.nurseVotes}
+                    role={this.props.role}
+                    handleVote={this.props.handleVote}
+                    handleQuizVote={this.props.handleQuizVote}
+                    aliveUsers={this.props.aliveUsers}
+                    currentUser={this.props.currentUser}
+                    prevVote={this.props.prevVote}
+                />
             </div>
 
         );

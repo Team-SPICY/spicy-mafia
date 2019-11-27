@@ -69,6 +69,9 @@ class WebSocketService {
         if (command === 'leaving') {
             this.callbacks[command](parsedData.user);
         }
+        if (command === 'update_alive') {
+            this.callbacks[command](parsedData.mafia_kill, parsedData.nurse_saved, parsedData.successful_investigation, parsedData.alive_users)
+        }
     }
 
     //should only be called in the begining when websocket first opened with new user
@@ -86,12 +89,13 @@ class WebSocketService {
         this.sendMessage({ command: 'new_message', from: message.from, text: message.text });
     }
 
-    addCallbacks(voteCallBack, cycleChangeCallBack, newUserCallBack, disconnectCallBack, roleCallBack) {
+    addCallbacks(voteCallBack, cycleChangeCallBack, newUserCallBack, disconnectCallBack, roleCallBack, aliveCallBack) {
         this.callbacks['cycle_change'] = cycleChangeCallBack;
         this.callbacks['vote'] = voteCallBack;
         this.callbacks['new_user'] = newUserCallBack;
         this.callbacks['leaving'] = disconnectCallBack;
         this.callbacks['set_roles'] = roleCallBack;
+        this.callbacks['update_alive'] = aliveCallBack;
     }
     //send data to websocket in consumers.py
     sendMessage(data) {
