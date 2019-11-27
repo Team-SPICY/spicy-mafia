@@ -4,7 +4,7 @@ import axios from 'axios'
 import PlayerList from "./PlayerList";
 import Lobby from '../Lobby/Lobby'
 import UserNightComponent from '../UserComponents';
-import UserDayComponent from '../UserComponents';
+import UserDayComponent from '../UserComponents/UserDayComponent';
 import '../UserComponents/Cycles.css'
 
 import { Modal, Button, ListGroup } from 'react-bootstrap'
@@ -37,6 +37,8 @@ export default class Game extends Component {
             isHost: false,
             flipped: false,
             prevVote: "",
+            accused: '',
+            trialVotes: {},
             mafia_kill: false,
             nurse_saved: false,
             successful_investigation: false,
@@ -60,7 +62,10 @@ export default class Game extends Component {
                 this.addUser.bind(this),
                 this.disconnect.bind(this),
                 this.setRole.bind(this),
-                this.updatePlayers.bind(this));
+                this.updatePlayers.bind(this),
+                this.handleAccused.bind(this),
+                this.handleTrialVote.bind(this),
+                );
         });
     }
 
@@ -78,6 +83,20 @@ export default class Game extends Component {
                     component.waitForSocketConnection(callback);
                 }
             }, 100); // wait 100 milisecond for the connection...
+    }
+
+    // TODO: Test!!
+    // set state to new accused
+    handleAccused(accused_name) {
+
+        this.setState({accused: accused_name});
+        console.log(`Accused player: ${accused_name}`);
+    }
+
+    handleTrialVote(playername, vote) {
+        const votesCopy = this.state.trialVotes;
+        votesCopy[playername] = vote;
+        this.setState({trialVotes: votesCopy});
     }
 
     //call back when websocket recieves role
@@ -104,7 +123,7 @@ export default class Game extends Component {
 
     resolve_votes() {
         if (this.state.gameState === "Nightime") {
-            WebSocketInstance.sendMessage({ 'command': 'resolve_votes', 
+            WebSocketInstance.sendMessage({ 'command': 'resolve_votes',
                                             'cycle': this.state.gameState,
                                             'role': this.state.role,
                                             'alive_users': this.state.aliveUsers,
@@ -213,6 +232,7 @@ export default class Game extends Component {
         console.log('vote submmitted');
     }
 
+
     //handle day night cycle change, param state should be the new state to enter
     handleCycleChange(cycle) {
         console.log('cycle change initiated');
@@ -245,7 +265,7 @@ export default class Game extends Component {
         return (
             <div>
                 {
-                    this.state.is_alive === true ? 
+                    this.state.is_alive === true ?
                         this.state.gameState === 'Lobby' ?
                             <div className="Lobby">
                                 <h1>SECRET CODE: {this.props.roomID}</h1>
@@ -294,22 +314,19 @@ export default class Game extends Component {
                                         currentUser={this.props.currentUser}
                                         prevVote={this.state.prevVote}
                                         />
-                                
-                                
-                                :
-                                this.props.isHost === true ?
-                                <button onClick={() => WebSocketInstance.sendMessage({ 'command': 'change_cycle', 'cycle': this.state.gameState })} className="p_button">Change Cycle</button>
+
+
                                 :
                                 <UserDayComponent
-                                    handleVote={this.handleVote}
-                                    handleVoteRecieved={this.handleVoteRecieved}
-                                    mafia_kill = {this.state.mafia_kill}
-                                    nurse_saved ={this.state.nurse_saved}
-                                    sheriff_inv = {this.state.successful_investigation}
+                                    aliveUsers={this.state.aliveUsers}
+                                    role={this.state.role}
+                                    accused={this.state.accused}
+                                    currentUser={this.props.currentUser}
+                                    trialVotes={this.state.trialVotes}
                                 />
                     :
                     <p>you are dead</p>
-                            
+
                     }
                 </div>
             );

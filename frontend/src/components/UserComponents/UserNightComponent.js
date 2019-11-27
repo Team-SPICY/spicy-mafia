@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 import Vote from '../Vote';
 
-
+import NarratorNight from './NarratorNight';
 
 export class UserNightComponent extends Component {
     constructor(props) {
@@ -57,18 +57,23 @@ export class UserNightComponent extends Component {
     render() {
         return (
             <div>
-                <Vote
-                    backgroundSrc={this.state.backgroundSrc}
-                    mafiaVotes={this.props.mafiaVotes}
-                    sheriffVotes={this.props.sheriffVotes}
-                    nurseVotes={this.props.nurseVotes}
-                    role={this.props.role}
-                    handleVote={this.props.handleVote}
-                    handleQuizVote={this.props.handleQuizVote}
-                    aliveUsers={this.props.aliveUsers}
-                    currentUser={this.props.currentUser}
-                    prevVote={this.props.prevVote}
-                />
+                {
+                    this.props.role !== 'host' ?
+                        <Vote
+                            backgroundSrc={this.state.backgroundSrc}
+                            mafiaVotes={this.props.mafiaVotes}
+                            sheriffVotes={this.props.sheriffVotes}
+                            nurseVotes={this.props.nurseVotes}
+                            role={this.props.role}
+                            handleVote={this.props.handleVote}
+                            handleQuizVote={this.props.handleQuizVote}
+                            aliveUsers={this.props.aliveUsers}
+                            currentUser={this.props.currentUser}
+                            prevVote={this.props.prevVote}
+                        />
+                        :
+                        <NarratorNight/>
+                }
             </div>
 
         );
