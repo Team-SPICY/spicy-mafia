@@ -4,6 +4,7 @@ import './Cycles.css';
 import FlipCard from 'react-flipcard';
 import Image from "react-bootstrap/Image";
 import WebSocketInstance from '../../services/WebSocket'
+import NewsFlash from "./NewsFlash"
 
 export default class UserDayComponent extends Component {
     constructor(props) {
@@ -16,7 +17,7 @@ export default class UserDayComponent extends Component {
     render() {
         return (
             <div className={"Daytime"}>
-                Day card
+
             </div>
         );
     }

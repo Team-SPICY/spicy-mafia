@@ -25,6 +25,7 @@ export default class Game extends Component {
         this.state = {
             users: [],
             //update alive users after a gameState change(someone is killed/executed)
+
             aliveUsers: {},
             nurseVotes: [],
             sheriffVotes: [],
@@ -302,6 +303,9 @@ export default class Game extends Component {
                                 <UserDayComponent
                                     handleVote={this.handleVote}
                                     handleVoteRecieved={this.handleVoteRecieved}
+                                    mafia_kill = {this.state.mafia_kill}
+                                    nurse_saved ={this.state.nurse_saved}
+                                    sheriff_inv = {this.state.successful_investigation}
                                 />
                     :
                     <p>you are dead</p>
