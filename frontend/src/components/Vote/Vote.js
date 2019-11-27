@@ -9,6 +9,7 @@ import Image from "react-bootstrap/Image";
 class Vote extends Component {
     constructor(props) {
         super(props);
+        console.log('in votejs');
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleOnFlip = this.handleOnFlip.bind(this);
         this.showFront = this.showFront.bind(this);
@@ -40,7 +41,21 @@ class Vote extends Component {
             this.showFront();
         }
     }
-    //Render votes based on users role
+
+    renderMafiaVotes = (user) => {
+        console.log('mafia votes: ', this.props.mafiaVotes);
+        //TODO use civilian users
+        var votes = 0;
+        const voted_for = this.props.mafiaVotes;
+        voted_for.forEach(function (element) {
+            if (element === user) {
+                votes++;
+            }
+        });
+        console.log('votes for user: ', user, votes)
+        return votes;
+    }
+
     renderVotes = (user) => {
         var voted_for;
         if (this.props.role === 'sheriff') {
@@ -52,6 +67,7 @@ class Vote extends Component {
         else (
             voted_for = this.props.nurseVotes
         )
+        //TODO use civilian users
         var votes = 0;
         voted_for.forEach(function (element) {
             if (element === user) {
@@ -61,7 +77,6 @@ class Vote extends Component {
         console.log('votes for user: ', user, votes)
         return votes;
     }
-    //render mafia members without clickable activity so mafia do not click on themselves
     renderMafia = () => {
         const currentUser = this.props.currentUser;
         const aliveUsers = this.props.aliveUsers;
@@ -163,12 +178,7 @@ class Vote extends Component {
                                             }
                                         </ul>
                                         :
-                                        null
-                                    }
-                                    {this.props.role === 'civilian' ?
                                         <p>You are a civilian</p>
-                                        :
-                                        <p>you are a host</p>
                                     }
 
                                     <img src={this.props.backgroundSrc} width={" "} height={"600"} />
@@ -181,5 +191,4 @@ class Vote extends Component {
         );
     }
 }
-
 export default Vote;
