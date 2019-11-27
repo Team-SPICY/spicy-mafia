@@ -287,7 +287,7 @@ export default class Game extends Component {
                                     :
                                     <div className="Lobby">
                                         <Button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="instructionsButton">INSTRUCTIONS</Button>
-                                        <Button onClick={() => this.startGame()} className="startButton">START</Button>
+                                        <Button disabled={() => this.startGame()} className="startButton">STARTING SOON...</Button>
                                         <Instructions
                                             show={this.state.instructionShow}
                                             onHide={() => this.setState({ instructionShow: false })}
