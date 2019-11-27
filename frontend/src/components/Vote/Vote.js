@@ -146,7 +146,7 @@ class Vote extends Component {
                                 onKeyDown={this.handleKeyDown}
                             >
                                 <div onClick={this.showBack} >
-                                    <img src={this.props.backgroundSrc} width={" "} height={"600"} />
+                                    <img src="/images/CardBack.png" width={" "} height={"600"} />
                                 </div>
                                 <div ref={this.backButton} onClick={this.showFront} >
                                     {

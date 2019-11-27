@@ -36,7 +36,7 @@ class UserNightComponent extends Component {
 
         }
         else if (role === 'mafia') {
-            this.setState({ backgroundSrc: "/images/card.png", description: this.state.MafiaDescription });
+            this.setState({ backgroundSrc: "/images/MafiaCard.png", description: this.state.MafiaDescription });
 
         }
         else {

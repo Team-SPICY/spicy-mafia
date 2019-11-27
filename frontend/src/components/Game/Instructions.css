@@ -1,0 +1,105 @@
+
+.instructionsContainer{
+  align-self: center;
+}
+.flex-column{
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  background: transparent;
+}
+.instructionsNavItem{
+
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: white;
+  font-weight: bold;
+  background: gray;
+  text-align: center;
+}
+
+.instructionsPane{
+  background: transparent;
+}
+.instructionsPane li{
+  color:white;
+}
+.Col1{
+  background: linear-gradient(180deg, rgba(99,99,99,1) 52%,
+    rgba(99,99,99,1) 76%, rgba(82,81,81,1) 100%);
+}
+.Col2{
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+  background: linear-gradient(180deg, rgba(99,99,99,1) 52%,
+    rgba(99,99,99,1) 76%, rgba(82,81,81,1) 100%);
+}
+
+.instructionsHeader{
+  background: gray;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+
+
+}
+
+.instructionsHeader Button{
+  color: white;
+
+
+}
+.instructionsTitle{
+  padding-top: 30px;
+  font-weight: bold;
+  font-size: 20px;
+}
+.instructionsFooter{
+  background: gray;
+}
+.instructionsFooter Button{
+
+  color: white;
+  font-weight: bold;
+  padding: 1px 10px 10px 10px;
+  margin: 20px 20px 10px 20px;
+  border-radius: 12px;
+}
+
+.instructionsFooter Button{
+  margin-top: 10px;
+  /* margin-right: 100px;
+  margin-left: 100px;
+  align-self: center; */
+  padding: 12px;
+  width: 200px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: white;
+  background: rgb(144,142,142);
+  background: linear-gradient(180deg, rgba(144,142,142,1) 26%, rgba(102,101,101,1) 63%, rgba(66,66,66,1) 100%);
+  border: none;
+  border-radius: 14px;
+  /* box-shadow: 0 5px #919191; */
+  box-shadow: 0px 10px 10px 5px rgba(0, 0, 0, 0.05);
+
+}
+
+
+.instructionsFooter Button:active {
+  color: rgb(182,33,15);
+  color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%,
+    rgba(52,2,2,1) 100%);
+  background: gray;
+  transform: scale(1);
+}
+.instructionsFooter Button:hover {
+  background: -webkit-linear-gradient(#861704, #9f3a14);
+
+  background-color: white;
+}

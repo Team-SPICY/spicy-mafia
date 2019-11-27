@@ -119,8 +119,12 @@ export default class Game extends Component {
 
     resolve_votes() {
         if (this.state.gameState === "Nightime") {
+<<<<<<< HEAD
 
             WebSocketInstance.sendMessage({ 'command': 'resolve_votes', 
+=======
+            WebSocketInstance.sendMessage({ 'command': 'resolve_votes',
+>>>>>>> refs/heads/thuc-branch
                                             'cycle': this.state.gameState,
                                             'role': this.state.role,
                                             'alive_users': this.state.aliveUsers,
@@ -262,11 +266,15 @@ export default class Game extends Component {
         return (
             <div>
                 {
+<<<<<<< HEAD
 
                     this.state.is_alive === true ? 
+=======
+                    this.state.is_alive === true ?
+>>>>>>> refs/heads/thuc-branch
                         this.state.gameState === 'Lobby' ?
                             <div className="Lobby">
-                                <h1>SECRET CODE: {this.props.roomID}</h1>
+
                                 <Lobby
                                     users={this.state.users}
                                     currentUser={this.props.currentUser}
@@ -275,24 +283,27 @@ export default class Game extends Component {
                                 />
                                 {this.props.isHost === true ?
                                     <div className="Lobby">
-                                        <button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="i_button">INSTRUCTIONS</button>
+                                        <Button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="instructionsButton">INSTRUCTIONS</Button>
                                         <Instructions
                                             show={this.state.instructionShow}
                                             onHide={() => this.setState({ instructionShow: false })}
                                         />
-                                        <button onClick={() => this.startGame()} className="p_button">START</button>
+                                      <Button onClick={() => this.startGame()} className="startButton">START</Button>
 
                                     </div>
                                     :
                                     <div className="Lobby">
-                                        <button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="i_button">INSTRUCTIONS</button>
+                                        <Button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="instructionsButton">INSTRUCTIONS</Button>
+                                        <Button onClick={() => this.startGame()} className="startButton">START</Button>
                                         <Instructions
                                             show={this.state.instructionShow}
                                             onHide={() => this.setState({ instructionShow: false })}
                                         />
                                     </div>}
-
-
+                                <div className="secretCodeContainer">
+                                  <p>SECRET CODE:</p>
+                                  <h1>{this.props.roomID}</h1>
+                                </div>
                             </div>
                             :
                             this.state.gameState === 'Nightime' ?
@@ -317,12 +328,33 @@ export default class Game extends Component {
                                 this.props.isHost === true ?
                                     <button onClick={() => WebSocketInstance.sendMessage({ 'command': 'change_cycle', 'cycle': this.state.gameState })} className="p_button">Change Cycle</button>
                                     :
+<<<<<<< HEAD
                                     <UserDayComponent
+=======
+                                    <UserNightComponent
+                                        mafiaVotes={this.state.mafiaVotes}
+                                        nurseVotes={this.state.nurseVotes}
+                                        sheriffVotes={this.state.sheriffVotes}
+                                        role={this.state.role}
+                                        handleVote={this.handleVote}
+                                        handleQuizVote={this.handleQuizVote}
+                                        handleSpecialAbility={this.handleSpecialAbility}
+                                        handleCycleChange={this.handleCycleChange}
+                                        aliveUsers={this.state.aliveUsers}
+                                        currentUser={this.props.currentUser}
+                                        prevVote={this.state.prevVote}
+                                        />
+
+
+                                :
+                                <UserDayComponent
+>>>>>>> refs/heads/thuc-branch
                                     aliveUsers={this.state.aliveUsers}
                                     role={this.state.role}
                                     accused={this.state.accused}
                                     currentUser={this.props.currentUser}
                                     trialVotes={this.state.trialVotes}
+<<<<<<< HEAD
                                     />
                         :
                         <p>you are dead</p>
@@ -332,4 +364,14 @@ export default class Game extends Component {
         );
     }
 
+=======
+                                />
+                    :
+                    <Image src="/images/DeadScreen.png"></Image>
+
+                    }
+                </div>
+            );
+        }
+>>>>>>> refs/heads/thuc-branch
 }
