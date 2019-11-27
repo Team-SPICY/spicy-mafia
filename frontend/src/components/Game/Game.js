@@ -3,9 +3,9 @@ import './Game.css';
 import axios from 'axios'
 import PlayerList from "./PlayerList";
 import Lobby from '../Lobby/Lobby'
-import UserNightComponent from '../UserComponents';
-import UserDayComponent from '../UserComponents/UserDayComponent';
-import '../UserComponents/Cycles.css'
+import UserNightComponent from '../UserNightComponent';
+import UserDayComponent from '../UserDayComponent';
+import '../UserDayComponent/Cycles.css'
 
 import { Modal, Button, ListGroup } from 'react-bootstrap'
 
@@ -21,7 +21,8 @@ export default class Game extends Component {
         //bind handle vot function
         this.handleVoteRecieved = this.handleVoteRecieved.bind(this);
         this.handleVote = this.handleVote.bind(this);
-
+        this.startGame = this.startGame.bind(this);
+        this.resolve_votes = this.resolve_votes.bind(this);
         this.state = {
             users: [],
             //update alive users after a gameState change(someone is killed/executed)
@@ -29,6 +30,7 @@ export default class Game extends Component {
             nurseVotes: [],
             sheriffVotes: [],
             mafiaVotes: [],
+            civilianVotes: [],
             playersShow: false,
             gameState: 'Lobby',
             //isHost: false,
@@ -64,7 +66,7 @@ export default class Game extends Component {
                 this.updatePlayers.bind(this),
                 this.handleAccused.bind(this),
                 this.handleTrialVote.bind(this),
-                );
+            );
         });
     }
 
@@ -88,14 +90,14 @@ export default class Game extends Component {
     // set state to new accused
     handleAccused(accused_name) {
 
-        this.setState({accused: accused_name});
+        this.setState({ accused: accused_name });
         console.log(`Accused player: ${accused_name}`);
     }
 
     handleTrialVote(playername, vote) {
         const votesCopy = this.state.trialVotes;
         votesCopy[playername] = vote;
-        this.setState({trialVotes: votesCopy});
+        this.setState({ trialVotes: votesCopy });
     }
 
     //call back when websocket recieves role
@@ -122,13 +124,15 @@ export default class Game extends Component {
 
     resolve_votes() {
         if (this.state.gameState === "Nightime") {
-            WebSocketInstance.sendMessage({ 'command': 'resolve_votes',
-                                            'cycle': this.state.gameState,
-                                            'role': this.state.role,
-                                            'alive_users': this.state.aliveUsers,
-                                            'mafia_votes': this.state.mafiaVotes,
-                                            'sheriff_votes': this.state.sheriffVotes,
-                                            'nurse_votes': this.state.nurseVotes})
+            WebSocketInstance.sendMessage({
+                'command': 'resolve_votes',
+                'cycle': this.state.gameState,
+                'role': this.state.role,
+                'alive_users': this.state.aliveUsers,
+                'mafia_votes': this.state.mafiaVotes,
+                'sheriff_votes': this.state.sheriffVotes,
+                'nurse_votes': this.state.nurseVotes
+            })
         }
         else { //game state will be Daytime
             console.log('under construction')
@@ -139,9 +143,9 @@ export default class Game extends Component {
     updatePlayers(mafia_kill, nurse_saved, successful_investigation, alive_users) {
         console.log("updating results from previous cycle");
         console.log("new_alive_players ", alive_users);
-        this.setState({ mafia_kill: mafia_kill, nurse_saved: nurse_saved, successful_investigation: successful_investigation ,aliveUsers: alive_users });
+        this.setState({ mafia_kill: mafia_kill, nurse_saved: nurse_saved, successful_investigation: successful_investigation, aliveUsers: alive_users });
         if (!(this.props.currentUser in alive_users)) {
-            this.setState({is_alive: false})
+            this.setState({ is_alive: false })
         }
     }
 
@@ -236,7 +240,7 @@ export default class Game extends Component {
     handleCycleChange(cycle) {
         console.log('cycle change initiated');
         if (cycle === "Daytime") {
-            this.setState({nurseVotes: [],sheriffVotes: [],mafiaVotes: [], mafia_kill: false, nurse_saved: false})
+            this.setState({ nurseVotes: [], sheriffVotes: [], mafiaVotes: [], mafia_kill: false, nurse_saved: false })
         }
         this.setState({ gameState: cycle });
     }
@@ -256,7 +260,6 @@ export default class Game extends Component {
         if (user !== this.props.currentUser) {
             this.setState({ users: [...this.state.users, user] });
             console.log('adding user to state: ', user, this.state.users);
-
         }
     }
 
@@ -266,58 +269,35 @@ export default class Game extends Component {
                 {
                     this.state.is_alive === true ?
                         this.state.gameState === 'Lobby' ?
-                            <div className="Lobby">
-
+                            <div>
                                 <Lobby
                                     users={this.state.users}
                                     currentUser={this.props.currentUser}
-                                    show={this.state.playersShow}
-                                    onHide={() => this.setState({ playersShow: false })}
+                                    isHost={this.props.isHost}
+                                    roomID={this.props.roomID}
+                                    startGame={this.startGame}
                                 />
-                                {this.props.isHost === true ?
-                                    <div className="Lobby">
-                                        <Button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="instructionsButton">INSTRUCTIONS</Button>
-                                        <Instructions
-                                            show={this.state.instructionShow}
-                                            onHide={() => this.setState({ instructionShow: false })}
-                                        />
-                                      <Button onClick={() => this.startGame()} className="startButton">START</Button>
-
-                                    </div>
-                                    :
-                                    <div className="Lobby">
-                                        <Button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="instructionsButton">INSTRUCTIONS</Button>
-                                        <Button onClick={() => this.startGame()} className="startButton">START</Button>
-                                        <Instructions
-                                            show={this.state.instructionShow}
-                                            onHide={() => this.setState({ instructionShow: false })}
-                                        />
-                                    </div>}
-                                <div className="secretCodeContainer">
-                                  <p>SECRET CODE:</p>
-                                  <h1>{this.props.roomID}</h1>
+                                <div className="numPlayersContainer">
+                                    <p>{this.state.users.length} SUSPECT(S)</p>
                                 </div>
                             </div>
                             :
                             this.state.gameState === 'Nightime' ?
-                                this.props.isHost === true ?
-                                    <button onClick={() => this.resolve_votes()} className="p_button">Change Cycle</button>
-                                    :
-                                    <UserNightComponent
-                                        mafiaVotes={this.state.mafiaVotes}
-                                        nurseVotes={this.state.nurseVotes}
-                                        sheriffVotes={this.state.sheriffVotes}
-                                        role={this.state.role}
-                                        handleVote={this.handleVote}
-                                        handleQuizVote={this.handleQuizVote}
-                                        handleSpecialAbility={this.handleSpecialAbility}
-                                        handleCycleChange={this.handleCycleChange}
-                                        aliveUsers={this.state.aliveUsers}
-                                        currentUser={this.props.currentUser}
-                                        prevVote={this.state.prevVote}
-                                        />
-
-
+                                <UserNightComponent
+                                    mafiaVotes={this.state.mafiaVotes}
+                                    civilianVotes={this.state.civilianVotes}
+                                    nurseVotes={this.state.nurseVotes}
+                                    sheriffVotes={this.state.sheriffVotes}
+                                    role={this.state.role}
+                                    handleVote={this.handleVote}
+                                    handleQuizVote={this.handleQuizVote}
+                                    handleSpecialAbility={this.handleSpecialAbility}
+                                    handleCycleChange={this.handleCycleChange}
+                                    aliveUsers={this.state.aliveUsers}
+                                    currentUser={this.props.currentUser}
+                                    prevVote={this.state.prevVote}
+                                    resolve_votes={this.resolve_votes}
+                                />
                                 :
                                 <UserDayComponent
                                     aliveUsers={this.state.aliveUsers}
@@ -326,12 +306,12 @@ export default class Game extends Component {
                                     currentUser={this.props.currentUser}
                                     trialVotes={this.state.trialVotes}
                                 />
-                    :
-                    <div className="deadScreenContainer">
-                      <Image className="deadScreen" src="/images/DeadScreen.png"></Image>
-                    </div>
-                    }
-                </div>
-            );
-        }
+                        :
+                        <div className="deadScreenContainer">
+                            <Image className="deadScreen" src="/images/DeadScreen.png"></Image>
+                        </div>
+                }
+            </div>
+        );
+    }
 }
