@@ -42,7 +42,7 @@ class UserNightComponent extends Component {
         else {
             this.setState({ backgroundSrc: "/images/card.png", description: this.state.HostDescription });
         }
-        console.log('setting role: ', role, this.state.description)
+        console.log('set descriptions ', this.state.description)
 
     }
 
@@ -83,10 +83,9 @@ class UserNightComponent extends Component {
                         currentUser={this.props.currentUser}
                         prevVote={this.props.prevVote}
                     />
+
                 }
             </div>
-
-
         );
     }
 }

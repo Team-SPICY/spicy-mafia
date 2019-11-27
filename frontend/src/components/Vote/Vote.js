@@ -9,7 +9,7 @@ import Image from "react-bootstrap/Image";
 class Vote extends Component {
     constructor(props) {
         super(props);
-        console.log('in votejs');
+
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleOnFlip = this.handleOnFlip.bind(this);
         this.showFront = this.showFront.bind(this);
@@ -106,6 +106,7 @@ class Vote extends Component {
     }
 
     //renders users who are not mafia so that mafia can vote on these users
+
     renderNonMafiaUsers = () => {
         var users = [];
         const currentUser = this.props.currentUser;
@@ -191,4 +192,5 @@ class Vote extends Component {
         );
     }
 }
+
 export default Vote;
