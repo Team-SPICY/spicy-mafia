@@ -6,11 +6,8 @@ import Lobby from '../Lobby/Lobby'
 import UserNightComponent from '../UserComponents';
 import UserDayComponent from '../UserComponents/UserDayComponent';
 import '../UserComponents/Cycles.css'
-
 import { Modal, Button, ListGroup } from 'react-bootstrap'
-
 import FlipCard from 'react-flipcard';
-
 import Image from "react-bootstrap/Image";
 import WebSocketInstance from '../../services/WebSocket'
 import Instructions from './Instructions'
@@ -27,13 +24,13 @@ export default class Game extends Component {
             //update alive users after a gameState change(someone is killed/executed)
             aliveUsers: {},
             nurseVotes: [],
+            civilianVotes: [],
             sheriffVotes: [],
             mafiaVotes: [],
+            isHost: false,
             playersShow: false,
             gameState: 'Lobby',
-            //isHost: false,
             role: 'civilian',
-            isHost: false,
             flipped: false,
             prevVote: "",
             accused: '',
@@ -122,6 +119,7 @@ export default class Game extends Component {
 
     resolve_votes() {
         if (this.state.gameState === "Nightime") {
+
             WebSocketInstance.sendMessage({ 'command': 'resolve_votes', 
                                             'cycle': this.state.gameState,
                                             'role': this.state.role,
@@ -264,6 +262,7 @@ export default class Game extends Component {
         return (
             <div>
                 {
+
                     this.state.is_alive === true ? 
                         this.state.gameState === 'Lobby' ?
                             <div className="Lobby">
@@ -297,37 +296,40 @@ export default class Game extends Component {
                             </div>
                             :
                             this.state.gameState === 'Nightime' ?
-                                this.props.isHost === true ?
-                                    <button onClick={() => this.resolve_votes()} className="p_button">Change Cycle</button>
-                                    :
-                                    <UserNightComponent
-                                        mafiaVotes={this.state.mafiaVotes}
-                                        nurseVotes={this.state.nurseVotes}
-                                        sheriffVotes={this.state.sheriffVotes}
-                                        role={this.state.role}
-                                        handleVote={this.handleVote}
-                                        handleQuizVote={this.handleQuizVote}
-                                        handleSpecialAbility={this.handleSpecialAbility}
-                                        handleCycleChange={this.handleCycleChange}
-                                        aliveUsers={this.state.aliveUsers}
-                                        currentUser={this.props.currentUser}
-                                        prevVote={this.state.prevVote}
-                                        />
-                                
-                                
+                                <UserNightComponent
+                                    mafiaVotes={this.state.mafiaVotes}
+                                    nurseVotes={this.state.nurseVotes}
+                                    sheriffVotes={this.state.sheriffVotes}
+                                    civilianVotes={this.state.civilianVotes}
+                                    role={this.state.role}
+                                    handleVote={this.handleVote}
+                                    handleQuizVote={this.handleQuizVote}
+                                    handleSpecialAbility={this.handleSpecialAbility}
+                                    handleCycleChange={this.handleCycleChange}
+                                    aliveUsers={this.state.aliveUsers}
+                                    currentUser={this.props.currentUser}
+                                    prevVote={this.state.prevVote}
+                                    isHost={this.state.isHost}
+                                    resolveVotes={this.resolve_votes}
+                                    users={this.props.users}
+                                />
                                 :
-                                <UserDayComponent
+                                this.props.isHost === true ?
+                                    <button onClick={() => WebSocketInstance.sendMessage({ 'command': 'change_cycle', 'cycle': this.state.gameState })} className="p_button">Change Cycle</button>
+                                    :
+                                    <UserDayComponent
                                     aliveUsers={this.state.aliveUsers}
                                     role={this.state.role}
                                     accused={this.state.accused}
                                     currentUser={this.props.currentUser}
                                     trialVotes={this.state.trialVotes}
-                                />
-                    :
-                    <p>you are dead</p>
-                            
-                    }
-                </div>
-            );
-        }
+                                    />
+                        :
+                        <p>you are dead</p>
+
+                }
+            </div>
+        );
+    }
+
 }

@@ -58,6 +58,7 @@ class LobbyViewSet(viewsets.ViewSet):
                 17: 'Which player is most likely to put a horse head in your bed?', 
                 18: 'Which player is most likely to actually use bubble sort?', 
                 19: 'Which player is most likely to push their code before testing it?'}
+        
         lobby_keys = db.child('lobbies').shallow().get().val()
         all_chars = string.ascii_letters + string.digits
         id = ''
@@ -101,7 +102,7 @@ class LobbyViewSet(viewsets.ViewSet):
                 data = {'isActive': True}
                 db.child('lobbies').child(pk).update(data)
                 return Response({"game_activated": True})
-    
+
     def delete(self, request, pk=None):
         if not pk:
             #raise/return some exception here, please just dont call this

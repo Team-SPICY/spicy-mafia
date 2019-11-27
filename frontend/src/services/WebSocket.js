@@ -69,6 +69,7 @@ class WebSocketService {
         if (command === 'leaving') {
             this.callbacks[command](parsedData.user);
         }
+
         if (command === 'update_accused') {
             this.callbacks[command](parsedData.accused);
         }
@@ -94,6 +95,7 @@ class WebSocketService {
     newChatMessage(message) {
         this.sendMessage({ command: 'new_message', from: message.from, text: message.text });
     }
+
 
     addCallbacks(voteCallBack, cycleChangeCallBack, newUserCallBack, disconnectCallBack, roleCallBack, aliveCallBack, handleAcussed, handleTrialVote) {
         this.callbacks['cycle_change'] = cycleChangeCallBack;
