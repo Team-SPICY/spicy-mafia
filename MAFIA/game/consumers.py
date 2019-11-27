@@ -88,6 +88,55 @@ class GameConsumer(AsyncWebsocketConsumer):
             }
         )
 
+    async def on_accusation(self, event):
+        accused = event['accused']
+
+        print(f'sending to layer: {accused}')
+
+        await self.channel_layer.group_send(
+            self.room_group_name,
+            {
+                'type': 'update_accused',
+                'accused': accused,
+            }
+        )
+
+    async def update_accused(self, event):
+        accused = event['accused']
+
+        await self.send(text_data=json.dumps({
+            'command': 'update_accused',
+            'accused': accused,
+        }))
+
+    async def on_trial_vote(self, event):
+        
+        playername = event['playername']
+        vote = event['vote']
+
+        print(f'sending to layer: {playername} says {vote}')
+
+        await self.channel_layer.group_send(
+            self.room_group_name,
+            {
+                'type': 'update_trial_votes',
+                'playername': playername,
+                'vote': vote,
+            }
+        )
+
+    async def update_trial_votes(self, event):
+        playername = event['playername']
+        vote = event['vote']
+
+        print(f'sending to users: {playername} says {vote}')
+
+        await self.send(text_data=json.dumps({
+            'command': 'update_trial_votes',
+            'playername': playername,
+            'vote': vote,
+        }))
+
  #broadcast that new vote has been submitted
     async def new_vote(self, event):
         print('new vote :',event)
@@ -239,8 +288,15 @@ class GameConsumer(AsyncWebsocketConsumer):
             og_length = len(alive_users)
             mafia_votes = event['mafia_votes']
             sheriff_votes = event['sheriff_votes']
-            sheriff_vote = {sheriff_votes[0]: alive_users[sheriff_votes[0]]} # store who the sheriff investigated in case they die
+            sheriff_voted = True
+            if len(sheriff_votes) == 0:
+                sheriff_voted = False
+            if sheriff_voted:
+                sheriff_vote = {sheriff_votes[0]: alive_users[sheriff_votes[0]]} # store who the sheriff investigated in case they die
             nurse_votes = event['nurse_votes']
+            nurse_voted = True
+            if len(nurse_votes) == 0:
+                nurse_voted = False
             player_votes = {}
             for m_v in mafia_votes:
                 if m_v in player_votes:
@@ -261,19 +317,19 @@ class GameConsumer(AsyncWebsocketConsumer):
                 player_to_kill = mafia_votes[0]
             num_civilian = db.child("lobbies").child(self.room_name).child("numOther").get().val()
             got_killed = {player_to_kill: alive_users[player_to_kill]}
-            if nurse_votes[0] != player_to_kill:
+            if len(nurse_votes) == 0 or nurse_votes[0] != player_to_kill:
                 num_civilian -= 1
                 alive_users.pop(player_to_kill,0)
                 db.child("lobbies").child(self.room_name).update({"numOther":num_civilian})
             length_alive = len(alive_users)
             data = {'type': 'update_players', 'alive_players': alive_users}
-            if length_alive == og_length:
+            if nurse_voted and length_alive == og_length:
                 data['mafia_kill'] = False
                 data['nurse_saved'] = nurse_votes[0]
             else:
                 data['mafia_kill'] = got_killed
                 data['nurse_saved'] = False
-            if list(sheriff_vote.values())[0] == 'mafia':
+            if sheriff_voted and list(sheriff_vote.values())[0] == 'mafia':
                 data['successful_investigation'] = True
             else:
                 data['successful_investigation'] = False
@@ -304,5 +360,7 @@ class GameConsumer(AsyncWebsocketConsumer):
         'change_cycle': change_cycle,
         'set_roles': set_roles,
         'new_vote': new_vote,
+        'on_accusation': on_accusation,
+        'on_trial_vote': on_trial_vote,
         'resolve_votes': resolve_votes
     }

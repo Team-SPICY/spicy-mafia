@@ -1,0 +1,19 @@
+.DayVote {
+    background: rgb(252,146,83);
+    background: linear-gradient(180deg, rgba(252,146,83,1) 26%,
+    rgba(255,163,84,1) 63%, rgba(255,193,124,1) 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+}
+
+.formPeopleVotes {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 40px;
+    padding-top: 20px;
+}
