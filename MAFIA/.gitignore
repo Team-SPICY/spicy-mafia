@@ -1,5 +1,9 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+MAFIA/MAFIA/__pycache__/
+MAFIA/game/__pycache__/
+MAFIA/game/api/__pycache__/
+MAFIA/game/migrations/__pycache__/
 *.py[cod]
 *$py.class
 
