@@ -7,6 +7,8 @@ from rest_framework.response import Response
 import json
 from rest_framework.decorators import action
 from rest_framework.exceptions import APIException
+from rest_framework.views import exception_handler
+
 #link to firebase
 config = {
     'apiKey': "AIzaSyBeYE_UDmmz-k3_EuQJu2y5MQab4J2-13E",
@@ -99,3 +101,15 @@ class LobbyViewSet(viewsets.ViewSet):
                 data = {'isActive': True}
                 db.child('lobbies').child(pk).update(data)
                 return Response({"game_activated": True})
+    
+    def delete(self, request, pk=None):
+        if not pk:
+            #raise/return some exception here, please just dont call this
+            print("raise some error")
+            return MethodNotAllowed()
+        lobby_keys = db.child('lobbies').shallow().get().val()
+        if pk in lobby_keys:
+            db.child('lobbies').child(pk).remove()
+            return Response({"deleted_lobby": pk})
+        else:
+            return MethodNotAllowed()
