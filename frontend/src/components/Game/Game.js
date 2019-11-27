@@ -98,6 +98,7 @@ export default class Game extends Component {
     handleAccused(accused_name) {
 
         this.setState({accused: accused_name});
+        this.setState({trialVotes: {}});
         console.log(`Accused player: ${accused_name}`);
     }
 

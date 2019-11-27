@@ -74,7 +74,9 @@ export default class NarratorDay extends Component {
                         }
                         </fieldset>
 
-                        <button onClick={() => this.resolve_day_votes()}>Change Cycle</button>
+                        <div className="killButton">
+                        <Button onClick={() => this.resolve_day_votes()}>Kill Accused and Change Cycle</Button>
+                        </div>
                         
                     </Card.Body>
                 </Card>
