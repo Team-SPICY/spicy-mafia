@@ -25,6 +25,7 @@ class UserDayComponent extends Component {
                         role={this.props.role}
                         currentUser={this.props.currentUser}
                         trialVotes={this.props.trialVotes}
+                        resolve_votes={this.props.resolve_votes}
                     />
                     :
                     <DayVote
@@ -33,6 +34,7 @@ class UserDayComponent extends Component {
                         accused={this.props.accused}
                         currentUser={this.props.currentUser}
                         trialVotes={this.props.trialVotes}
+                        gameState={this.props.gameState}
                     />
                 }
             </div>

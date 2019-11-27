@@ -86,7 +86,15 @@ export default class Game extends Component {
             }, 100); // wait 100 milisecond for the connection...
     }
 
-    // TODO: Test!!
+    handleTrialKill(alive_users) {
+        console.log("updating results from previous cycle");
+        console.log("new_alive_players ", alive_users);
+        this.setState({ aliveUsers: alive_users });
+        if (!(this.props.currentUser in alive_users)) {
+            this.setState({ is_alive: false })
+        }
+    }
+
     // set state to new accused
     handleAccused(accused_name) {
 
@@ -133,9 +141,6 @@ export default class Game extends Component {
                 'sheriff_votes': this.state.sheriffVotes,
                 'nurse_votes': this.state.nurseVotes
             })
-        }
-        else { //game state will be Daytime
-            console.log('under construction')
         }
         WebSocketInstance.sendMessage({ 'command': 'change_cycle', 'cycle': this.state.gameState })
     }
@@ -305,6 +310,8 @@ export default class Game extends Component {
                                     accused={this.state.accused}
                                     currentUser={this.props.currentUser}
                                     trialVotes={this.state.trialVotes}
+                                    resolve_votes={this.resolve_votes}
+                                    gameState={this.state.gameState}
                                 />
                         :
                         <div className="deadScreenContainer">
