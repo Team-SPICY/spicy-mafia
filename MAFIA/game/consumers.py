@@ -330,6 +330,38 @@ class GameConsumer(AsyncWebsocketConsumer):
                 self.room_group_name,
                 data
             )
+        else:
+            accused_player = event['accused_player']
+            alive_users = event['alive_users']
+            accused_role = alive_users[accused_player]
+
+            if ( accused_role == 'mafia'):
+                num_mafia = db.child("lobbies").child(self.room_name).child("numMafia").get().val()
+                num_mafia -= 1
+                db.child("lobbies").child(self.room_name).update({'numMafia': num_mafia})
+            else:
+                num_civilian = db.child("lobbies").child(self.room_name).child("numOther").get().val()
+                num_civilian -= 1
+                db.child("lobbies").child(self.room_name).update({'numOther': num_civilian})
+
+            alive_users.pop(accused_player)
+
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    'type': 'update_players_day',
+                    'alive_players': alive_users,
+                }
+            )
+
+    async def update_players_day(self, event):
+        alive_users = event['alive_players']
+        #send to client side
+        await self.send(text_data=json.dumps({
+            'command': 'update_alive_day',
+            'alive_users': alive_users
+        }))
+
     
     async def update_players(self, event):
         mafia_kill = event['mafia_kill']

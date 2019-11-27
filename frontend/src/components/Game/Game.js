@@ -66,6 +66,7 @@ export default class Game extends Component {
                 this.updatePlayers.bind(this),
                 this.handleAccused.bind(this),
                 this.handleTrialVote.bind(this),
+                this.handleTrialKill.bind(this),
                 );
         });
     }
@@ -86,7 +87,15 @@ export default class Game extends Component {
             }, 100); // wait 100 milisecond for the connection...
     }
 
-    // TODO: Test!!
+    handleTrialKill(alive_users) {
+        console.log("updating results from previous cycle");
+        console.log("new_alive_players ", alive_users);
+        this.setState({ aliveUsers: alive_users });
+        if (!(this.props.currentUser in alive_users)) {
+            this.setState({is_alive: false})
+        }
+    }
+
     // set state to new accused
     handleAccused(accused_name) {
 
@@ -131,9 +140,6 @@ export default class Game extends Component {
                                             'mafia_votes': this.state.mafiaVotes,
                                             'sheriff_votes': this.state.sheriffVotes,
                                             'nurse_votes': this.state.nurseVotes})
-        }
-        else { //game state will be Daytime
-            console.log('under construction')
         }
         WebSocketInstance.sendMessage({ 'command': 'change_cycle', 'cycle': this.state.gameState })
     }
@@ -269,7 +275,7 @@ export default class Game extends Component {
                     this.state.is_alive === true ?
                         this.state.gameState === 'Lobby' ?
                             <div className="Lobby">
-                                <h1>SECRET CODE: {this.props.roomID}</h1>
+
                                 <Lobby
                                     users={this.state.users}
                                     currentUser={this.props.currentUser}
@@ -278,24 +284,27 @@ export default class Game extends Component {
                                 />
                                 {this.props.isHost === true ?
                                     <div className="Lobby">
-                                        <button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="i_button">INSTRUCTIONS</button>
+                                        <Button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="instructionsButton">INSTRUCTIONS</Button>
                                         <Instructions
                                             show={this.state.instructionShow}
                                             onHide={() => this.setState({ instructionShow: false })}
                                         />
-                                        <button onClick={() => this.startGame()} className="p_button">START</button>
+                                      <Button onClick={() => this.startGame()} className="startButton">START</Button>
 
                                     </div>
                                     :
                                     <div className="Lobby">
-                                        <button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="i_button">INSTRUCTIONS</button>
+                                        <Button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="instructionsButton">INSTRUCTIONS</Button>
+                                        <Button disabled={() => this.startGame()} className="startButton">STARTING SOON...</Button>
                                         <Instructions
                                             show={this.state.instructionShow}
                                             onHide={() => this.setState({ instructionShow: false })}
                                         />
                                     </div>}
-
-
+                                <div className="secretCodeContainer">
+                                  <p>SECRET CODE:</p>
+                                  <h1>{this.props.roomID}</h1>
+                                </div>
                             </div>
                             :
                             this.state.gameState === 'Nightime' ?
@@ -323,7 +332,7 @@ export default class Game extends Component {
                                     role={this.state.role}
                                     accused={this.state.accused}
                                     currentUser={this.props.currentUser}
-                                    trialVotes={this.state.trialVotes}
+                                    trialVotes={this.state.trialVotes
                                     mafia_kill={this.state.mafia_kill}
                                     nurse_saved={this.state.nurse_saved}
                                     sheriff_inv={this.state.successful_investigation}
@@ -331,6 +340,13 @@ export default class Game extends Component {
                     :
                     <p>you are dead</p>
 
+                                    resolve_votes={this.resolve_votes}
+                                    gameState={this.state.gameState}
+                                />
+                    :
+                    <div className="deadScreenContainer">
+                      <Image className="deadScreen" src="/images/DeadScreen.png"></Image>
+                    </div>
                     }
                 </div>
             );
