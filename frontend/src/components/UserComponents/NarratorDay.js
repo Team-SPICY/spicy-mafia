@@ -24,6 +24,15 @@ export default class NarratorDay extends Component {
           };
     }
 
+    resolve_day_votes() {
+        WebSocketInstance.sendMessage({ 'command': 'resolve_votes', 
+                                        'cycle': 'Daytime',
+                                        'accused_player': this.state.accused_player,
+                                        'alive_users': this.props.aliveUsers,
+                                        })
+        WebSocketInstance.sendMessage({ 'command': 'change_cycle', 'cycle': 'Daytime' })
+    }
+
     // recieve vote and reflect that vote
 
     render() {
@@ -64,6 +73,8 @@ export default class NarratorDay extends Component {
                             )
                         }
                         </fieldset>
+
+                        <button onClick={() => this.resolve_day_votes()}>Change Cycle</button>
                         
                     </Card.Body>
                 </Card>

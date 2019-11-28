@@ -69,6 +69,7 @@ class WebSocketService {
         if (command === 'leaving') {
             this.callbacks[command](parsedData.user);
         }
+
         if (command === 'update_accused') {
             this.callbacks[command](parsedData.accused);
         }
@@ -77,6 +78,9 @@ class WebSocketService {
         }
         if (command === 'update_alive') {
             this.callbacks[command](parsedData.mafia_kill, parsedData.nurse_saved, parsedData.successful_investigation, parsedData.alive_users)
+        }
+        if (command === 'update_alive_day') {
+            this.callbacks[command](parsedData.alive_users)
         }
     }
 
@@ -95,7 +99,7 @@ class WebSocketService {
         this.sendMessage({ command: 'new_message', from: message.from, text: message.text });
     }
 
-    addCallbacks(voteCallBack, cycleChangeCallBack, newUserCallBack, disconnectCallBack, roleCallBack, aliveCallBack, handleAcussed, handleTrialVote) {
+    addCallbacks(voteCallBack, cycleChangeCallBack, newUserCallBack, disconnectCallBack, roleCallBack, aliveCallBack, handleAcussed, handleTrialVote, handleTrialKill) {
         this.callbacks['cycle_change'] = cycleChangeCallBack;
         this.callbacks['vote'] = voteCallBack;
         this.callbacks['new_user'] = newUserCallBack;
@@ -104,6 +108,7 @@ class WebSocketService {
         this.callbacks['update_alive'] = aliveCallBack;
         this.callbacks['update_accused'] = handleAcussed;
         this.callbacks['update_trial_votes'] = handleTrialVote;
+        this.callbacks['update_alive_day'] = handleTrialKill;
     }
     //send data to websocket in consumers.py
     sendMessage(data) {

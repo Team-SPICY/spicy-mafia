@@ -7,7 +7,7 @@ import Image from "react-bootstrap/Image";
 import NarratorDay from './NarratorDay';
 import DayVote from '../Vote/DayVote';
 
-export default class UserDayComponent extends Component {
+class UserDayComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -25,6 +25,7 @@ export default class UserDayComponent extends Component {
                         role={this.props.role}
                         currentUser={this.props.currentUser}
                         trialVotes={this.props.trialVotes}
+                        resolve_votes={this.props.resolve_votes}
                     />
                     :
                     <DayVote
@@ -33,9 +34,11 @@ export default class UserDayComponent extends Component {
                         accused={this.props.accused}
                         currentUser={this.props.currentUser}
                         trialVotes={this.props.trialVotes}
+                        gameState={this.props.gameState}
                     />
                 }
             </div>
         );
     }
 }
+export default UserDayComponent;

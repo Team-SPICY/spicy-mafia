@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Mafia.css'
+import './Vote.css'
 import FlipCard from 'react-flipcard';
 import { Card, Modal, Button, ListGroup, Container } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
@@ -9,6 +9,7 @@ import Image from "react-bootstrap/Image";
 class Vote extends Component {
     constructor(props) {
         super(props);
+
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleOnFlip = this.handleOnFlip.bind(this);
         this.showFront = this.showFront.bind(this);
@@ -76,7 +77,6 @@ class Vote extends Component {
         console.log('votes for user: ', user, votes)
         return votes;
     }
-
     renderMafia = () => {
         const currentUser = this.props.currentUser;
         const aliveUsers = this.props.aliveUsers;
@@ -90,6 +90,22 @@ class Vote extends Component {
         return mafia_users.map((user, i) => <ListGroup.Item key={user} className={mafia_users[user] === currentUser ? 'me-mafia-li' : 'mafia-li'}>
             <p>{user}</p></ListGroup.Item>);
     }
+    //render sheriff members without clickable activity so sheriff do not investigate themselves
+    renderSheriff = () => {
+        const currentUser = this.props.currentUser;
+        const aliveUsers = this.props.aliveUsers;
+        var sheriff_users = [];
+        Object.keys(aliveUsers).forEach(key => {
+            if (aliveUsers[key] === 'sheriff') {
+                sheriff_users.push(key);
+            };
+        });
+
+        return sheriff_users.map((user, i) => <ListGroup.Item key={user} className={sheriff_users[user] === currentUser ? 'me-sheriff-li' : 'sheriff-li'}>
+            <p>{user}</p></ListGroup.Item>);
+    }
+
+    //renders users who are not mafia so that mafia can vote on these users
 
     renderNonMafiaUsers = () => {
         var users = [];
@@ -103,7 +119,7 @@ class Vote extends Component {
         return users.map((user, i) => <ListGroup.Item key={user} className={'civilian'}>
             <button onClick={() => this.props.handleVote(currentUser, user)} type="button" className="btn btn-secondary">{user} <span class="badge badge-pill badge-dark m-3" >{this.renderVotes(user)}</span></button></ListGroup.Item>);
     }
-
+    //renders all users except the host
     renderUsers = () => {
         var users = [];
         const currentUser = this.props.currentUser;
@@ -163,14 +179,8 @@ class Vote extends Component {
                                             }
                                         </ul>
                                         :
-                                        null
-                                    }
-                                    {this.props.role === 'civilian' ?
                                         <p>You are a civilian</p>
-                                        :
-                                        <p>you are a host</p>
                                     }
-
 
                                     <img src={this.props.backgroundSrc} width={" "} height={"600"} />
                                 </div>
