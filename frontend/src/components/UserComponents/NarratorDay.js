@@ -14,6 +14,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import Form from 'react-bootstrap/Form';
+
 import WebSocketInstance from '../../services/WebSocket';
 
 export default class NarratorDay extends Component {
@@ -25,7 +26,7 @@ export default class NarratorDay extends Component {
     }
 
     resolve_day_votes() {
-        WebSocketInstance.sendMessage({ 'command': 'resolve_votes', 
+        WebSocketInstance.sendMessage({ 'command': 'resolve_votes',
                                         'cycle': 'Daytime',
                                         'accused_player': this.state.accused_player,
                                         'alive_users': this.props.aliveUsers,
@@ -39,16 +40,16 @@ export default class NarratorDay extends Component {
         return (
             <div className={"Narrator"}>
                 <h1>NARRATOR</h1>
-                <Card style={{ width: '18rem' }}>
-                    <Card.Body>
-                        <Card.Title>WHO TO ACCUSE?</Card.Title>
-                        <Form>
-                        <fieldset className="formSuspects"> 
+                <Card bsPrefix="narratorCardContainer" style={{ width: '18rem' }}>
+                    <Card.Body bsPrefix="narratorCardBody">
+                        <Card.Title bsPrefix="narratorCardTitle">WHO TO ACCUSE?</Card.Title>
+                        <Form bsPrefix="narratorCardForm">
+                        <fieldset className="formSuspects">
                         {
                             Object.keys(this.props.aliveUsers)
                             .filter((name) => {return this.props.aliveUsers[name] !== 'host'})
-                            .map( (name) => 
-                                <Form.Check 
+                            .map( (name) =>
+                                <Form.Check bsPrefix="narratorFormCheck"
                                     type="radio"
                                     id={`default-${name}`}
                                     label={`${name}`}
@@ -59,23 +60,24 @@ export default class NarratorDay extends Component {
                         }
                         </fieldset>
                         </Form>
-                        <div className="submitButton">
-                        <Button onClick={() => WebSocketInstance.sendMessage({ 'command': 'on_accusation', 'accused': this.state.accused_player })}
-                            variant="secondary">SUBMIT</Button>
+                        <div className="submitButtonContainer">
+                          <Button onClick={() => WebSocketInstance.sendMessage({ 'command': 'on_accusation', 'accused': this.state.accused_player })}
+                              variant="secondary">SUBMIT</Button>
                         </div>
 
                         <fieldset className="formPeopleVotes">
-                        <Card.Title>THE PEOPLE SAY:</Card.Title> 
-                        {
-                            Object.keys(this.props.trialVotes)
-                            .map( (name) => 
-                                <Card.Text> {name}: {this.props.trialVotes[name]}</Card.Text>
-                            )
-                        }
+                          <Card.Title bsPrefix="peopleSayTitle">THE PEOPLE SAY:</Card.Title>
+                          {
+                              Object.keys(this.props.trialVotes)
+                              .map( (name) =>
+                                  <Card.Text> {name}: {this.props.trialVotes[name]}</Card.Text>
+                              )
+                          }
                         </fieldset>
 
-                        <button onClick={() => this.resolve_day_votes()}>Change Cycle</button>
-                        
+                        <div className="changeCycleButtonContainer">
+                          <Button onClick={() => this.resolve_day_votes()}>Change Cycle</Button>
+                        </div>
                     </Card.Body>
                 </Card>
             </div>

@@ -2,9 +2,8 @@
     text-align: center;
     width:100vw;
     height:100vh;
-    background: rgb(0,0,0);
-    background: linear-gradient(180deg, rgba(0,0,0,1) 26%,
-    rgba(27,27,27,1) 63%, rgba(50,50,50,1) 100%);
+    background: rgb(2,0,36);
+    background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 58%, rgba(8,76,133,1) 100%);
     touch-action: manipulation;
     overflow: auto;
 }

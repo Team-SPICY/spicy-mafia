@@ -1,0 +1,55 @@
+.deadScreenContainer{
+  position: relative;
+  height: 50vh;
+  width: auto;
+
+  /* background: red; */
+  border-radius: 20px;
+}
+
+.deadScreen{
+  width: auto;
+  height: 60vh;
+  margin-top: 50px;
+
+  margin-bottom: 50px;
+  /* background: purple; */
+  border-radius: 20px;
+}
+
+.narratorChangeCycle{
+  margin: 0 auto;
+  margin-top: 200px;
+  width: 200px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: white;
+  background: rgb(144,142,142);
+  background: linear-gradient(180deg, rgba(144,142,142,1) 26%, rgba(102,101,101,1) 63%, rgba(66,66,66,1) 100%);
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0px 10px 10px 5px rgba(0, 0, 0, 0.05);
+
+}
+.narratorChangeCycle:active {
+  color: rgb(182,33,15);
+  color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%,
+    rgba(52,2,2,1) 100%);
+  background: gray;
+  transform: scale(1);
+}
+.narratorChangeCycle:hover {
+  background: -webkit-linear-gradient(#861704, #9f3a14);
+
+  background-color: white;
+}
+.narratorChangeCycle:disabled{
+  color: white;
+  cursor:not-allowed;
+  background: gray;
+
+}

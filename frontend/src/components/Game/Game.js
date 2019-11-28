@@ -287,13 +287,20 @@ export default class Game extends Component {
                                             show={this.state.instructionShow}
                                             onHide={() => this.setState({ instructionShow: false })}
                                         />
-                                      <Button onClick={() => this.startGame()} className="startButton">START</Button>
+                                        {
+                                            this.state.users.length >= 5 ?
+                                            <Button onClick={() => this.startGame()} className="startButton">START</Button>
+                                          :
+                                            <Button disabled className="startButton">{5-this.state.users.length} MORE PLAYERS</Button>
+
+                                        }
+
 
                                     </div>
                                     :
                                     <div className="Lobby">
                                         <Button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="instructionsButton">INSTRUCTIONS</Button>
-                                        <Button disabled={() => this.startGame()} className="startButton">STARTING SOON...</Button>
+                                        <Button className="startButton" disabled>STARTING SOON...</Button>
                                         <Instructions
                                             show={this.state.instructionShow}
                                             onHide={() => this.setState({ instructionShow: false })}
@@ -307,7 +314,7 @@ export default class Game extends Component {
                             :
                             this.state.gameState === 'Nightime' ?
                                 this.props.isHost === true ?
-                                    <button onClick={() => this.resolve_votes()} className="p_button">Change Cycle</button>
+                                    <Button onClick={() => this.resolve_votes()} className="narratorChangeCycle">CHANGE CYCLE</Button>
                                     :
                                     <UserNightComponent
                                         mafiaVotes={this.state.mafiaVotes}
@@ -334,6 +341,7 @@ export default class Game extends Component {
                                     resolve_votes={this.resolve_votes}
                                     gameState={this.state.gameState}
                                 />
+
                     :
                     <div className="deadScreenContainer">
                       <Image className="deadScreen" src="/images/DeadScreen.png"></Image>

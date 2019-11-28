@@ -31,7 +31,12 @@ class Lobby extends Component {
               </div>
 
               <div className="numPlayersContainer">
-                <p>{this.props.users.length} SUSPECT(S)</p>
+                {
+                  this.props.users.length === 1 ? 
+                  <p>{this.props.users.length} SUSPECT</p>
+                  :
+                  <p>{this.props.users.length} SUSPECTS</p>
+                }
               </div>
             </div>
         );
