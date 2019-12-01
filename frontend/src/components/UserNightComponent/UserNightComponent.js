@@ -56,19 +56,23 @@ class UserNightComponent extends Component {
         return (
             <div>
                 {this.props.role === 'host' ?
-                    <NarratorNight
-                        backgroundSrc={this.state.backgroundSrc}
-                        mafiaVotes={this.props.mafiaVotes}
-                        sheriffVotes={this.props.sheriffVotes}
-                        civilianVotes={this.props.civilianVotes}
-                        nurseVotes={this.props.nurseVotes}
-                        role={this.props.role}
-                        handleVote={this.props.handleVote}
-                        handleQuizVote={this.props.handleQuizVote}
-                        aliveUsers={this.props.aliveUsers}
-                        currentUser={this.props.currentUser}
-                        prevVote={this.props.prevVote}
-                    />
+                    <div>
+                        <button onClick={() => this.props.resolve_votes()} className="p_button">Change Cycle</button>
+                        <NarratorNight
+                            resolve_votes={this.props.resolve_votes}
+                            backgroundSrc={this.state.backgroundSrc}
+                            mafiaVotes={this.props.mafiaVotes}
+                            sheriffVotes={this.props.sheriffVotes}
+                            civilianVotes={this.props.civilianVotes}
+                            nurseVotes={this.props.nurseVotes}
+                            role={this.props.role}
+                            handleVote={this.props.handleVote}
+                            handleQuizVote={this.props.handleQuizVote}
+                            aliveUsers={this.props.aliveUsers}
+                            currentUser={this.props.currentUser}
+                            prevVote={this.props.prevVote}
+                        />
+                    </div>
                     :
                     <Vote
                         backgroundSrc={this.state.backgroundSrc}
