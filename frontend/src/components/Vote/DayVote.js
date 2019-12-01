@@ -15,13 +15,13 @@ import WebSocketInstance from '../../services/WebSocket';
 import Instructions from "../Game/Instructions";
 import NewsFlash from "../DayCycle/NewsFlash";
 import Game from "../Game/Game";
-import UserDayComponent from "../DayCycle/UserDayComponent";
+import {UserDayComponent} from '../DayCycle/UserDayComponent';
 
 export default class DayVote extends Component {
     constructor(props) {
         super(props);
         this.state ={
-            newsShow: false,
+            newsShow: true,
         }
 
     }
@@ -60,13 +60,12 @@ export default class DayVote extends Component {
                     </Card.Body>
                 </Card>
                 <div>
-                <button onClick={() => this.setState({ newsShow: true })} variant={"secondary"} type={"button"} className="i_button">CLICK ME</button>
                 <NewsFlash
                     show={this.state.newsShow}
                     onHide={() => this.setState({ newsShow: false })}
-                    mafia_kill={this.props.mafia_kill}
-                    nurse_saved={this.props.nurse_saved}
-                    sheriff_inv={this.props.successful_investigation}
+                    mafia={this.props.mafia}
+                    nurse={this.props.nurse}
+                    sheriff ={this.props.sheriff}
                 />
                 </div>
 
