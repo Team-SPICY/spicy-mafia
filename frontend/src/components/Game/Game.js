@@ -66,6 +66,7 @@ export default class Game extends Component {
                 this.updatePlayers.bind(this),
                 this.handleAccused.bind(this),
                 this.handleTrialVote.bind(this),
+                this.handleTrialKill.bind(this),
             );
         });
     }
@@ -98,7 +99,8 @@ export default class Game extends Component {
     // set state to new accused
     handleAccused(accused_name) {
 
-        this.setState({ accused: accused_name });
+        this.setState({accused: accused_name});
+        this.setState({trialVotes: {}});
         console.log(`Accused player: ${accused_name}`);
     }
 
