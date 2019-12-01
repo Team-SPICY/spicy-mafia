@@ -88,55 +88,6 @@ class GameConsumer(AsyncWebsocketConsumer):
             }
         )
 
-    async def on_accusation(self, event):
-        accused = event['accused']
-
-        print(f'sending to layer: {accused}')
-
-        await self.channel_layer.group_send(
-            self.room_group_name,
-            {
-                'type': 'update_accused',
-                'accused': accused,
-            }
-        )
-
-    async def update_accused(self, event):
-        accused = event['accused']
-
-        await self.send(text_data=json.dumps({
-            'command': 'update_accused',
-            'accused': accused,
-        }))
-
-    async def on_trial_vote(self, event):
-
-        playername = event['playername']
-        vote = event['vote']
-
-        print(f'sending to layer: {playername} says {vote}')
-
-        await self.channel_layer.group_send(
-            self.room_group_name,
-            {
-                'type': 'update_trial_votes',
-                'playername': playername,
-                'vote': vote,
-            }
-        )
-
-    async def update_trial_votes(self, event):
-        playername = event['playername']
-        vote = event['vote']
-
-        print(f'sending to users: {playername} says {vote}')
-
-        await self.send(text_data=json.dumps({
-            'command': 'update_trial_votes',
-            'playername': playername,
-            'vote': vote,
-        }))
-
  #broadcast that new vote has been submitted
     async def new_vote(self, event):
         print('new vote :',event)
@@ -154,6 +105,28 @@ class GameConsumer(AsyncWebsocketConsumer):
                 'prev_vote': prev_vote,
             }
         )
+        async def send_quiz(self, event):
+            print('new vote :',event)
+            voter = event['voter']
+            voted = event['voted']
+            prev_vote = event['prev_vote']
+
+            #send to group(broadcast)
+            await self.channel_layer.group_send(
+            self.room_group_name,
+            {
+                'type': 'send_question',
+                'question': event['question']
+            }
+        )
+    async def send_question(self, event):
+        question = event['question']
+        print(f'new question: {question}')
+        # Send cycle to cycle_change method on client side to distribute cycles
+        await self.send(text_data=json.dumps({
+            'command': 'recieve_question',
+            'question': question
+        }))
 
     async def set_user(self, event):
         print(f'setting user name! {event}')
@@ -200,7 +173,6 @@ class GameConsumer(AsyncWebsocketConsumer):
 
     async def new_role(self, event):
         users = event['users']
-        print('boradcasting role as: ',users[self.username])
         await self.send(text_data=json.dumps({
             'command': 'set_roles',
             'role': users[self.username],
@@ -211,7 +183,7 @@ class GameConsumer(AsyncWebsocketConsumer):
         host_name = event['host_name']
         print(host_name)
         players = db.child("lobbies").child(self.room_name).child("players").get().val()
-        player_list = list(players)
+        player_list = list(players) #first index is host so we wont set that
         player_list.remove(host_name) #don't reset host
         print("players exluding host: " + str(player_list))
         r_index = random.randint(0, len(player_list)-1)
@@ -281,140 +253,8 @@ class GameConsumer(AsyncWebsocketConsumer):
             }
         )
 
-    async def new_quiz(self, event):
-        print('new question :',event)
 
-        #send to group(broadcast)
-        await self.channel_layer.group_send(
-        self.room_group_name,
-        {
-            'type': 'send_question',
-            'question': event['question']
-    })
-
-    async def send_question(self, event):
-            question = event['question']
-            # Send cycle to cycle_change method on client side to distribute cycles
-            await self.send(text_data=json.dumps({
-                'command': 'recieve_question',
-                'question': question
-            }))
-
-    async def resolve_votes(self, event):
-        #use this to get the votes from the sheriff, nurse, mafia, civilian etc...
-        if event['cycle'] == "Nightime":
-            alive_users = event['alive_users']
-            og_length = len(alive_users)
-            mafia_votes = event['mafia_votes']
-            sheriff_votes = event['sheriff_votes']
-            civilian_votes = event['civilian_votes']
-            sheriff_voted = True
-            if len(sheriff_votes) == 0:
-                sheriff_voted = False
-            if sheriff_voted:
-                sheriff_vote = {sheriff_votes[0]: alive_users[sheriff_votes[0]]} # store who the sheriff investigated in case they die
-            nurse_votes = event['nurse_votes']
-            player_votes = {}
-            for m_v in mafia_votes:
-                if m_v in player_votes:
-                    player_votes[m_v] += 1
-                else:
-                    player_votes[m_v] = 1
-            if len(player_votes) == 0: # mafia never voted, pick a random player to kill
-                available_to_kill = []
-                for k,v in alive_users.items():
-                    if v != 'host' and v != 'mafia':
-                        available_to_kill.append(k)
-                r_index = random.randint(0, len(available_to_kill)-1)
-                player_to_kill = available_to_kill[r_index]
-            elif len(player_votes) > 1:
-                mafia_votes = sorted(list(player_votes.items()))
-                player_to_kill = mafia_votes[-1][0]
-            else:
-                player_to_kill = mafia_votes[0]
-            num_civilian = db.child("lobbies").child(self.room_name).child("numOther").get().val()
-            got_killed = {player_to_kill: alive_users[player_to_kill]}
-            if nurse_votes[0] != player_to_kill:
-                num_civilian -= 1
-                alive_users.pop(player_to_kill,0)
-                db.child("lobbies").child(self.room_name).update({"numOther":num_civilian})
-            length_alive = len(alive_users)
-            data = {'type': 'update_players', 'alive_players': alive_users}
-            #process civilian night votes
-            if len(civilian_votes) > 0:
-                c_v = {}
-                for vote in civilian_votes:
-                    if vote in c_v:
-                        c_v[vote] = c_v[vote] + 1
-                    else:
-                        c_v[vote] = 1
-                civ_votes = sorted(list(c_v.items()))
-                data['winner'] = civ_votes[-1][0]
-            else:
-                r_index = random.randint(0, len(alive_users) -1 )
-                data['winner'] = alive_users[r_index]
-            if nurse_voted and length_alive == og_length:
-                data['mafia_kill'] = False
-                data['nurse_saved'] = nurse_votes[0]
-            else:
-                data['mafia_kill'] = got_killed
-                data['nurse_saved'] = False
-            if list(sheriff_vote.values())[0] == 'mafia':
-                data['successful_investigation'] = True
-            else:
-                data['successful_investigation'] = False
-            await self.channel_layer.group_send(
-                self.room_group_name,
-                data
-            )
-        else:
-            accused_player = event['accused_player']
-            alive_users = event['alive_users']
-            accused_role = alive_users[accused_player]
-
-            if ( accused_role == 'mafia'):
-                num_mafia = db.child("lobbies").child(self.room_name).child("numMafia").get().val()
-                num_mafia -= 1
-                db.child("lobbies").child(self.room_name).update({'numMafia': num_mafia})
-            else:
-                num_civilian = db.child("lobbies").child(self.room_name).child("numOther").get().val()
-                num_civilian -= 1
-                db.child("lobbies").child(self.room_name).update({'numOther': num_civilian})
-
-            alive_users.pop(accused_player)
-
-            await self.channel_layer.group_send(
-                self.room_group_name,
-                {
-                    'type': 'update_players_day',
-                    'alive_players': alive_users,
-                }
-            )
-
-    async def update_players_day(self, event):
-        alive_users = event['alive_players']
-        #send to client side
-        await self.send(text_data=json.dumps({
-            'command': 'update_alive_day',
-            'alive_users': alive_users
-        }))
-
-
-    async def update_players(self, event):
-        mafia_kill = event['mafia_kill']
-        successful_investigation = event['successful_investigation']
-        alive_users = event['alive_players']
-        winner = event['winner']
-        #send to client side
-        await self.send(text_data=json.dumps({
-            'command': 'update_alive',
-            'mafia_kill': mafia_kill,
-            'successful_investigation': successful_investigation,
-            'alive_users': alive_users,
-            'winner': winner
-        }))
-
-    #key-values so receiveing function knows what to do, map a command to a function
+    #key-values so receiveing function knows what to do
     commands = {
         'new_message': chat_message,
         'leaving': leaving,
@@ -424,9 +264,5 @@ class GameConsumer(AsyncWebsocketConsumer):
         'change_cycle': change_cycle,
         'set_roles': set_roles,
         'new_vote': new_vote,
-        'on_accusation': on_accusation,
-        'on_trial_vote': on_trial_vote,
-        'resolve_votes': resolve_votes,
-        'new_quiz': new_quiz,
-
+        'send_quiz': send_quiz,
     }

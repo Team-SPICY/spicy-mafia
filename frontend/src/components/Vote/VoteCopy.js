@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Vote.css'
+import './Mafia.css'
 import FlipCard from 'react-flipcard';
 import { Card, Modal, Button, ListGroup, Container } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
@@ -9,7 +9,6 @@ import Image from "react-bootstrap/Image";
 class Vote extends Component {
     constructor(props) {
         super(props);
-
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleOnFlip = this.handleOnFlip.bind(this);
         this.showFront = this.showFront.bind(this);
@@ -64,8 +63,8 @@ class Vote extends Component {
         else if (this.props.role === 'mafia') {
             voted_for = this.props.mafiaVotes;
         }
-        else if (this.props.role == 'civilian') {
-            return null;
+        else if (this.props.role === 'civilian') {
+          voted_for = this.props.civilianVotes;
         }
         else (
             voted_for = this.props.nurseVotes
@@ -80,6 +79,7 @@ class Vote extends Component {
         console.log('votes for user: ', user, votes)
         return votes;
     }
+
     renderMafia = () => {
         const currentUser = this.props.currentUser;
         const aliveUsers = this.props.aliveUsers;
@@ -93,22 +93,6 @@ class Vote extends Component {
         return mafia_users.map((user, i) => <ListGroup.Item key={user} className={mafia_users[user] === currentUser ? 'me-mafia-li' : 'mafia-li'}>
             <p>{user}</p></ListGroup.Item>);
     }
-    //render sheriff members without clickable activity so sheriff do not investigate themselves
-    renderSheriff = () => {
-        const currentUser = this.props.currentUser;
-        const aliveUsers = this.props.aliveUsers;
-        var sheriff_users = [];
-        Object.keys(aliveUsers).forEach(key => {
-            if (aliveUsers[key] === 'sheriff') {
-                sheriff_users.push(key);
-            };
-        });
-
-        return sheriff_users.map((user, i) => <ListGroup.Item key={user} className={sheriff_users[user] === currentUser ? 'me-sheriff-li' : 'sheriff-li'}>
-            <p>{user}</p></ListGroup.Item>);
-    }
-
-    //renders users who are not mafia so that mafia can vote on these users
 
     renderNonMafiaUsers = () => {
         var users = [];
@@ -122,7 +106,7 @@ class Vote extends Component {
         return users.map((user, i) => <ListGroup.Item key={user} className={'civilian'}>
             <button onClick={() => this.props.handleVote(currentUser, user)} type="button" className="btn btn-secondary">{user} <span class="badge badge-pill badge-dark m-3" >{this.renderVotes(user)}</span></button></ListGroup.Item>);
     }
-    //renders all users except the host
+
     renderUsers = () => {
         var users = [];
         const currentUser = this.props.currentUser;
@@ -149,11 +133,12 @@ class Vote extends Component {
                                 onKeyDown={this.handleKeyDown}
                             >
                                 <div onClick={this.showBack} >
-                                    <img src="/images/CardBack.png" width={" "} height={"600"} />
+                                    <img src={this.props.backgroundSrc} width={" "} height={"600"} />
                                 </div>
                                 <div ref={this.backButton} onClick={this.showFront} >
                                     {
                                         this.props.role === 'mafia' ?
+                                            <h2>Who to kill</h2>
                                             <ul className='list-group list-group-flush mafia-list'>
                                                 {
                                                     this.renderMafia()
@@ -166,7 +151,7 @@ class Vote extends Component {
                                             null
                                     }
                                     {this.props.role === 'sheriff' ?
-
+                                        <h2>Who to investigate</h2>
                                         <ul className='list-group list-group-flush sheriff-list'>
                                             {
                                                 this.renderUsers()
@@ -176,6 +161,7 @@ class Vote extends Component {
                                         null
                                     }
                                     {this.props.role === 'nurse' ?
+                                        <h2>Who to save</h2>
                                         <ul className='list-group list-group-flush nurse-list'>
                                             {
                                                 this.renderUsers()
@@ -184,19 +170,15 @@ class Vote extends Component {
                                         :
                                         null
                                     }
-                                    {
-                                        this.props.role === 'civilian' ?
-                                            <div>
-                                                <h2>{this.props.quizQuestion}</h2>
-                                                <ul className='list-group list-group-flush civilian-list'>
-                                                    {
-                                                        this.renderUsers()
-                                                    }
-                                                </ul>
-                                            </div>
-                                            :
-                                            null
+                                    {this.props.role === 'civilian' ?
+                                        <h2></h2>
+                                        <ul className='list-group list-group-flush civilian-list'>
+                                          {
+                                            this.renderUsers()
+                                          }
+                                        </ul>
                                     }
+
 
                                     <img src={this.props.backgroundSrc} width={" "} height={"600"} />
                                 </div>

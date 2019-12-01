@@ -31,3 +31,10 @@
     padding-left: 40px;
     padding-top: 20px;
 }
+
+.killButton {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-top: 12px;
+}
