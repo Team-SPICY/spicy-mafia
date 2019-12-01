@@ -15,6 +15,7 @@ import Image from "react-bootstrap/Image";
 import WebSocketInstance from '../../services/WebSocket'
 import Instructions from './Instructions'
 import DayVote from "../Vote/DayVote";
+import {NewsFlash} from '../DayCycle/NewsFlash';
 
 export default class Game extends Component {
     constructor(props) {
@@ -332,16 +333,10 @@ export default class Game extends Component {
                                     role={this.state.role}
                                     accused={this.state.accused}
                                     currentUser={this.props.currentUser}
-                                    trialVotes={this.state.trialVotes
-                                    mafia_kill={this.state.mafia_kill}
-                                    nurse_saved={this.state.nurse_saved}
-                                    sheriff_inv={this.state.successful_investigation}
-                                />
-                    :
-                    <p>you are dead</p>
-
-                                    resolve_votes={this.resolve_votes}
-                                    gameState={this.state.gameState}
+                                    trialVotes={this.state.trialVotes}
+                                    mafia ={this.state.mafia_kill}
+                                    nurse ={this.state.nurse_saved}
+                                    sheriff = {this.state.successful_investigation}
                                 />
                     :
                     <div className="deadScreenContainer">
