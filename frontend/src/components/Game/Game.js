@@ -285,7 +285,12 @@ export default class Game extends Component {
                                     startGame={this.startGame}
                                 />
                                 <div className="numPlayersContainer">
-                                    <p>{this.state.users.length} SUSPECT(S)</p>
+                                  {
+                                     this.state.users.length === 1 ?
+                                     <p>{this.state.users.length} SUSPECT</p>
+                                     :
+                                     <p>{this.state.users.length} SUSPECTS</p>
+                                   }
                                 </div>
                             </div>
                             :

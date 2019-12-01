@@ -60,7 +60,7 @@ class Lobby extends Component {
                 delay={{ show: 250, hide: 400 }}
                 overlay={this.renderTooltip()}
               >
-                <Button className="startButton">START</Button>
+                <Button disabled className="startButton">START</Button>
               </OverlayTrigger>
 
 
