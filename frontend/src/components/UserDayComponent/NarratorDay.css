@@ -79,3 +79,13 @@
     padding-left: 40px;
     padding-top: 20px;
 }
+<<<<<<< HEAD:frontend/src/components/UserComponents/NarratorDay.css
+=======
+
+.killButton {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-top: 12px;
+}
+>>>>>>> refs/heads/front-end:frontend/src/components/UserDayComponent/NarratorDay.css
