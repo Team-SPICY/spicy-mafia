@@ -43,7 +43,8 @@ export default class Game extends Component {
             mafia_kill: false,
             nurse_saved: false,
             successful_investigation: false,
-            is_alive: true
+            is_alive: true,
+            quizQuestion: "",
         };
 
         this.waitForSocketConnection(() => {
@@ -67,6 +68,7 @@ export default class Game extends Component {
                 this.handleAccused.bind(this),
                 this.handleTrialVote.bind(this),
                 this.handleTrialKill.bind(this),
+                this.quizQuestionCallBack.bind(this)
             );
         });
     }
@@ -95,12 +97,14 @@ export default class Game extends Component {
             this.setState({ is_alive: false })
         }
     }
-
+    quizQuestionCallBack(question) {
+        this.setState({ quizQuestion: question });
+    }
     // set state to new accused
     handleAccused(accused_name) {
 
-        this.setState({accused: accused_name});
-        this.setState({trialVotes: {}});
+        this.setState({ accused: accused_name });
+        this.setState({ trialVotes: {} });
         console.log(`Accused player: ${accused_name}`);
     }
 
@@ -128,6 +132,20 @@ export default class Game extends Component {
                     //send a message to the server websocket to change cycles
                     WebSocketInstance.sendMessage({ 'command': 'set_roles', 'host_name': this.props.currentUser });
                     WebSocketInstance.sendMessage({ 'command': 'change_cycle', 'cycle': this.state.gameState });
+                    var lobby = "http://127.0.0.1:8000/api/lobby/" + this.props.roomID + "/"
+                    axios.get(lobby)
+                        .then(response => {
+                            var qq = response['data']['quizQuestions'];
+                            var lengthQ = Object.keys(qq).length;
+                            var ran = Math.round(Math.random(lengthQ - 1));
+                            const question = qq[ran]
+                            const data = {
+                                'command': 'new_quiz',
+                                'question': question
+                            };
+                            console.log('sendingQuizQuestion')
+                            WebSocketInstance.sendMessage(data);
+                        });
                 }
             })
     }
@@ -141,31 +159,37 @@ export default class Game extends Component {
                 'alive_users': this.state.aliveUsers,
                 'mafia_votes': this.state.mafiaVotes,
                 'sheriff_votes': this.state.sheriffVotes,
-                'nurse_votes': this.state.nurseVotes
+                'nurse_votes': this.state.nurseVotes,
+                'civilian_votes': this.state.civilianVotes
             })
+        }
+        //changing from daytime to nightime
+        if (this.state.gameState === 'Daytime') {
+            var lobby = "http://127.0.0.1:8000/api/lobby/" + this.props.roomID + "/"
+            axios.get(lobby)
+                .then(response => {
+                    var qq = response['data']['quizQuestions'];
+                    var lengthQ = Object.keys(qq).length;
+                    var ran = Math.round(Math.random(lengthQ - 1));
+                    const question = qq[ran]
+                    const data = {
+                        'command': 'new_quiz',
+                        'question': question
+                    };
+                    console.log('sendingQuizQuestion')
+                    WebSocketInstance.sendMessage(data);
+                });
         }
         WebSocketInstance.sendMessage({ 'command': 'change_cycle', 'cycle': this.state.gameState })
     }
 
-    updatePlayers(mafia_kill, nurse_saved, successful_investigation, alive_users) {
-        console.log("updating results from previous cycle");
-        console.log("new_alive_players ", alive_users);
-        this.setState({ mafia_kill: mafia_kill, nurse_saved: nurse_saved, successful_investigation: successful_investigation, aliveUsers: alive_users });
+    updatePlayers(mafia_kill, nurse_saved, successful_investigation, alive_users, winner) {
+        console.log("updating results from previous cycle and winner of votes");
+        console.log("new_alive_players ", alive_users, winner);
+        this.setState({ mafia_kill: mafia_kill, nurse_saved: nurse_saved, successful_investigation: successful_investigation, aliveUsers: alive_users, civilianVotes: [], prev_vote: "", winner: winner });
         if (!(this.props.currentUser in alive_users)) {
             this.setState({ is_alive: false })
         }
-    }
-
-    //handle votes from sherrif or nurse
-    handleSpecialAbility() {
-        console.log('handling special ability');
-
-        //send to api vote
-
-    }
-
-    handleQuizVote() {
-        console.log('handling quiz vote');
     }
 
     //handle a vote recieved from websocket should only be for mafia at night or execution for daytime
@@ -213,6 +237,14 @@ export default class Game extends Component {
                 }
                 voted_for = [...voted_for, voted];
                 this.setState({ nurseVotes: voted_for });
+            } else if (role === 'civilian') {
+                voted_for = this.state.civilianVotes;
+                if (prev_voted != "") {
+                    var index = voted_for.indexOf(prev_voted);
+                    voted_for.splice(index, 1);
+                }
+                voted_for = [...voted_for, voted];
+                this.setState({ civilianVotes: voted_for });
             }
         }
 
@@ -298,12 +330,11 @@ export default class Game extends Component {
                                 <UserNightComponent
                                     mafiaVotes={this.state.mafiaVotes}
                                     civilianVotes={this.state.civilianVotes}
+                                    quizQuestion={this.state.quizQuestion}
                                     nurseVotes={this.state.nurseVotes}
                                     sheriffVotes={this.state.sheriffVotes}
                                     role={this.state.role}
                                     handleVote={this.handleVote}
-                                    handleQuizVote={this.handleQuizVote}
-                                    handleSpecialAbility={this.handleSpecialAbility}
                                     handleCycleChange={this.handleCycleChange}
                                     aliveUsers={this.state.aliveUsers}
                                     currentUser={this.props.currentUser}

@@ -79,6 +79,7 @@ class UserNightComponent extends Component {
                         mafiaVotes={this.props.mafiaVotes}
                         sheriffVotes={this.props.sheriffVotes}
                         civilianVotes={this.props.civilianVotes}
+                        quizQuestion={this.props.quizQuestion}
                         nurseVotes={this.props.nurseVotes}
                         role={this.props.role}
                         handleVote={this.props.handleVote}

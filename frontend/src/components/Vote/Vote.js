@@ -64,6 +64,9 @@ class Vote extends Component {
         else if (this.props.role === 'mafia') {
             voted_for = this.props.mafiaVotes;
         }
+        else if (this.props.role == 'civilian') {
+            return null;
+        }
         else (
             voted_for = this.props.nurseVotes
         )
@@ -179,7 +182,20 @@ class Vote extends Component {
                                             }
                                         </ul>
                                         :
-                                        <p>You are a civilian</p>
+                                        null
+                                    }
+                                    {
+                                        this.props.role === 'civilian' ?
+                                            <div>
+                                                <h2>{this.props.quizQuestion}</h2>
+                                                <ul className='list-group list-group-flush civilian-list'>
+                                                    {
+                                                        this.renderUsers()
+                                                    }
+                                                </ul>
+                                            </div>
+                                            :
+                                            null
                                     }
 
                                     <img src={this.props.backgroundSrc} width={" "} height={"600"} />
