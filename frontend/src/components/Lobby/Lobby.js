@@ -23,7 +23,7 @@ class Lobby extends Component {
     return (this.props.users.length - 1);
   }
   renderTooltip() {
-    return <Tooltip>Minnimum 4 players and 1 host: 5 total users</Tooltip>;
+    return <Tooltip>Minimum 4 players and 1 host: 5 total users</Tooltip>;
   }
 
   render() {
