@@ -1,0 +1,22 @@
+.News {
+    background-color: antiquewhite;
+    text-align: center;
+    padding: 10px 0 15px 0;
+    border-style: hidden;
+    font-style: normal;
+    vertical-align: center;
+    font-weight: bold;
+}
+
+.title {
+    font-family: Impact;
+    color: #000000;
+}
+.result{
+    color: red;
+    font-family:  "Courier New", Courier, monospace;
+}
+
+.somethingnew{
+//background: linear-gradient(180deg,black,gray, #995d1b);
+}
