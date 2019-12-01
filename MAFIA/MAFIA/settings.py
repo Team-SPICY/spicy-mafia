@@ -56,7 +56,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
+#allow all will ignore whitelist if set to true
+#CORS_ORIGIN_ALLOW_ALL = True
+        
 CORS_ORIGIN_WHITELIST = ["http://localhost:3000",]
 
 ROOT_URLCONF = 'MAFIA.urls'
