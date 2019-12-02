@@ -110,7 +110,7 @@ class GameConsumer(AsyncWebsocketConsumer):
         }))
 
     async def on_trial_vote(self, event):
-        
+
         playername = event['playername']
         vote = event['vote']
 
@@ -152,7 +152,7 @@ class GameConsumer(AsyncWebsocketConsumer):
                 'voter': voter,
                 'voted': voted,
                 'prev_vote': prev_vote,
-            }   
+            }
         )
 
     async def set_user(self, event):
@@ -211,7 +211,7 @@ class GameConsumer(AsyncWebsocketConsumer):
         host_name = event['host_name']
         print(host_name)
         players = db.child("lobbies").child(self.room_name).child("players").get().val()
-        player_list = list(players) 
+        player_list = list(players)
         player_list.remove(host_name) #don't reset host
         print("players exluding host: " + str(player_list))
         r_index = random.randint(0, len(player_list)-1)
@@ -237,7 +237,7 @@ class GameConsumer(AsyncWebsocketConsumer):
             player_list.remove(random_player)
             db.child("lobbies").child(self.room_name).child("players").update({random_player:"mafia"})
             num_mafia += 1
-        
+
         db.child("lobbies").child(self.room_name).update({"numMafia":num_mafia})
         db.child("lobbies").child(self.room_name).update({"numOther":length_players - num_mafia})
         players = db.child("lobbies").child(self.room_name).child("players").get().val()
@@ -280,7 +280,7 @@ class GameConsumer(AsyncWebsocketConsumer):
                 'cycle': cycle
             }
         )
-        
+
     async def new_quiz(self, event):
         print('new question :',event)
 
@@ -308,15 +308,12 @@ class GameConsumer(AsyncWebsocketConsumer):
             mafia_votes = event['mafia_votes']
             sheriff_votes = event['sheriff_votes']
             civilian_votes = event['civilian_votes']
+            nurse_votes = event['nurse_votes']
             sheriff_voted = True
             if len(sheriff_votes) == 0:
                 sheriff_voted = False
             if sheriff_voted:
                 sheriff_vote = {sheriff_votes[0]: alive_users[sheriff_votes[0]]} # store who the sheriff investigated in case they die
-            nurse_votes = event['nurse_votes']
-            nurse_voted = True
-            if len(nurse_votes) == 0:
-                nurse_voted = False
             player_votes = {}
             for m_v in mafia_votes:
                 if m_v in player_votes:
@@ -337,10 +334,17 @@ class GameConsumer(AsyncWebsocketConsumer):
                 player_to_kill = mafia_votes[0]
             num_civilian = db.child("lobbies").child(self.room_name).child("numOther").get().val()
             got_killed = {player_to_kill: alive_users[player_to_kill]}
-            if len(nurse_votes) == 0 or nurse_votes[0] != player_to_kill:
-                num_civilian -= 1
-                alive_users.pop(player_to_kill,0)
-                db.child("lobbies").child(self.room_name).update({"numOther":num_civilian})
+            #process nurse votes
+            nurse_saved = ""
+            if len(nurse_votes) != 0:
+            #todo sort list by highest occurence, break ties if any using rand num
+                randNum = random.randint(0,len(nurse_votes)-1) 
+                nurse_saved = nurse_votes[randNum]
+                if nurse_saved != player_to_kill:
+                    num_civilian -= 1
+                    alive_users.pop(player_to_kill,0)
+                    db.child("lobbies").child(self.room_name).update({"numOther":num_civilian})
+                    nurse_saved = ""
             length_alive = len(alive_users)
             data = {'type': 'update_players', 'alive_players': alive_users}
             #process civilian night votes
@@ -356,12 +360,13 @@ class GameConsumer(AsyncWebsocketConsumer):
             else:
                 r_index = random.randint(0, len(alive_users) -1 )
                 data['winner'] = alive_users[r_index]
-            if nurse_voted and length_alive == og_length:
-                data['mafia_kill'] = False
-                data['nurse_saved'] = nurse_votes[0]
+
+            if nurse_votes and length_alive == og_length:
+                data['mafia_kill'] = ""
+                data['nurse_saved'] = nurse_saved
             else:
-                data['mafia_kill'] = got_killed
-                data['nurse_saved'] = False
+                data['mafia_kill'] = player_to_kill
+                data['nurse_saved'] = ""
             if sheriff_voted and list(sheriff_vote.values())[0] == 'mafia':
                 data['successful_investigation'] = True
             else:
@@ -402,21 +407,23 @@ class GameConsumer(AsyncWebsocketConsumer):
             'alive_users': alive_users
         }))
 
-    
+
     async def update_players(self, event):
         mafia_kill = event['mafia_kill']
         successful_investigation = event['successful_investigation']
         alive_users = event['alive_players']
         winner = event['winner']
+        nurse_saved = event['nurse_saved']
         #send to client side
         await self.send(text_data=json.dumps({
             'command': 'update_alive',
             'mafia_kill': mafia_kill,
+            'nurse_saved': nurse_saved,
             'successful_investigation': successful_investigation,
             'alive_users': alive_users,
             'winner': winner
         }))
-    
+
     #key-values so receiveing function knows what to do, map a command to a function
     commands = {
         'new_message': chat_message,
