@@ -4,7 +4,7 @@ import axios from 'axios'
 import PlayerList from "./PlayerList";
 import Lobby from '../Lobby/Lobby'
 import UserNightComponent from '../UserNightComponent';
-import UserDayComponent from '../UserDayComponent';
+import UserDayComponent from '../UserDayComponent/UserDayComponent';
 import '../UserDayComponent/Cycles.css'
 
 import { Modal, Button, ListGroup } from 'react-bootstrap'
@@ -23,9 +23,11 @@ export default class Game extends Component {
         this.handleVote = this.handleVote.bind(this);
         this.startGame = this.startGame.bind(this);
         this.resolve_votes = this.resolve_votes.bind(this);
+
         this.state = {
             users: [],
             //update alive users after a gameState change(someone is killed/executed)
+            winner: "",
             aliveUsers: {},
             nurseVotes: [],
             sheriffVotes: [],
@@ -40,8 +42,8 @@ export default class Game extends Component {
             prevVote: "",
             accused: '',
             trialVotes: {},
-            mafia_kill: false,
-            nurse_saved: false,
+            mafiaKill: "",
+            nurseSaved: "",
             successful_investigation: false,
             is_alive: true,
             quizQuestion: "",
@@ -169,7 +171,7 @@ export default class Game extends Component {
             axios.get(lobby)
                 .then(response => {
                     var qq = response['data']['quizQuestions'];
-                    var lengthQ = Object.keys(qq).length;
+                    var lengthQ = (Object.keys(qq)).length;
                     var ran = Math.round(Math.random(lengthQ - 1));
                     const question = qq[ran]
                     const data = {
@@ -185,8 +187,9 @@ export default class Game extends Component {
 
     updatePlayers(mafia_kill, nurse_saved, successful_investigation, alive_users, winner) {
         console.log("updating results from previous cycle and winner of votes");
-        console.log("new_alive_players ", alive_users, winner);
-        this.setState({ mafia_kill: mafia_kill, nurse_saved: nurse_saved, successful_investigation: successful_investigation, aliveUsers: alive_users, civilianVotes: [], prev_vote: "", winner: winner });
+        console.log("new_alive_players ", alive_users, 'winner: ', winner, ' nurse save: ', nurse_saved, ' mafiakill ', mafia_kill);
+        this.setState({ mafiaKill: mafia_kill, nurseSaved: nurse_saved, successful_investigation: successful_investigation, aliveUsers: alive_users, civilianVotes: [], prevVote: "", winner: winner });
+        console.log('state after updating: ', this.state.nurseSaved, this.state.mafiaKill)
         if (!(this.props.currentUser in alive_users)) {
             this.setState({ is_alive: false })
         }
@@ -239,7 +242,7 @@ export default class Game extends Component {
                 this.setState({ nurseVotes: voted_for });
             } else if (role === 'civilian') {
                 voted_for = this.state.civilianVotes;
-                if (prev_voted != "") {
+                if (prev_voted !== "") {
                     var index = voted_for.indexOf(prev_voted);
                     voted_for.splice(index, 1);
                 }
@@ -317,12 +320,12 @@ export default class Game extends Component {
                                     startGame={this.startGame}
                                 />
                                 <div className="numPlayersContainer">
-                                  {
-                                     this.state.users.length === 1 ?
-                                     <p>{this.state.users.length} SUSPECT</p>
-                                     :
-                                     <p>{this.state.users.length} SUSPECTS</p>
-                                   }
+                                    {
+                                        this.state.users.length === 1 ?
+                                            <p>{this.state.users.length} SUSPECT</p>
+                                            :
+                                            <p>{this.state.users.length} SUSPECTS</p>
+                                    }
                                 </div>
                             </div>
                             :
@@ -348,8 +351,11 @@ export default class Game extends Component {
                                     accused={this.state.accused}
                                     currentUser={this.props.currentUser}
                                     trialVotes={this.state.trialVotes}
-                                    resolve_votes={this.resolve_votes}
-                                    gameState={this.state.gameState}
+                                    mafia_kill={this.state.mafiaKill}
+                                    nurse_saved={this.state.nurseSaved}
+                                    sheriff={this.state.successful_investigation}
+                                    winner={this.state.winner}
+                                    quizQuestion={this.state.quizQuestion}
                                 />
                         :
                         <div className="deadScreenContainer">

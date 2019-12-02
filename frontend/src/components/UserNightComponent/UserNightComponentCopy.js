@@ -72,7 +72,7 @@ export class UserNightComponent extends Component {
                             prevVote={this.props.prevVote}
                         />
                         :
-                        <NarratorNight/>
+                        <NarratorNight />
                 }
             </div>
 
