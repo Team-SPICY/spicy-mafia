@@ -32,6 +32,7 @@ export default class Game extends Component {
             mafiaVotes: [],
             civilianVotes: [],
             playersShow: false,
+            instructionShow: false,
             gameState: 'Lobby',
             //isHost: false,
             role: 'civilian',
@@ -327,6 +328,7 @@ export default class Game extends Component {
                             </div>
                             :
                             this.state.gameState === 'Nightime' ?
+                            <div>
                                 <UserNightComponent
                                     mafiaVotes={this.state.mafiaVotes}
                                     civilianVotes={this.state.civilianVotes}
@@ -340,8 +342,11 @@ export default class Game extends Component {
                                     currentUser={this.props.currentUser}
                                     prevVote={this.state.prevVote}
                                     resolve_votes={this.resolve_votes}
-                                />
-                                :
+                                    users={this.state.users}
+                                    playerShow={this.state.playersShow}
+                                    instructionShow={this.state.playersShow}
+                                /></div>
+                              :<div>
                                 <UserDayComponent
                                     aliveUsers={this.state.aliveUsers}
                                     role={this.state.role}
@@ -350,7 +355,14 @@ export default class Game extends Component {
                                     trialVotes={this.state.trialVotes}
                                     resolve_votes={this.resolve_votes}
                                     gameState={this.state.gameState}
+                                    users={this.state.users}
+                                    playerShow={this.state.playersShow}
+                                    instructionShow={this.state.playersShow}
+
                                 />
+                                
+                            </div>
+
                         :
                         <div className="deadScreenContainer">
                             <Image className="deadScreen" src="/images/DeadScreen.png"></Image>

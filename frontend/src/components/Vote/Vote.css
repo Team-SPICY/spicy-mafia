@@ -6,6 +6,7 @@
     width: 64%;
     margin-left: auto;
     margin-right: auto;
+
 }
 
 .me-mafia-li{
@@ -31,4 +32,22 @@
 
 .me-sheriff-li{
     font-weight: bold;
+}
+
+.ingameButtonContainer{
+  position: relative;
+  margin: 0 auto;
+  background: red;
+  margin-top: 100vh;
+}
+
+.voteComponentCardContainer{
+  position: relative;
+  margin: 0 auto;
+  
+}
+.cardContainer{
+  position: absolute;
+
+
 }
