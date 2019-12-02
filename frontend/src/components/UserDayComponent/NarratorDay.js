@@ -8,7 +8,7 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import './Cycles.css';
 import './NarratorDay.css';
-
+import NewsFlash from './NewsFlash'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -20,7 +20,8 @@ export default class NarratorDay extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            accused_player: ""
+            accused_player: "",
+            newsShow: true,
         };
     }
 
@@ -76,9 +77,9 @@ export default class NarratorDay extends Component {
                         </fieldset>
 
                         <div className="killButton">
-                        <Button onClick={() => this.resolve_day_votes()}>Kill Accused and Change Cycle</Button>
+                            <Button onClick={() => this.resolve_day_votes()}>Kill Accused and Change Cycle</Button>
                         </div>
-                        
+
                     </Card.Body>
                 </Card>
             </div>

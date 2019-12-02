@@ -13,15 +13,13 @@ import './DayVote.css';
 
 import WebSocketInstance from '../../services/WebSocket';
 import Instructions from "../Game/Instructions";
-import NewsFlash from "../DayCycle/NewsFlash";
 import Game from "../Game/Game";
-import {UserDayComponent} from '../DayCycle/UserDayComponent';
+import UserDayComponent from '../UserDayComponent/UserDayComponent';
 
 export default class DayVote extends Component {
     constructor(props) {
         super(props);
-        this.state ={
-            newsShow: true,
+        this.state = {
         }
 
     }
@@ -37,39 +35,29 @@ export default class DayVote extends Component {
                         <Card.Title>IS {this.props.accused} GUILTY?</Card.Title>
                         <div>
                             <Button onClick={() => WebSocketInstance.sendMessage({ 'command': 'on_trial_vote', playername: this.props.currentUser, vote: 'Guilty!' })}
-                            variant="secondary" size="lg" block>
+                                variant="secondary" size="lg" block>
                                 YES
                             </Button>
                             <Button onClick={() => WebSocketInstance.sendMessage({ 'command': 'on_trial_vote', playername: this.props.currentUser, vote: 'Innocent!' })}
-                            variant="secondary" size="lg" block>
+                                variant="secondary" size="lg" block>
                                 NO
                             </Button>
                         </div>
                         <Form>
 
-                        <fieldset className="formPeopleVotes">
-                        <Card.Title>THE PEOPLE SAY:</Card.Title> 
-                        {
-                            Object.keys(this.props.trialVotes)
-                            .map( (name) => 
-                                <Card.Text> {name}: {this.props.trialVotes[name]}</Card.Text>
-                            )
-                        }
-                        </fieldset>
+                            <fieldset className="formPeopleVotes">
+                                <Card.Title>THE PEOPLE SAY:</Card.Title>
+                                {
+                                    Object.keys(this.props.trialVotes)
+                                        .map((name) =>
+                                            <Card.Text> {name}: {this.props.trialVotes[name]}</Card.Text>
+                                        )
+                                }
+                            </fieldset>
                         </Form>
                     </Card.Body>
                 </Card>
-                <div>
-                <NewsFlash
-                    show={this.state.newsShow}
-                    onHide={() => this.setState({ newsShow: false })}
-                    mafia={this.props.mafia}
-                    nurse={this.props.nurse}
-                    sheriff ={this.props.sheriff}
-                />
-                </div>
-
-                </div>
+            </div>
         )
     }
 

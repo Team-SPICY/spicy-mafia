@@ -1,4 +1,4 @@
-import config from '../../../frontend/src/config';
+import config from '../config';
 
 class WebSocketService {
     static instance = null;
@@ -69,7 +69,7 @@ class WebSocketService {
         if (command === 'leaving') {
             this.callbacks[command](parsedData.user);
         }
-        if (command == 'recieve_question') {
+        if (command === 'recieve_question') {
             this.callbacks[command](parsedData.question);
         }
         if (command === 'update_accused') {
