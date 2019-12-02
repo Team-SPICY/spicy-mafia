@@ -361,6 +361,9 @@ export default class Game extends Component {
                                     sheriff={this.state.successful_investigation}
                                     winner={this.state.winner}
                                     quizQuestion={this.state.quizQuestion}
+                                    users={this.state.users}
+                                    playerShow={this.state.playersShow}
+                                    instructionShow={this.state.playersShow}
                                 />
 
                             </div>
