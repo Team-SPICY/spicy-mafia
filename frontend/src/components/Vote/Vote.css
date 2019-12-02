@@ -44,10 +44,14 @@
 .voteComponentCardContainer{
   position: relative;
   margin: 0 auto;
-  
+
 }
 .cardContainer{
   position: absolute;
 
 
+}
+
+.quizQuestionHeader{
+  color:white;
 }

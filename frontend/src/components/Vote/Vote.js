@@ -138,7 +138,7 @@ class Vote extends Component {
 
     render() {
         return (
-            <div>
+            <div className="cardVoteContainer">
                 <Container fluid={true}>
                     <Row>
                         <Col xs={6} md={7}>
@@ -187,7 +187,7 @@ class Vote extends Component {
                                     {
                                         this.props.role === 'civilian' ?
                                             <div>
-                                                <h2>{this.props.quizQuestion}</h2>
+                                                <h2 className="quizQuestionHeader">{this.props.quizQuestion}</h2>
                                                 <ul className='list-group list-group-flush civilian-list'>
                                                     {
                                                         this.renderUsers()

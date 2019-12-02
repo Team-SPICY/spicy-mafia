@@ -60,7 +60,6 @@ class UserNightComponent extends Component {
             <div>
                 {this.props.role === 'host' ?
                     <div>
-                        <button onClick={() => this.props.resolve_votes()} className="p_button">Change Cycle</button>
                         <NarratorNight
                             resolve_votes={this.props.resolve_votes}
                             backgroundSrc={this.state.backgroundSrc}

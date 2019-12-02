@@ -1,7 +1,27 @@
+.deadScreenContainer{
+  position: relative;
+  height: 50vh;
+  width: auto;
+
+  /* background: red; */
+  border-radius: 20px;
+}
+
+.deadScreen{
+  width: auto;
+  height: 60vh;
+  margin-top: 50px;
+
+  margin-bottom: 50px;
+  /* background: purple; */
+  border-radius: 20px;
+}
+
+
 .messageMafia {
   font-weight: bold;
   font-size: 10vw;
-  color: #93290C;
+  color: white;
   font-family: sans-serif;
   height: 100vh;
   margin: 0;
@@ -13,7 +33,7 @@
 .messageCivilian {
   font-weight: bold;
   font-size: 10vw;
-  color: #93290C;
+  color: white;
   font-family: sans-serif;
   height: 100vh;
   margin: 0;
