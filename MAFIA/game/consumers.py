@@ -37,8 +37,15 @@ class GameConsumer(AsyncWebsocketConsumer):
     async def disconnect(self, close_code):
         print('self: ',self.username)
         print(close_code)
-        db.child("lobbies").child(self.room_name).child("players").child(self.username).remove()
-        
+
+        if (len(db.child("lobbies").child(self.room_name).child("players").get().val()) == 1):
+            #delete the entire lobby
+            print("DELETING LOBBY")
+            db.child("lobbies").child(self.room_name).remove()
+        else:
+            print("REMOVING PLAYER FROM DATABASE")
+            db.child("lobbies").child(self.room_name).child("players").child(self.username).remove()
+
         await self.channel_layer.group_send(
             #broadcast that you have left
             self.room_group_name,
@@ -339,7 +346,7 @@ class GameConsumer(AsyncWebsocketConsumer):
             nurse_saved = ""
             if len(nurse_votes) != 0:
             #todo sort list by highest occurence, break ties if any using rand num
-                randNum = random.randint(0,len(nurse_votes)-1) 
+                randNum = random.randint(0,len(nurse_votes)-1)
                 nurse_saved = nurse_votes[randNum]
                 if nurse_saved != player_to_kill:
                     num_civilian -= 1
