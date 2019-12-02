@@ -37,16 +37,7 @@ class GameConsumer(AsyncWebsocketConsumer):
     async def disconnect(self, close_code):
         print('self: ',self.username)
         print(close_code)
-        
-        #check to see if there are any players left in the lobby
-        if (len(db.child("lobbies").child(self.room_name).child("players").get().val()) == 1):
-            #delete the entire lobby
-            print("DELETING LOBBY")
-            db.child("lobbies").child(self.room_name).remove()
-        else:
-            #remove player from db
-            print("REMOVING PLAYER FROM DATABASE")
-            db.child("lobbies").child(self.room_name).child("players").child(self.username).remove()
+        db.child("lobbies").child(self.room_name).child("players").child(self.username).remove()
         
         await self.channel_layer.group_send(
             #broadcast that you have left
