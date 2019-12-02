@@ -67,7 +67,7 @@ class WebSocketService {
             this.callbacks[command](parsedData.role, parsedData.roles)
         }
         if (command === 'leaving') {
-            this.callbacks[command](parsedData.user);
+            this.callbacks[command](parsedData.user, parsedData.isHost, parsedData.newHost);
         }
 
         if (command === 'update_accused') {

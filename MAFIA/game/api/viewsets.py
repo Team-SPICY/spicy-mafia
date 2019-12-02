@@ -58,7 +58,7 @@ class LobbyViewSet(viewsets.ViewSet):
                 17: 'Which player is most likely to put a horse head in your bed?',
                 18: 'Which player is most likely to actually use bubble sort?',
                 19: 'Which player is most likely to push their code before testing it?'}
-        
+
         lobby_keys = db.child('lobbies').shallow().get().val()
         all_chars = string.ascii_letters + string.digits
         id = ''
@@ -84,6 +84,7 @@ class LobbyViewSet(viewsets.ViewSet):
         return Response({'lobby_id':id})
 
     def update(self, request, pk=None):
+        print("IN UPDATE METHOD")
         lobby_keys = db.child('lobbies').shallow().get().val()
         if pk in lobby_keys:
             if 'user' in request.data:

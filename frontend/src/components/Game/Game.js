@@ -6,6 +6,7 @@ import Lobby from '../Lobby/Lobby'
 import UserNightComponent from '../UserNightComponent';
 import UserDayComponent from '../UserDayComponent';
 import '../UserDayComponent/Cycles.css'
+import updateHost from '../../App'
 
 import { Modal, Button, ListGroup } from 'react-bootstrap'
 
@@ -253,7 +254,7 @@ export default class Game extends Component {
     }
 
     //call when websocket receinves message that user has disconeccted
-    disconnect(user) {
+    disconnect(user, is_Host, newHost) {
         console.log(`removing user ${user} from user list!`);
         this.setState({
             users: this.state.users.filter(function (filteree) {
@@ -261,6 +262,9 @@ export default class Game extends Component {
             })
         });
         console.log('users: ', this.state.users);
+
+        //function to update the state of isHost
+        updateHost()
     }
 
     addUser(user) {

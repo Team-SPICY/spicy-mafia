@@ -37,13 +37,38 @@ class GameConsumer(AsyncWebsocketConsumer):
     async def disconnect(self, close_code):
         print('self: ',self.username)
         print(close_code)
+
+        #save role of removed player
+        #role = db.child("lobbies").child(self.room_name).child("players").child(self.username).get().val()
+        #isHost = False
+        #newHost = self.username
+
+        #print(len(db.child("lobbies").child(self.room_name).child("players").get().val()))
+        #check to see if there are any players left in the lobby
+        #if (len(db.child("lobbies").child(self.room_name).child("players").get().val()) == 1):
+            #delete the entire lobby
+            #print("DELETING LOBBY")
+            #db.child("lobbies").child(self.room_name).remove()
+        #else:
+            #remove player from db
+        print("REMOVING PLAYER FROM DATABASE")
         db.child("lobbies").child(self.room_name).child("players").child(self.username).remove()
+            #print("THERE ARE MORE PLAYERS LEFT IN THE LOBBY")
+            #if (role == 'host'):
+                #print("PLAYER THAT LEFT WAS HOST")
+                #isHost = True
+                #newHost = random.choice(list(db.child("lobbies").child(self.room_name).child("players").get().val().keys()))
+                #print("THE NEW HOST IS " + newHost)
+                #db.child("lobbies").child(self.room_name).child("players").update({newHost:'host'})
+
         await self.channel_layer.group_send(
             #broadcast that you have left
             self.room_group_name,
             {
                 'type': 'leaving',
                 'message': self.username,
+                'isHost': isHost,
+                'newHost': newHost
             }
             )
         # Leave room group
@@ -64,13 +89,12 @@ class GameConsumer(AsyncWebsocketConsumer):
         message = event['message']
         print(f'ln51: user leaving: {message}')
 
-        #put a pyrebase function to remove self.username into room
-        print('pyrebase do something')
-
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
             'command': 'leaving',
-            'user': message
+            'user': message,
+            'isHost': event['isHost'],
+            'newHost': event['newHost']
         }))
 
     #broadcast that new player joined
@@ -110,7 +134,7 @@ class GameConsumer(AsyncWebsocketConsumer):
         }))
 
     async def on_trial_vote(self, event):
-        
+
         playername = event['playername']
         vote = event['vote']
 
@@ -152,7 +176,7 @@ class GameConsumer(AsyncWebsocketConsumer):
                 'voter': voter,
                 'voted': voted,
                 'prev_vote': prev_vote,
-            }   
+            }
         )
 
     async def set_user(self, event):
@@ -211,7 +235,7 @@ class GameConsumer(AsyncWebsocketConsumer):
         host_name = event['host_name']
         print(host_name)
         players = db.child("lobbies").child(self.room_name).child("players").get().val()
-        player_list = list(players) 
+        player_list = list(players)
         player_list.remove(host_name) #don't reset host
         print("players exluding host: " + str(player_list))
         r_index = random.randint(0, len(player_list)-1)
@@ -237,7 +261,7 @@ class GameConsumer(AsyncWebsocketConsumer):
             player_list.remove(random_player)
             db.child("lobbies").child(self.room_name).child("players").update({random_player:"mafia"})
             num_mafia += 1
-        
+
         db.child("lobbies").child(self.room_name).update({"numMafia":num_mafia})
         db.child("lobbies").child(self.room_name).update({"numOther":length_players - num_mafia})
         players = db.child("lobbies").child(self.room_name).child("players").get().val()
@@ -280,7 +304,7 @@ class GameConsumer(AsyncWebsocketConsumer):
                 'cycle': cycle
             }
         )
-        
+
     async def resolve_votes(self, event):
         #use this to get the votes from the sheriff, nurse, mafia, civilian etc...
         if event['cycle'] == "Nightime":
@@ -369,7 +393,7 @@ class GameConsumer(AsyncWebsocketConsumer):
             'alive_users': alive_users
         }))
 
-    
+
     async def update_players(self, event):
         mafia_kill = event['mafia_kill']
         successful_investigation = event['successful_investigation']
@@ -381,7 +405,7 @@ class GameConsumer(AsyncWebsocketConsumer):
             'successful_investigation': successful_investigation,
             'alive_users': alive_users
         }))
-    
+
     #key-values so receiveing function knows what to do, map a command to a function
     commands = {
         'new_message': chat_message,
