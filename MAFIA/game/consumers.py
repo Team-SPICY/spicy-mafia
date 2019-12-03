@@ -308,6 +308,11 @@ class GameConsumer(AsyncWebsocketConsumer):
                 'question': question
             }))
 
+    '''
+    This function is called when the narrator changes cycle from night to day in the front end. This funct
+    will resolve the votes, see who mafia killed, nurse saved, sheriff investigation and the civilian quiz votes.
+    This fucntion will broadcast to all the players the results of the night cycle. 
+    '''
     async def resolve_votes(self, event):
         #use this to get the votes from the sheriff, nurse, mafia, civilian etc...
         if event['cycle'] == "Nightime":
@@ -348,11 +353,15 @@ class GameConsumer(AsyncWebsocketConsumer):
             #todo sort list by highest occurence, break ties if any using rand num
                 randNum = random.randint(0,len(nurse_votes)-1)
                 nurse_saved = nurse_votes[randNum]
-                if nurse_saved != player_to_kill:
-                    num_civilian -= 1
-                    alive_users.pop(player_to_kill,0)
-                    db.child("lobbies").child(self.room_name).update({"numOther":num_civilian})
-                    nurse_saved = ""
+            else:
+                #choose random player for nurse to save
+                randNum = random.randint(0, len(alive_users)-1)
+                nurse_saved = ( list(alive_users.keys()) )[randNum] 
+            if nurse_saved != player_to_kill:
+                num_civilian -= 1
+                alive_users.pop(player_to_kill,0)
+                db.child("lobbies").child(self.room_name).update({"numOther":num_civilian})
+                nurse_saved = ""
             length_alive = len(alive_users)
             data = {'type': 'update_players', 'alive_players': alive_users}
             #process civilian night votes
@@ -367,7 +376,9 @@ class GameConsumer(AsyncWebsocketConsumer):
                 data['winner'] = civ_votes[-1][0]
             else:
                 r_index = random.randint(0, len(alive_users) -1 )
-                data['winner'] = alive_users[r_index]
+                keys = list(alive_users.keys())
+                print('keys: ',keys)
+                data['winner'] = keys[r_index]
 
             if nurse_votes and length_alive == og_length:
                 data['mafia_kill'] = ""

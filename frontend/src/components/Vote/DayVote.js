@@ -29,7 +29,7 @@ export default class DayVote extends Component {
     render() {
         return (
             <div className={"DayVote"}>
-                <h1>{this.props.role}</h1>
+                <h1>{this.props.currentUser}</h1>
                 <Card style={{ width: '18rem' }}>
                     <Card.Body>
                         <Card.Title>IS {this.props.accused} GUILTY?</Card.Title>

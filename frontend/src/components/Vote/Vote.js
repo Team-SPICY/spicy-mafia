@@ -127,11 +127,19 @@ class Vote extends Component {
         var users = [];
         const currentUser = this.props.currentUser;
         const aliveUsers = this.props.aliveUsers;
-        Object.keys(aliveUsers).forEach(key => {
-            if (aliveUsers[key] !== 'host') {
-                users.push(key);
-            }
-        });
+        if (aliveUsers[currentUser] === 'sheriff') {
+            Object.keys(aliveUsers).forEach(key => {
+                if (aliveUsers[key] !== 'host' && aliveUsers[key] !== 'sheriff') {
+                    users.push(key);
+                }
+            });
+        } else {
+            Object.keys(aliveUsers).forEach(key => {
+                if (aliveUsers[key] !== 'host') {
+                    users.push(key);
+                }
+            });
+        }
         return users.map((user, i) => <ListGroup.Item key={user} className={currentUser === user ? 'me' : 'civilian'}>
             <button onClick={() => this.props.handleVote(currentUser, user)} type="button" className="btn btn-secondary">{user} <span class="badge badge-pill badge-dark m-3" >{this.renderVotes(user)}</span></button></ListGroup.Item>);
     }
@@ -168,6 +176,9 @@ class Vote extends Component {
                                     {this.props.role === 'sheriff' ?
 
                                         <ul className='list-group list-group-flush sheriff-list'>
+                                            {
+                                                this.renderSheriff()
+                                            }
                                             {
                                                 this.renderUsers()
                                             }

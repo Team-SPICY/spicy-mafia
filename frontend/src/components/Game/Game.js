@@ -6,11 +6,7 @@ import Lobby from '../Lobby/Lobby'
 import UserNightComponent from '../UserNightComponent';
 import UserDayComponent from '../UserDayComponent/UserDayComponent';
 import '../UserDayComponent/Cycles.css'
-
 import { Modal, Button, ListGroup } from 'react-bootstrap'
-
-import FlipCard from 'react-flipcard';
-
 import Image from "react-bootstrap/Image";
 import WebSocketInstance from '../../services/WebSocket'
 import Instructions from './Instructions'
@@ -140,7 +136,8 @@ export default class Game extends Component {
                         .then(response => {
                             var qq = response['data']['quizQuestions'];
                             var lengthQ = Object.keys(qq).length;
-                            var ran = Math.round(Math.random(lengthQ - 1));
+                            var ran = Math.round(Math.random() * (lengthQ - 1));
+                            console.log('printing quiz questions', qq, ' printing length: ', lengthQ, 'ran: ', ran);
                             const question = qq[ran]
                             const data = {
                                 'command': 'new_quiz',
@@ -166,14 +163,15 @@ export default class Game extends Component {
                 'civilian_votes': this.state.civilianVotes
             })
         }
-        //changing from daytime to nightime
+        //changing from daytime to nightime, get a new quiz question for the night
         if (this.state.gameState === 'Daytime') {
             var lobby = "http://127.0.0.1:8000/api/lobby/" + this.props.roomID + "/"
             axios.get(lobby)
                 .then(response => {
                     var qq = response['data']['quizQuestions'];
                     var lengthQ = (Object.keys(qq)).length;
-                    var ran = Math.round(Math.random(lengthQ - 1));
+                    console.log('printing quiz questions', qq, ' printing length: ', lengthQ);
+                    var ran = Math.round(Math.random() * (lengthQ - 1));
                     const question = qq[ran]
                     const data = {
                         'command': 'new_quiz',
@@ -349,33 +347,33 @@ export default class Game extends Component {
                                     instructionShow={this.state.playersShow}
                                 />
                                 :
-                                  this.state.gameState === 'mafia_win' ?
-                                  <div>
-                                    <h1 class="messageMafia">MAFIA WON!</h1>
-                                    <Image className="messengerImage" src="/images/GaryCard.png"></Image>
-                                  </div>
-                                  :
-                                  this.state.gameState === 'civilian_win' ?
-                                  <div>
-                                    <h1 class="messageCivilian">CIVILIANS WON!</h1>
-                                    <Image className="messengerImage" src="/images/GaryCard.png"></Image>
-                                  </div>
-                                :
-                                <UserDayComponent
-                                    aliveUsers={this.state.aliveUsers}
-                                    role={this.state.role}
-                                    accused={this.state.accused}
-                                    currentUser={this.props.currentUser}
-                                    trialVotes={this.state.trialVotes}
-                                    mafia_kill={this.state.mafiaKill}
-                                    nurse_saved={this.state.nurseSaved}
-                                    sheriff={this.state.successful_investigation}
-                                    winner={this.state.winner}
-                                    quizQuestion={this.state.quizQuestion}
-                                    users={this.state.users}
-                                    playerShow={this.state.playersShow}
-                                    instructionShow={this.state.playersShow}
-                                />
+                                this.state.gameState === 'mafia_win' ?
+                                    <div>
+                                        <h1 class="messageMafia">MAFIA WON!</h1>
+                                        <Image className="messengerImage" src="/images/GaryCard.png"></Image>
+                                    </div>
+                                    :
+                                    this.state.gameState === 'civilian_win' ?
+                                        <div>
+                                            <h1 class="messageCivilian">CIVILIANS WON!</h1>
+                                            <Image className="messengerImage" src="/images/GaryCard.png"></Image>
+                                        </div>
+                                        :
+                                        <UserDayComponent
+                                            aliveUsers={this.state.aliveUsers}
+                                            role={this.state.role}
+                                            accused={this.state.accused}
+                                            currentUser={this.props.currentUser}
+                                            trialVotes={this.state.trialVotes}
+                                            mafia_kill={this.state.mafiaKill}
+                                            nurse_saved={this.state.nurseSaved}
+                                            sheriff={this.state.successful_investigation}
+                                            winner={this.state.winner}
+                                            quizQuestion={this.state.quizQuestion}
+                                            users={this.state.users}
+                                            playerShow={this.state.playersShow}
+                                            instructionShow={this.state.playersShow}
+                                        />
                         :
                         <div className="deadScreenContainer">
                             <Image className="deadScreen" src="/images/DeadScreen.png"></Image>
