@@ -60,7 +60,7 @@ class LobbyViewSet(viewsets.ViewSet):
                 19: 'Which player is most likely to push their code before testing it?'}
 
         lobby_keys = db.child('lobbies').shallow().get().val()
-        all_chars = string.ascii_letters + string.digits
+        all_chars = string.ascii_uppercase
         id = ''
         retry = 0
         while retry < 10:
