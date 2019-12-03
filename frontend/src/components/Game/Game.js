@@ -32,9 +32,8 @@ export default class Game extends Component {
             playersShow: false,
             instructionShow: false,
             gameState: 'Lobby',
-            //isHost: false,
             role: 'civilian',
-            isHost: false,
+            isHost: this.props.isHost,
             flipped: false,
             prevVote: "",
             accused: '',
@@ -287,7 +286,7 @@ export default class Game extends Component {
     }
 
     //call when websocket receinves message that user has disconeccted
-    disconnect(user) {
+    disconnect(user, is_Host, newHost) {
         console.log(`removing user ${user} from user list!`);
         this.setState({
             users: this.state.users.filter(function (filteree) {
@@ -295,6 +294,13 @@ export default class Game extends Component {
             })
         });
         console.log('users: ', this.state.users);
+
+        //if the currentUser is the new host
+        if (is_Host == true && this.props.currentUser == newHost){
+          //set currentUser isHost state to true
+          console.log('SETTING NEW HOST STATE')
+          this.setState({isHost: true})
+        }
     }
 
     addUser(user) {
@@ -314,7 +320,7 @@ export default class Game extends Component {
                                 <Lobby
                                     users={this.state.users}
                                     currentUser={this.props.currentUser}
-                                    isHost={this.props.isHost}
+                                    isHost={this.state.isHost}
                                     roomID={this.props.roomID}
                                     startGame={this.startGame}
                                 />
