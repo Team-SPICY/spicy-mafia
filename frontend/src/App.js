@@ -91,12 +91,7 @@ export default class App extends Component {
 
     }
   }
-
- //function to change the state of isHost
- updateHost() {
-   console.log("UPDATING HOST")
- }
-
+  
   render() {
     const {
       loggedIn,

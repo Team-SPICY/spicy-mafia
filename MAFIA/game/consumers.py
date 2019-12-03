@@ -38,28 +38,28 @@ class GameConsumer(AsyncWebsocketConsumer):
         print('self: ',self.username)
         print(close_code)
 
-        #save role of removed player
-        #role = db.child("lobbies").child(self.room_name).child("players").child(self.username).get().val()
-        #isHost = False
-        #newHost = self.username
+        isHost = False
+        newHost = self.username
 
-        #print(len(db.child("lobbies").child(self.room_name).child("players").get().val()))
+        print(len(db.child("lobbies").child(self.room_name).child("players").get().val()))
         #check to see if there are any players left in the lobby
-        #if (len(db.child("lobbies").child(self.room_name).child("players").get().val()) == 1):
+        if (len(db.child("lobbies").child(self.room_name).child("players").get().val()) == 1):
             #delete the entire lobby
-            #print("DELETING LOBBY")
-            #db.child("lobbies").child(self.room_name).remove()
-        #else:
+            print("DELETING LOBBY")
+            db.child("lobbies").child(self.room_name).remove()
+        else:
+            #save role of removed player
+            role = db.child("lobbies").child(self.room_name).child("players").child(self.username).get().val()
             #remove player from db
-        print("REMOVING PLAYER FROM DATABASE")
-        db.child("lobbies").child(self.room_name).child("players").child(self.username).remove()
-            #print("THERE ARE MORE PLAYERS LEFT IN THE LOBBY")
-            #if (role == 'host'):
-                #print("PLAYER THAT LEFT WAS HOST")
-                #isHost = True
-                #newHost = random.choice(list(db.child("lobbies").child(self.room_name).child("players").get().val().keys()))
-                #print("THE NEW HOST IS " + newHost)
-                #db.child("lobbies").child(self.room_name).child("players").update({newHost:'host'})
+            print("REMOVING PLAYER FROM DATABASE")
+            db.child("lobbies").child(self.room_name).child("players").child(self.username).remove()
+            print("THERE ARE MORE PLAYERS LEFT IN THE LOBBY")
+            if (role == 'host'):
+                print("PLAYER THAT LEFT WAS HOST")
+                isHost = True
+                newHost = random.choice(list(db.child("lobbies").child(self.room_name).child("players").get().val().keys()))
+                print("THE NEW HOST IS " + newHost)
+                db.child("lobbies").child(self.room_name).child("players").update({newHost:'host'})
 
         await self.channel_layer.group_send(
             #broadcast that you have left
