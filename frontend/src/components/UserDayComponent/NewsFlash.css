@@ -2,7 +2,6 @@
     background-color: antiquewhite;
     padding: 15px 20px 15px 20px;
     border-style: hidden;
-    align-items: normal;
 }
 .head_cont{
     text-align: center;
@@ -17,7 +16,7 @@
     text-align: center;
 }
 
-.sub_title{
+.date{
     text-transform: uppercase;
     border-bottom: 2px solid black;
     border-top: 2px solid black;
@@ -26,11 +25,38 @@
     font-family: Serif;
 }
 .result{
-    color: red;
-    font-family:  "Courier New", Courier, monospace;
+    color: darkred;
+}
+
+.column {
+    width: 50%;
+    display: inline-block;
+    vertical-align: top;
+    font-family: Serif;
+}
+
+.inside_text {
+    font-family: Serif;
+    font-size: 20px;
+    color: black;
+}
+.sub_title{
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
 }
 
 .footer{
     background: antiquewhite;
-    align-items: center;
+    text-align: center;
+}
+
+.figure_img {
+    background-color: antiquewhite;
+    padding: 15px 20px 15px 20px;
+    border-style: hidden;
+    float: right;
+    text-wrap: normal;
+    flex-wrap: wrap;
+
 }
