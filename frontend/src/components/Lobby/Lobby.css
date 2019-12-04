@@ -29,11 +29,10 @@
 
   font-size: 20px;
   padding-top: 25px;
-  font-stretch: ultra-condensed;
+  text-align: center;
 }
 .other{
   color: white;
-  margin: 0 auto;
   font-weight: bold;
   background: rgb(99,99,99);
   background: radial-gradient(circle, rgba(99,99,99,1) 45%,
@@ -41,7 +40,8 @@
 
   font-size: 20px;
   padding-top: 25px;
-  font-stretch: ultra-condensed;
+  text-align: center;
+
 }
 
 

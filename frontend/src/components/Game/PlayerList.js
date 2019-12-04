@@ -20,23 +20,22 @@ class PlayerList extends Component {
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
             >
-                <Modal.Header closeButton>
+                <Modal.Header bsPrefix="playerListHeader">
                     <Modal.Title id="contained-modal-title-vcenter">
-                        Players
+                        PLAYERS
                     </Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body bsPrefix="playerListBody">
                     <div className={"container"}>
-                        LIST OF PLAYERS
-                        <div>
+                        <div className="playerListLG">
                             <ListGroup>{
                                 this.renderUsers()
                             }</ListGroup>
                         </div>
                     </div>
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button variant={'outline-dark'} onClick={this.props.onHide}>Close</Button>
+                <Modal.Footer bsPrefix="playerListFooter">
+                    <Button variant={'outline-dark'} onClick={this.props.onHide}>CLOSE</Button>
                 </Modal.Footer>
             </Modal>
         );

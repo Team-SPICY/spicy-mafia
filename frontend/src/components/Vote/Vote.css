@@ -1,50 +1,198 @@
+
+.buttonVoteNight{
+  margin: 5px;
+  padding-bottom: 10px;
+  padding-top: 5px;
+  width: 200px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: white;
+  background: rgb(144,142,142);
+  background: linear-gradient(180deg, rgba(144,142,142,1) 26%, rgba(102,101,101,1) 63%, rgba(66,66,66,1) 100%);
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0px 10px 10px 5px rgba(0, 0, 0, 0.05);
+
+}
+
+.buttonVoteNight:hover {
+  background: -webkit-linear-gradient(#861704, #9f3a14);
+
+  background-color: white;
+}
+.badgeVotes{
+  background: white;
+  border-radius: 20px;
+  padding: 0px 10px 0px 10px;
+  margin-left: 10px;
+  margin-top: 10px;
+  color: red;
+  font-size: 15px;
+}
+
+.civilian-list{
+  border-radius: 10px;
+  max-height: 180px;
+  margin-bottom: 10px;
+  overflow:scroll;
+  -webkit-overflow-scrolling: touch;
+  width: 64%;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 5px #919191;
+}
+.nurse-list{
+  border-radius: 10px;
+  max-height: 180px;
+  margin-bottom: 10px;
+  overflow:scroll;
+  -webkit-overflow-scrolling: touch;
+  width: 64%;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 5px #919191;
+}
+.civilian{
+  background: white;
+  padding: 15px 0px 15px 0px;
+
+  margin: 10px 0px 10px 0px;
+  border-radius: 10px;
+  box-shadow: 0 5px #919191;
+}
+.me-ingame{
+
+  padding: 15px 0px 15px 0px;
+
+  color: rgb(182,33,15);
+  color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%, rgba(52,2,2,1) 100%);
+  background: rgb(75,75,75);
+  background: radial-gradient(circle, rgba(75,75,75,1) 45%,
+    rgba(57,57,57,1) 76%, rgba(19,19,19,1) 100%);
+    font-weight: bold;
+  margin: 10px 0px 10px 0px;
+  border-radius: 10px;
+    box-shadow: 0 5px black;
+}
 .mafia-list{
-    max-height: 300px;
+    border-radius: 10px;
+    max-height: 180px;
     margin-bottom: 10px;
     overflow:scroll;
     -webkit-overflow-scrolling: touch;
     width: 64%;
     margin-left: auto;
     margin-right: auto;
+    box-shadow: 0 5px #919191;
+
+
 
 }
 
 .me-mafia-li{
-    color: rgb(182,33,15);
-    color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%, rgba(52,2,2,1) 100%);
+
+  padding: 25px 0px 15px 0px;
+
+  color: rgb(182,33,15);
+  color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%, rgba(52,2,2,1) 100%);
+  background: rgb(75,75,75);
+  background: radial-gradient(circle, rgba(75,75,75,1) 45%,
+    rgba(57,57,57,1) 76%, rgba(19,19,19,1) 100%);
     font-weight: bold;
+  margin: 10px 0px 10px 0px;
+  border-radius: 10px;
+    box-shadow: 0 5px black;
 }
 
 .mafia-li{
+    padding: 25px 0px 15px 0px;
+
+    font-weight: bold;
     color: rgb(182,33,15);
     color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%, rgba(52,2,2,1) 100%);
+    background: white;
+    margin: 10px 0px 10px 0px;
+    border-radius: 10px;
+
+    box-shadow: 0 5px #919191;
 
 }
-.sheriff-li{
-    max-height: 300px;
-    margin-bottom: 10px;
-    overflow:scroll;
-    -webkit-overflow-scrolling: touch;
-    width: 64%;
-    margin-left: auto;
-    margin-right: auto;
+.sheriff-list{
+  border-radius: 10px;
+  max-height: 180px;
+  margin-bottom: 10px;
+  overflow:scroll;
+  -webkit-overflow-scrolling: touch;
+  width: 64%;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 5px #919191;
 }
 
 .me-sheriff-li{
-    font-weight: bold;
+  padding: 25px 0px 15px 0px;
+  font-size: 20px;
+  color: orange;
+  background: rgb(75,75,75);
+  background: radial-gradient(circle, rgba(75,75,75,1) 45%,
+    rgba(57,57,57,1) 76%, rgba(19,19,19,1) 100%);
+  font-weight: bold;
+  margin: 10px 0px 10px 0px;
+  border-radius: 10px;
+  box-shadow: 0 5px black;
+}
+.sheriff-li{
+  padding: 25px 0px 15px 0px;
+
+  font-weight: bold;
+  color: orange;
+  background: white;
+  margin: 10px 0px 10px 0px;
+  border-radius: 10px;
+
+  box-shadow: 0 5px #919191;
 }
 
 .ingameButtonContainer{
   padding-bottom: 10px;
   margin: 50px 0px 0px 0px;
-  margin-top: 100vh;
+
 }
 .ingameButtonContainer Button{
   position: relative;
   margin: 0 auto;
   margin: 0px 10px 0px 10px;
 
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: black;
+  background-color: white;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 5px #919191;
+  display:inline;
+
 }
+.ingameButtonContainer Button:hover {
+   background-color: white;
+   color: gray;
+
+
+ }
+
+ .ingameButtonContainer Button:active {
+   background-color: #989898;
+
+   transform: scale(1);
+ }
 
 .voteComponentCardContainer{
   position: relative;
@@ -59,4 +207,7 @@
 
 .quizQuestionHeader{
   color:white;
+  font-size: 30px;
+  margin-top: -15px;
+  margin-bottom: 15px;
 }

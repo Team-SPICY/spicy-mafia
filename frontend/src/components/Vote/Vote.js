@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import './Vote.css'
 import FlipCard from 'react-flipcard';
-import { Card, Modal, Button, ListGroup, Container } from 'react-bootstrap'
+import { Card, Modal, Button, ListGroup, Container, Badge} from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col';
 import Image from "react-bootstrap/Image";
+import PlayerList from "../Game/PlayerList";
+import Instructions from '../Game/Instructions'
 
 class Vote extends Component {
     constructor(props) {
@@ -19,6 +21,12 @@ class Vote extends Component {
             isFlipped: false,
 
         };
+    }
+    initialButtonState(){
+      this.setState({bgColor: 'light'})
+    }
+    selectedButtonState(){
+      this.setState({bgColor: 'danger'})
     }
 
     showBack() {
@@ -89,8 +97,9 @@ class Vote extends Component {
                 mafia_users.push(key);
             };
         });
-
-        return mafia_users.map((user, i) => <ListGroup.Item key={user} className={mafia_users[user] === currentUser ? 'me-mafia-li' : 'mafia-li'}>
+        console.log("alive users", aliveUsers)
+        console.log("current user", currentUser)
+        return mafia_users.map((user, i) => <ListGroup.Item bsPrefix="playerVoteItem" key={user} className={mafia_users[i] === currentUser ? 'me-mafia-li' : 'mafia-li'}>
             <p>{user}</p></ListGroup.Item>);
     }
     //render sheriff members without clickable activity so sheriff do not investigate themselves
@@ -104,7 +113,7 @@ class Vote extends Component {
             };
         });
 
-        return sheriff_users.map((user, i) => <ListGroup.Item key={user} className={sheriff_users[user] === currentUser ? 'me-sheriff-li' : 'sheriff-li'}>
+        return sheriff_users.map((user, i) => <ListGroup.Item bsPrefix="playerVoteItem" key={user} className={sheriff_users[i] === currentUser ? 'me-sheriff-li' : 'sheriff-li'}>
             <p>{user}</p></ListGroup.Item>);
     }
 
@@ -119,8 +128,8 @@ class Vote extends Component {
                 users.push(key);
             }
         });
-        return users.map((user, i) => <ListGroup.Item key={user} className={'civilian'}>
-            <button onClick={() => this.props.handleVote(currentUser, user)} type="button" className="btn btn-secondary">{user} <span class="badge badge-pill badge-dark m-3" >{this.renderVotes(user)}</span></button></ListGroup.Item>);
+        return users.map((user, i) => <ListGroup.Item  bsPrefix="playerVoteItem" key={user} className={'civilian'}>
+            <Button onClick={() => this.props.handleVote(currentUser, user)} bsPrefix="buttonVoteNight" variant="dark">{user} <Badge variant="danger">{this.renderVotes(user)}</Badge><span className="sr-only">votes</span></Button></ListGroup.Item>);
     }
     //renders all users except the host
     renderUsers = () => {
@@ -140,10 +149,11 @@ class Vote extends Component {
                 }
             });
         }
-        return users.map((user, i) => <ListGroup.Item key={user} className={currentUser === user ? 'me' : 'civilian'}>
-            <button onClick={() => this.props.handleVote(currentUser, user)} type="button" className="btn btn-secondary">{user} <span class="badge badge-pill badge-dark m-3" >{this.renderVotes(user)}</span></button></ListGroup.Item>);
+        return users.map((user, i) => <ListGroup.Item bsPrefix="playerVoteItem" key={user} className={currentUser === user ? 'me-ingame' : 'civilian'}>
+            <Button onClick={() => this.props.handleVote(currentUser, user)} bsPrefix="buttonVoteNight" variant="dark">{user} <Badge  variant="danger">{this.renderVotes(user)}</Badge><span className="sr-only">votes</span></Button></ListGroup.Item>);
     }
-
+    //
+//className={key === this.state.selectedButton ? 'selected' : ''} type="button" style={{ width: '25%', border: "none" }} key={key} onClick={this.buttonSelected(key)}>{key}</button>
     render() {
         return (
             <div className="cardVoteContainer">
@@ -156,42 +166,57 @@ class Vote extends Component {
                                 onFlip={this.handleOnFlip}
                                 onKeyDown={this.handleKeyDown}
                             >
-                                <div onClick={this.showBack} >
-                                    <img src="/images/CardBack.png" width={" "} height={"600"} />
+                                <div>
+                                    <img onClick={this.showBack} src="/images/CardBack.png" width={" "} height={"600"} />
+                                      <div className="ingameButtonContainer">
+                                        <Button onClick={() => this.setState({ instructionShow: true, isFlipped: false })} variant={"secondary"} type={"button"} className="instructionsButton">INSTRUCTIONS</Button>
+                                          <Instructions
+                                              show={this.state.instructionShow}
+                                              onHide={() => this.setState({ instructionShow: false, isFlipped: false })}
+                                          />
+                                        <Button className="playerListButton" onClick={() => this.setState({ playersShow: true })}>PLAYER LIST</Button>
+                                          <PlayerList
+                                              users={this.props.users}
+                                              currentUser={this.props.currentUser}
+                                              show={this.state.playersShow}
+                                              onHide={() => this.setState({ playersShow: false })}
+                                          />
+                                      </div>
                                 </div>
-                                <div ref={this.backButton} onClick={this.showFront} >
+                                <div>
+                                    <img ref={this.backButton} onClick={this.showFront} src={this.props.backgroundSrc} width={" "} height={"600"} />
                                     {
                                         this.props.role === 'mafia' ?
-                                            <ul className='list-group list-group-flush mafia-list'>
+                                            <ListGroup bsPrefix='list-group list-group-flush mafia-list' variant="flush">
                                                 {
                                                     this.renderMafia()
                                                 }
                                                 {
                                                     this.renderNonMafiaUsers()
                                                 }
-                                            </ul>
+                                            </ListGroup>
                                             :
                                             null
                                     }
                                     {this.props.role === 'sheriff' ?
 
-                                        <ul className='list-group list-group-flush sheriff-list'>
+                                        <ListGroup bsPrefix='list-group list-group-flush sheriff-list' variant="flush">
                                             {
                                                 this.renderSheriff()
                                             }
                                             {
                                                 this.renderUsers()
                                             }
-                                        </ul>
+                                        </ListGroup>
                                         :
                                         null
                                     }
                                     {this.props.role === 'nurse' ?
-                                        <ul className='list-group list-group-flush nurse-list'>
+                                        <ListGroup bsPrefix='list-group list-group-flush nurse-list' variant="flush">
                                             {
                                                 this.renderUsers()
                                             }
-                                        </ul>
+                                        </ListGroup>
                                         :
                                         null
                                     }
@@ -199,17 +224,18 @@ class Vote extends Component {
                                         this.props.role === 'civilian' ?
                                             <div>
                                                 <h2 className="quizQuestionHeader">{this.props.quizQuestion}</h2>
-                                                <ul className='list-group list-group-flush civilian-list'>
+                                                <ListGroup bsPrefix='list-group list-group-flush civilian-list' variant="flush">
                                                     {
                                                         this.renderUsers()
                                                     }
-                                                </ul>
+                                                </ListGroup>
                                             </div>
                                             :
                                             null
                                     }
 
-                                    <img src={this.props.backgroundSrc} width={" "} height={"600"} />
+
+
                                 </div>
                             </FlipCard>
                         </Col>

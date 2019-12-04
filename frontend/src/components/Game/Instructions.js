@@ -16,7 +16,7 @@ class Instructions extends Component {
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
             >
-                <Modal.Header bsPrefix="instructionsHeader" closeButton>
+                <Modal.Header bsPrefix="instructionsHeader">
                     <Modal.Title bsPrefix="instructionsTitle" id="contained-modal-title-vcenter">
                         INSTRUCTIONS
                     </Modal.Title>

@@ -1,3 +1,16 @@
+.voteStateItem{
+  background: white;
+  width: 300px;
+  margin: 0 auto;
+  margin-top: 10px;
+  padding: 10px 10px 10px 10px;
+  border-style: none;
+  border-radius: 10px;
+  box-shadow: 0 5px #919191;
+  outline: none;
+  font-weight: bold;
+}
+
 .voting-stats-header{
   color:white;
 }
@@ -6,14 +19,9 @@
   width: 10px;
 }
 .changeCycleButtonContainer Button{
-  
-
-
-
-  margin-top: 10px;
-
-  align-self: center;
-
+  position: relative;
+  margin: 0 auto;
+  margin: 30px 10px 0px 10px;
 
   font-size: 15px;
   font-weight: bold;
@@ -21,30 +29,23 @@
   text-align: center;
   text-decoration: none;
   outline: none;
-  color: white;
-  background: rgb(144,142,142);
-  background: linear-gradient(180deg, rgba(144,142,142,1) 26%, rgba(102,101,101,1) 63%, rgba(66,66,66,1) 100%);
+  color: black;
+  background-color: white;
   border: none;
-  border-radius: 10px;
-  /* box-shadow: 0 5px #919191; */
-  box-shadow: 0px 10px 10px 5px rgba(0, 0, 0, 0.05);
+  border-radius: 15px;
+  box-shadow: 0 5px #919191;
+  display:inline;
 
-}
-
-
-
-.changeCycleButtonContainer Button:active {
-  color: rgb(182,33,15);
-  color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%,
-    rgba(52,2,2,1) 100%);
-  background: gray;
-  transform: scale(1);
 }
 .changeCycleButtonContainer Button:hover {
-  background: -webkit-linear-gradient(#861704, #9f3a14);
+   background-color: white;
+   color: gray;
 
-  background-color: white;
-}
-.changeCycleButtonContainer Button:focus {
-  outline: 0;
-}
+
+ }
+
+ .changeCycleButtonContainer Button:active {
+   background-color: #989898;
+
+   transform: scale(1);
+ }

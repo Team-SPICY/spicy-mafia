@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import FlipCard from 'react-flipcard';
 import ListGroup from "react-bootstrap/ListGroup";
-import { Card, Modal, Button, Container } from 'react-bootstrap'
+import { Card, Modal, Button, Container, Badge } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col';
 import './NarratorNight.css';
@@ -53,7 +53,7 @@ class NarratorNight extends Component {
         });
         const votes = this.props.mafiaVotes;
         const numVotes = votes.length;
-        return (<ListGroup.Item>Mafia Votes:{numVotes}/{num}</ListGroup.Item>)
+        return (<ListGroup.Item bsPrefix="voteStateItem">MAFIA VOTES: {numVotes}/{num} {numVotes === num? <Badge variant="danger"> DONE</Badge>:null}</ListGroup.Item>)
 
     }
     renderCivilianStats() {
@@ -67,7 +67,7 @@ class NarratorNight extends Component {
         });
         const votes = this.props.civilianVotes;
         const numVotes = votes.length;
-        return (<ListGroup.Item>Civilian Votes: {numVotes}/{num}</ListGroup.Item>)
+        return (<ListGroup.Item bsPrefix="voteStateItem">CIVILIAN VOTES: {numVotes}/{num} {numVotes === num ? <Badge variant="danger"> DONE</Badge>:null}</ListGroup.Item>)
 
     }
 
@@ -82,7 +82,7 @@ class NarratorNight extends Component {
         });
         const votes = this.props.nurseVotes;
         const numVotes = votes.length;
-        return (<ListGroup.Item>Nurse Votes: {numVotes}/{num}</ListGroup.Item>)
+        return (<ListGroup.Item bsPrefix="voteStateItem">NURSE VOTES: {numVotes}/{num} {numVotes === num? <Badge variant="danger"> DONE</Badge>:null}</ListGroup.Item>)
     }
 
     renderSheriffStats() {
@@ -96,15 +96,16 @@ class NarratorNight extends Component {
         });
         const votes = this.props.sheriffVotes;
         const numVotes = votes.length;
-        return (<ListGroup.Item>Sheriff Votes: {numVotes}/{num}</ListGroup.Item>)
+        return (<ListGroup.Item bsPrefix="voteStateItem">SHERIFF VOTES: {numVotes}/{num} {numVotes === num? <Badge variant="danger"> DONE</Badge>:null}</ListGroup.Item>)
 
     }
 
 
 
     render() {
-        return (<div>
-            <Container fluid={true}>
+        return (
+          <div className="narratorNightContainer">
+            <Container bsPrefix="narratorNightContainerBS" fluid={true}>
                 <Row>
                     <Col xs={6} md={7}>
                         <FlipCard
@@ -116,7 +117,7 @@ class NarratorNight extends Component {
                             <div onClick={this.showBack} >
                                 <img src={this.props.backgroundSrc} width={" "} height={"600"} />
                                 <div className='vote-stats'>
-                                    <h3 className='voting-stats-header'>Voting Stats - Don't Snitch!</h3>
+                                    <h3 className='voting-stats-header'>VOTING STATES</h3>
                                     <ListGroup variant="flush">
                                         {this.renderMafiaStats()}
                                         {this.renderNurseStats()}
@@ -125,7 +126,7 @@ class NarratorNight extends Component {
                                     </ListGroup>
                                 </div>
                                 <div className="changeCycleButtonContainer">
-                                  <Button onClick={this.props.resolve_votes} className="changeCycleButton">Change Cycle</Button>
+                                  <Button onClick={this.props.resolve_votes} className="changeCycleButton">CHANGE CYCLE</Button>
                                 </div>
                             </div>
                             <div ref={this.backButton} onClick={this.showFront} >
