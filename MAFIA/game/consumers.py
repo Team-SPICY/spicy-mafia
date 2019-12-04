@@ -38,6 +38,7 @@ class GameConsumer(AsyncWebsocketConsumer):
         print('self: ',self.username)
         print(close_code)
 
+        #set fields for broadcasting
         isHost = False
         newHost = self.username
 
@@ -54,11 +55,15 @@ class GameConsumer(AsyncWebsocketConsumer):
             print("REMOVING PLAYER FROM DATABASE")
             db.child("lobbies").child(self.room_name).child("players").child(self.username).remove()
             print("THERE ARE MORE PLAYERS LEFT IN THE LOBBY")
+            #if the role of the player leaving is host
             if (role == 'host'):
                 print("PLAYER THAT LEFT WAS HOST")
+                #set fields for broadcasting
                 isHost = True
+                #randomly choose a new host from players in lobby
                 newHost = random.choice(list(db.child("lobbies").child(self.room_name).child("players").get().val().keys()))
                 print("THE NEW HOST IS " + newHost)
+                #set new host to be host in database
                 db.child("lobbies").child(self.room_name).child("players").update({newHost:'host'})
 
         await self.channel_layer.group_send(
@@ -95,7 +100,7 @@ class GameConsumer(AsyncWebsocketConsumer):
             'command': 'leaving',
             'user': message,
             'isHost': event['isHost'],
-            'newHost': event['newHost'] 
+            'newHost': event['newHost']
         }))
 
     #broadcast that new player joined
