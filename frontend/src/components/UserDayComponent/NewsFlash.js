@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Button, ListGroup } from 'react-bootstrap'
+import { Modal, Button, Figure, Image} from 'react-bootstrap'
 import './NewsFlash.css';
 
 
@@ -23,10 +23,18 @@ class NewsFlash extends Component {
             >
                 <Modal.Body bsPrefix="News">
                     <div>
-                        <h1 className="title">RECAP FROM LAST NIGHT...</h1>
-                        <h3> {this.props.quizQuestion}</h3>
+                        <div className={"head_cont"}>
+                            <header className={"title"}>THE DARK NEWS</header>
+                        </div>
+                        <div className={"sub_title"}>
+                            This City, This Day, 1960
+                        </div>
+                        <p> {this.props.quizQuestion}</p>
                         <p>{this.props.winner}</p>
-                        <h3 className="title">Sheriff Investigation</h3>
+                        <p className="title">Sheriff Investigation</p>
+                        <Figure>
+                            <Image src={"/images/SheriffCard.png"} thumbnail={true} />
+                        </Figure>
                         {
                             this.props.sheriff === true ?
                                 <h3 className="result">Sheriff Investigated... and found a mafia</h3>
@@ -52,8 +60,8 @@ class NewsFlash extends Component {
                         }
                     </div>
                 </Modal.Body>
-                <Modal.Footer bsPrefix={"News"}>
-                    <Button variant={'outline-dark'} onClick={this.props.onHide}>Close</Button>
+                <Modal.Footer bsPrefix={"footer"}>
+                    <Button variant={'outline-light'} onClick={this.props.onHide}>Close</Button>
                 </Modal.Footer>
             </Modal>
         );
