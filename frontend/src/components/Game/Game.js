@@ -143,7 +143,7 @@ export default class Game extends Component {
                                 'question': question
                             };
                             console.log('sendingQuizQuestion')
-                            WebSocketInstance.sendMessage(data);
+                            WebS ocketInstance.sendMessage(data);
                         });
                 }
             })
