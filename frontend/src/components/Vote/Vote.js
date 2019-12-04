@@ -160,6 +160,7 @@ class Vote extends Component {
                                     <img src="/images/CardBack.png" width={" "} height={"600"} />
                                 </div>
                                 <div ref={this.backButton} onClick={this.showFront} >
+                                    <img src={this.props.backgroundSrc} width={" "} height={"600"} />
                                     {
                                         this.props.role === 'mafia' ?
                                             <ul className='list-group list-group-flush mafia-list'>
@@ -209,7 +210,7 @@ class Vote extends Component {
                                             null
                                     }
 
-                                    <img src={this.props.backgroundSrc} width={" "} height={"600"} />
+
                                 </div>
                             </FlipCard>
                         </Col>
