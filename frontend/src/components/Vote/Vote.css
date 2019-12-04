@@ -6,6 +6,7 @@
     width: 64%;
     margin-left: auto;
     margin-right: auto;
+
 }
 
 .me-mafia-li{
@@ -31,4 +32,31 @@
 
 .me-sheriff-li{
     font-weight: bold;
+}
+
+.ingameButtonContainer{
+  padding-bottom: 10px;
+  margin: 50px 0px 0px 0px;
+  margin-top: 100vh;
+}
+.ingameButtonContainer Button{
+  position: relative;
+  margin: 0 auto;
+  margin: 0px 10px 0px 10px;
+
+}
+
+.voteComponentCardContainer{
+  position: relative;
+  margin: 0 auto;
+
+}
+.cardContainer{
+  position: absolute;
+
+
+}
+
+.quizQuestionHeader{
+  color:white;
 }

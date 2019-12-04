@@ -6,11 +6,7 @@ import Lobby from '../Lobby/Lobby'
 import UserNightComponent from '../UserNightComponent';
 import UserDayComponent from '../UserDayComponent/UserDayComponent';
 import '../UserDayComponent/Cycles.css'
-
 import { Modal, Button, ListGroup } from 'react-bootstrap'
-
-import FlipCard from 'react-flipcard';
-
 import Image from "react-bootstrap/Image";
 import WebSocketInstance from '../../services/WebSocket'
 import Instructions from './Instructions'
@@ -34,10 +30,10 @@ export default class Game extends Component {
             mafiaVotes: [],
             civilianVotes: [],
             playersShow: false,
+            instructionShow: false,
             gameState: 'Lobby',
-            //isHost: false,
             role: 'civilian',
-            isHost: false,
+            isHost: this.props.isHost,
             flipped: false,
             prevVote: "",
             accused: '',
@@ -139,7 +135,8 @@ export default class Game extends Component {
                         .then(response => {
                             var qq = response['data']['quizQuestions'];
                             var lengthQ = Object.keys(qq).length;
-                            var ran = Math.round(Math.random(lengthQ - 1));
+                            var ran = Math.round(Math.random() * (lengthQ - 1));
+                            console.log('printing quiz questions', qq, ' printing length: ', lengthQ, 'ran: ', ran);
                             const question = qq[ran]
                             const data = {
                                 'command': 'new_quiz',
@@ -165,14 +162,15 @@ export default class Game extends Component {
                 'civilian_votes': this.state.civilianVotes
             })
         }
-        //changing from daytime to nightime
+        //changing from daytime to nightime, get a new quiz question for the night
         if (this.state.gameState === 'Daytime') {
             var lobby = "http://127.0.0.1:8000/api/lobby/" + this.props.roomID + "/"
             axios.get(lobby)
                 .then(response => {
                     var qq = response['data']['quizQuestions'];
                     var lengthQ = (Object.keys(qq)).length;
-                    var ran = Math.round(Math.random(lengthQ - 1));
+                    console.log('printing quiz questions', qq, ' printing length: ', lengthQ);
+                    var ran = Math.round(Math.random() * (lengthQ - 1));
                     const question = qq[ran]
                     const data = {
                         'command': 'new_quiz',
@@ -288,14 +286,22 @@ export default class Game extends Component {
     }
 
     //call when websocket receinves message that user has disconeccted
-    disconnect(user) {
+    disconnect(user, is_Host, newHost) {
         console.log(`removing user ${user} from user list!`);
+        //update state of users to reflect that the a player left
         this.setState({
             users: this.state.users.filter(function (filteree) {
                 return filteree !== user
             })
         });
         console.log('users: ', this.state.users);
+
+        //if the currentUser is the new host
+        if (is_Host == true && this.props.currentUser == newHost){
+          //set currentUser isHost state to true
+          console.log('SETTING NEW HOST STATE')
+          this.setState({isHost: true})
+        }
     }
 
     addUser(user) {
@@ -315,7 +321,7 @@ export default class Game extends Component {
                                 <Lobby
                                     users={this.state.users}
                                     currentUser={this.props.currentUser}
-                                    isHost={this.props.isHost}
+                                    isHost={this.state.isHost}
                                     roomID={this.props.roomID}
                                     startGame={this.startGame}
                                 />
@@ -343,20 +349,38 @@ export default class Game extends Component {
                                     currentUser={this.props.currentUser}
                                     prevVote={this.state.prevVote}
                                     resolve_votes={this.resolve_votes}
+                                    users={this.state.users}
+                                    playerShow={this.state.playersShow}
+                                    instructionShow={this.state.playersShow}
                                 />
                                 :
-                                <UserDayComponent
-                                    aliveUsers={this.state.aliveUsers}
-                                    role={this.state.role}
-                                    accused={this.state.accused}
-                                    currentUser={this.props.currentUser}
-                                    trialVotes={this.state.trialVotes}
-                                    mafia_kill={this.state.mafiaKill}
-                                    nurse_saved={this.state.nurseSaved}
-                                    sheriff={this.state.successful_investigation}
-                                    winner={this.state.winner}
-                                    quizQuestion={this.state.quizQuestion}
-                                />
+                                this.state.gameState === 'mafia_win' ?
+                                    <div>
+                                        <h1 class="messageMafia">MAFIA WON!</h1>
+                                        <Image className="messengerImage" src="/images/GaryCard.png"></Image>
+                                    </div>
+                                    :
+                                    this.state.gameState === 'civilian_win' ?
+                                        <div>
+                                            <h1 class="messageCivilian">CIVILIANS WON!</h1>
+                                            <Image className="messengerImage" src="/images/GaryCard.png"></Image>
+                                        </div>
+                                        :
+                                        <UserDayComponent
+                                            aliveUsers={this.state.aliveUsers}
+                                            role={this.state.role}
+                                            accused={this.state.accused}
+                                            currentUser={this.props.currentUser}
+                                            trialVotes={this.state.trialVotes}
+                                            mafia_kill={this.state.mafiaKill}
+                                            nurse_saved={this.state.nurseSaved}
+                                            sheriff={this.state.successful_investigation}
+                                            winner={this.state.winner}
+                                            quizQuestion={this.state.quizQuestion}
+                                            users={this.state.users}
+                                            playerShow={this.state.playersShow}
+                                            instructionShow={this.state.playersShow}
+                                        />
                         :
                         <div className="deadScreenContainer">
                             <Image className="deadScreen" src="/images/DeadScreen.png"></Image>

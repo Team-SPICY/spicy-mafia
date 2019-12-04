@@ -4,6 +4,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 import { Card, Modal, Button, Container } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col';
+import './NarratorNight.css';
 
 class NarratorNight extends Component {
     constructor(props) {
@@ -95,7 +96,7 @@ class NarratorNight extends Component {
         });
         const votes = this.props.sheriffVotes;
         const numVotes = votes.length;
-        return (<ListGroup.Item>`Sheriff Votes: {numVotes}/{num}</ListGroup.Item>)
+        return (<ListGroup.Item>Sheriff Votes: {numVotes}/{num}</ListGroup.Item>)
 
     }
 
@@ -115,7 +116,7 @@ class NarratorNight extends Component {
                             <div onClick={this.showBack} >
                                 <img src={this.props.backgroundSrc} width={" "} height={"600"} />
                                 <div className='vote-stats'>
-                                    <h3 className='voting-stats-header'>Voting Stats - don't snitch</h3>
+                                    <h3 className='voting-stats-header'>Voting Stats - Don't Snitch!</h3>
                                     <ListGroup variant="flush">
                                         {this.renderMafiaStats()}
                                         {this.renderNurseStats()}
@@ -123,8 +124,9 @@ class NarratorNight extends Component {
                                         {this.renderCivilianStats()}
                                     </ListGroup>
                                 </div>
-                                <button onClick={this.props.resolve_votes} className="p_button">Change Cycle</button>
-
+                                <div className="changeCycleButtonContainer">
+                                  <Button onClick={this.props.resolve_votes} className="changeCycleButton">Change Cycle</Button>
+                                </div>
                             </div>
                             <div ref={this.backButton} onClick={this.showFront} >
                                 {

@@ -8,6 +8,10 @@ import NarratorDay from './NarratorDay';
 import DayVote from '../Vote/DayVote';
 import NewsFlash from './NewsFlash';
 
+import {Button} from 'react-bootstrap'
+import PlayerList from "../Game/PlayerList";
+import Instructions from '../Game/Instructions'
+
 class UserDayComponent extends Component {
     constructor(props) {
         super(props);
@@ -38,6 +42,7 @@ class UserDayComponent extends Component {
                             resolve_votes={this.props.resolve_votes}
                         />
                         :
+                        <div>
                         <DayVote
                             aliveUsers={this.props.aliveUsers}
                             role={this.props.role}
@@ -46,6 +51,22 @@ class UserDayComponent extends Component {
                             trialVotes={this.props.trialVotes}
                             gameState={this.props.gameState}
                         />
+                          <div className="ingameButtonContainer">
+                            <Button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="instructionsButton">INSTRUCTIONS</Button>
+                              <Instructions
+                                  show={this.state.instructionShow}
+                                  onHide={() => this.setState({ instructionShow: false })}
+                              />
+                            <Button className="playerListButton" onClick={() => this.setState({ playersShow: true })}>PLAYER LIST</Button>
+                              <PlayerList
+                                  users={this.props.users}
+                                  currentUser={this.props.currentUser}
+                                  show={this.state.playersShow}
+                                  onHide={() => this.setState({ playersShow: false })}
+                              />
+                          </div>
+                        </div>
+
                 }
             </div>
         );

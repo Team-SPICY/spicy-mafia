@@ -37,15 +37,46 @@ class GameConsumer(AsyncWebsocketConsumer):
     async def disconnect(self, close_code):
         print('self: ',self.username)
         print(close_code)
-        db.child("lobbies").child(self.room_name).child("players").child(self.username).remove()
+
+        #set fields for broadcasting
+        isHost = False
+        newHost = self.username
+
+        print(len(db.child("lobbies").child(self.room_name).child("players").get().val()))
+        #check to see if there are any players left in the lobby
+        if (len(db.child("lobbies").child(self.room_name).child("players").get().val()) == 1):
+            #delete the entire lobby
+            print("DELETING LOBBY")
+            db.child("lobbies").child(self.room_name).remove()
+        else:
+            #save role of removed player
+            role = db.child("lobbies").child(self.room_name).child("players").child(self.username).get().val()
+            #remove player from db
+            print("REMOVING PLAYER FROM DATABASE")
+            db.child("lobbies").child(self.room_name).child("players").child(self.username).remove()
+            print("THERE ARE MORE PLAYERS LEFT IN THE LOBBY")
+            #if the role of the player leaving is host
+            if (role == 'host'):
+                print("PLAYER THAT LEFT WAS HOST")
+                #set fields for broadcasting
+                isHost = True
+                #randomly choose a new host from players in lobby
+                newHost = random.choice(list(db.child("lobbies").child(self.room_name).child("players").get().val().keys()))
+                print("THE NEW HOST IS " + newHost)
+                #set new host to be host in database
+                db.child("lobbies").child(self.room_name).child("players").update({newHost:'host'})
+
         await self.channel_layer.group_send(
             #broadcast that you have left
             self.room_group_name,
             {
                 'type': 'leaving',
                 'message': self.username,
+                'isHost': isHost,
+                'newHost': newHost
             }
             )
+
         # Leave room group
         await self.channel_layer.group_discard(
             self.room_group_name,
@@ -64,13 +95,12 @@ class GameConsumer(AsyncWebsocketConsumer):
         message = event['message']
         print(f'ln51: user leaving: {message}')
 
-        #put a pyrebase function to remove self.username into room
-        print('pyrebase do something')
-
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
             'command': 'leaving',
-            'user': message
+            'user': message,
+            'isHost': event['isHost'],
+            'newHost': event['newHost']
         }))
 
     #broadcast that new player joined
@@ -300,6 +330,11 @@ class GameConsumer(AsyncWebsocketConsumer):
                 'question': question
             }))
 
+    '''
+    This function is called when the narrator changes cycle from night to day in the front end. This funct
+    will resolve the votes, see who mafia killed, nurse saved, sheriff investigation and the civilian quiz votes.
+    This fucntion will broadcast to all the players the results of the night cycle.
+    '''
     async def resolve_votes(self, event):
         #use this to get the votes from the sheriff, nurse, mafia, civilian etc...
         if event['cycle'] == "Nightime":
@@ -338,13 +373,17 @@ class GameConsumer(AsyncWebsocketConsumer):
             nurse_saved = ""
             if len(nurse_votes) != 0:
             #todo sort list by highest occurence, break ties if any using rand num
-                randNum = random.randint(0,len(nurse_votes)-1) 
+                randNum = random.randint(0,len(nurse_votes)-1)
                 nurse_saved = nurse_votes[randNum]
-                if nurse_saved != player_to_kill:
-                    num_civilian -= 1
-                    alive_users.pop(player_to_kill,0)
-                    db.child("lobbies").child(self.room_name).update({"numOther":num_civilian})
-                    nurse_saved = ""
+            else:
+                #choose random player for nurse to save
+                randNum = random.randint(0, len(alive_users)-1)
+                nurse_saved = ( list(alive_users.keys()) )[randNum]
+            if nurse_saved != player_to_kill:
+                num_civilian -= 1
+                alive_users.pop(player_to_kill,0)
+                db.child("lobbies").child(self.room_name).update({"numOther":num_civilian})
+                nurse_saved = ""
             length_alive = len(alive_users)
             data = {'type': 'update_players', 'alive_players': alive_users}
             #process civilian night votes
@@ -359,7 +398,9 @@ class GameConsumer(AsyncWebsocketConsumer):
                 data['winner'] = civ_votes[-1][0]
             else:
                 r_index = random.randint(0, len(alive_users) -1 )
-                data['winner'] = alive_users[r_index]
+                keys = list(alive_users.keys())
+                print('keys: ',keys)
+                data['winner'] = keys[r_index]
 
             if nurse_votes and length_alive == og_length:
                 data['mafia_kill'] = ""

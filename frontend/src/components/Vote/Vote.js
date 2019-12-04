@@ -127,18 +127,26 @@ class Vote extends Component {
         var users = [];
         const currentUser = this.props.currentUser;
         const aliveUsers = this.props.aliveUsers;
-        Object.keys(aliveUsers).forEach(key => {
-            if (aliveUsers[key] !== 'host') {
-                users.push(key);
-            }
-        });
+        if (aliveUsers[currentUser] === 'sheriff') {
+            Object.keys(aliveUsers).forEach(key => {
+                if (aliveUsers[key] !== 'host' && aliveUsers[key] !== 'sheriff') {
+                    users.push(key);
+                }
+            });
+        } else {
+            Object.keys(aliveUsers).forEach(key => {
+                if (aliveUsers[key] !== 'host') {
+                    users.push(key);
+                }
+            });
+        }
         return users.map((user, i) => <ListGroup.Item key={user} className={currentUser === user ? 'me' : 'civilian'}>
             <button onClick={() => this.props.handleVote(currentUser, user)} type="button" className="btn btn-secondary">{user} <span class="badge badge-pill badge-dark m-3" >{this.renderVotes(user)}</span></button></ListGroup.Item>);
     }
 
     render() {
         return (
-            <div>
+            <div className="cardVoteContainer">
                 <Container fluid={true}>
                     <Row>
                         <Col xs={6} md={7}>
@@ -152,6 +160,7 @@ class Vote extends Component {
                                     <img src="/images/CardBack.png" width={" "} height={"600"} />
                                 </div>
                                 <div ref={this.backButton} onClick={this.showFront} >
+                                    <img src={this.props.backgroundSrc} width={" "} height={"600"} />
                                     {
                                         this.props.role === 'mafia' ?
                                             <ul className='list-group list-group-flush mafia-list'>
@@ -168,6 +177,9 @@ class Vote extends Component {
                                     {this.props.role === 'sheriff' ?
 
                                         <ul className='list-group list-group-flush sheriff-list'>
+                                            {
+                                                this.renderSheriff()
+                                            }
                                             {
                                                 this.renderUsers()
                                             }
@@ -187,7 +199,7 @@ class Vote extends Component {
                                     {
                                         this.props.role === 'civilian' ?
                                             <div>
-                                                <h2>{this.props.quizQuestion}</h2>
+                                                <h2 className="quizQuestionHeader">{this.props.quizQuestion}</h2>
                                                 <ul className='list-group list-group-flush civilian-list'>
                                                     {
                                                         this.renderUsers()
@@ -198,7 +210,7 @@ class Vote extends Component {
                                             null
                                     }
 
-                                    <img src={this.props.backgroundSrc} width={" "} height={"600"} />
+
                                 </div>
                             </FlipCard>
                         </Col>
