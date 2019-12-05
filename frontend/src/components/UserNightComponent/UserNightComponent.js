@@ -24,24 +24,29 @@ class UserNightComponent extends Component {
         this.setBackground();
     }
 
-    //render function for nurse
+    //sets background for each role
     setBackground() {
         console.log('setting role: ', this.props.role)
         const role = this.props.role;
+        // if player is assigned Civilian, display civilian card
         if (role === 'civilian') {
             this.setState({ backgroundSrc: "/images/CivilianCard.png", description: this.state.CivilianDescription });
         }
+        // if player is assigned Sherrif, display Sherrif card
         else if (role === 'sheriff') {
             this.setState({ backgroundSrc: "/images/SheriffCard.png", description: this.state.SheriffDescription });
         }
+        // if player is assigned Nurse, display Nurse card
         else if (role === 'nurse') {
             this.setState({ backgroundSrc: "/images/NurseCard.png", description: this.state.NurseDescription });
 
         }
+        // if player is assigned Mafia, display Mafia card
         else if (role === 'mafia') {
             this.setState({ backgroundSrc: "/images/MafiaCard.png", description: this.state.MafiaDescription });
 
         }
+        // if player is Narrator, display Narrator card
         else {
             this.setState({ backgroundSrc: "/images/NarratorCard.png", description: this.state.HostDescription });
         }
@@ -49,15 +54,18 @@ class UserNightComponent extends Component {
 
     }
 
+    // add a vote to target player
     changeVoteHandler = (e) => {
         this.setState({
             voted: e.target.value
         });
     }
 
+    // render function
     render() {
         return (
             <div>
+                // if player is host, display game stats to narrator
                 {this.props.role === 'host' ?
                     <div>
                         <NarratorNight
@@ -90,12 +98,14 @@ class UserNightComponent extends Component {
                         currentUser={this.props.currentUser}
                         prevVote={this.props.prevVote}
                     />
+                    // show instructions when "Instructions" button is presses
                     <div className="ingameButtonContainer">
                       <Button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="instructionsButton">INSTRUCTIONS</Button>
                         <Instructions
                             show={this.state.instructionShow}
                             onHide={() => this.setState({ instructionShow: false })}
                         />
+                    // show players alive when "Player List" button is presses
                       <Button className="playerListButton" onClick={() => this.setState({ playersShow: true })}>PLAYER LIST</Button>
                         <PlayerList
                             users={this.props.users}
