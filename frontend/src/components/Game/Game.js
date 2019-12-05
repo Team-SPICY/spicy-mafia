@@ -285,7 +285,7 @@ export default class Game extends Component {
         this.setState({ gameState: cycle });
     }
 
-    //call when websocket receinves message that user has disconeccted
+    //call when websocket receives message that user has disconeccted
     disconnect(user, is_Host, newHost) {
         console.log(`removing user ${user} from user list!`);
         //update state of users to reflect that the a player left
