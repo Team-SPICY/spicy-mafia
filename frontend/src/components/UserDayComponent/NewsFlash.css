@@ -1,22 +1,79 @@
 .News {
     background-color: antiquewhite;
-    text-align: center;
-    padding: 10px 0 15px 0;
+    padding: 15px 20px 15px 20px;
     border-style: hidden;
-    font-style: normal;
-    vertical-align: center;
-    font-weight: bold;
+}
+.head_cont{
+    text-align: center;
+    position: relative;
 }
 
 .title {
-    font-family: Impact;
+    font-family: Serif;
     color: #000000;
-}
-.result{
-    color: red;
-    font-family:  "Courier New", Courier, monospace;
+    font-weight: 900;
+    font-size: 60px;
+    text-align: center;
 }
 
-.somethingnew{
-//background: linear-gradient(180deg,black,gray, #995d1b);
+.logo{
+    background-color: antiquewhite;
+}
+
+.date{
+    text-transform: uppercase;
+    border-bottom: 2px solid black;
+    border-top: 2px solid black;
+    padding: 10px 0 10px 0;
+    text-align: center;
+    font-family: Serif;
+}
+.result{
+    color: darkred;
+}
+
+.column {
+    width: 50%;
+    display: inline-block;
+    vertical-align: center;
+    font-family: Serif;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+.column_left{
+    width:50%;
+    display: inline-block;
+    vertical-align: after-edge;
+    font-family: Serif;
+    padding-left: 20px;
+    padding-right: 20px;
+
+}
+
+.inside_text {
+    font-family: Serif;
+    font-size: 20px;
+    color: black;
+    text-justify: newspaper;
+}
+.sub_title{
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.footer{
+    background: antiquewhite;
+    text-align: center;
+}
+
+.figure_img {
+    background-color: antiquewhite;
+    padding: 15px 20px 15px 20px;
+    border-style: hidden;
+    float: right;
+    text-wrap: normal;
+    flex-wrap: wrap;
+
 }
