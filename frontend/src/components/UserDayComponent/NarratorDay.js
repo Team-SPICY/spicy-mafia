@@ -40,10 +40,10 @@ export default class NarratorDay extends Component {
     render() {
         return (
             <div className={"Narrator"}>
-                <h1>NARRATOR</h1>
-                <Card style={{ width: '18rem' }}>
-                    <Card.Body>
-                        <Card.Title>WHO TO ACCUSE?</Card.Title>
+                <h1 className={"header"}>NARRATOR</h1>
+                <Card style={{ width: '20rem' }}>
+                    <Card.Body bsPrefix={"body"}>
+                        <Card.Title style ={{color:'darkred'}}>WHO TO ACCUSE?</Card.Title>
                         <Form>
                             <fieldset className="formSuspects">
                                 {
