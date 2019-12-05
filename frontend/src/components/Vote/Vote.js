@@ -156,17 +156,15 @@ class Vote extends Component {
 //className={key === this.state.selectedButton ? 'selected' : ''} type="button" style={{ width: '25%', border: "none" }} key={key} onClick={this.buttonSelected(key)}>{key}</button>
     render() {
         return (
-            <div className="cardVoteContainer">
-                <Container fluid={true}>
-                    <Row>
-                        <Col xs={6} md={7}>
+            <div className={"NightVote"}>
+
                             <FlipCard
                                 disabled={true}
                                 flipped={this.state.isFlipped}
                                 onFlip={this.handleOnFlip}
                                 onKeyDown={this.handleKeyDown}
                             >
-                                <div>
+                                <div className="nightCardBackContainer">
                                     <img onClick={this.showBack} src="/images/CardBack.png" width={" "} height={"600"} />
                                       <div className="ingameButtonContainer">
                                         <Button onClick={() => this.setState({ instructionShow: true, isFlipped: false })} variant={"secondary"} type={"button"} className="instructionsButton">INSTRUCTIONS</Button>
@@ -184,9 +182,11 @@ class Vote extends Component {
                                       </div>
                                 </div>
                                 <div>
-                                    <img ref={this.backButton} onClick={this.showFront} src={this.props.backgroundSrc} width={" "} height={"600"} />
+                                    <img className="nightCardFrontContainer" ref={this.backButton} onClick={this.showFront} src={this.props.backgroundSrc} width={" "} height={"600"} />
                                     {
                                         this.props.role === 'mafia' ?
+                                        <div>
+                                            <h2 className="questionHeader">WHO TO ASSASSINATE?</h2>
                                             <ListGroup bsPrefix='list-group list-group-flush mafia-list' variant="flush">
                                                 {
                                                     this.renderMafia()
@@ -195,11 +195,14 @@ class Vote extends Component {
                                                     this.renderNonMafiaUsers()
                                                 }
                                             </ListGroup>
+                                        </div>
                                             :
                                             null
                                     }
-                                    {this.props.role === 'sheriff' ?
-
+                                    {
+                                      this.props.role === 'sheriff' ?
+                                      <div>
+                                        <h2 className="questionHeader">WHO TO INVESTIGATE?</h2>
                                         <ListGroup bsPrefix='list-group list-group-flush sheriff-list' variant="flush">
                                             {
                                                 this.renderSheriff()
@@ -208,15 +211,21 @@ class Vote extends Component {
                                                 this.renderUsers()
                                             }
                                         </ListGroup>
+                                      </div>
+
                                         :
                                         null
                                     }
-                                    {this.props.role === 'nurse' ?
+                                    {
+                                      this.props.role === 'nurse' ?
+                                      <div>
+                                        <h2 className="questionHeader">WHO TO SAVE?</h2>
                                         <ListGroup bsPrefix='list-group list-group-flush nurse-list' variant="flush">
                                             {
                                                 this.renderUsers()
                                             }
                                         </ListGroup>
+                                      </div>
                                         :
                                         null
                                     }
@@ -238,9 +247,7 @@ class Vote extends Component {
 
                                 </div>
                             </FlipCard>
-                        </Col>
-                    </Row>
-                </Container>
+
             </div >
         );
     }

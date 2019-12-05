@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import Flipcard from '@kennethormandy/react-flipcard'
-
-import '@kennethormandy/react-flipcard/dist/Flipcard.css'
 
 import Image from 'react-bootstrap/Image';
 
@@ -15,6 +12,9 @@ import WebSocketInstance from '../../services/WebSocket';
 import Instructions from "../Game/Instructions";
 import Game from "../Game/Game";
 import UserDayComponent from '../UserDayComponent/UserDayComponent';
+
+import PlayerList from "../Game/PlayerList";
+
 
 export default class DayVote extends Component {
     constructor(props) {
@@ -46,7 +46,7 @@ export default class DayVote extends Component {
                         <Form>
 
                             <fieldset className="formPeopleVotes">
-                                <Card.Title>THE PEOPLE SAY:</Card.Title>
+                                <Card.Title>CONSENSUS:</Card.Title>
                                 {
                                     Object.keys(this.props.trialVotes)
                                         .map((name) =>
@@ -57,6 +57,20 @@ export default class DayVote extends Component {
                         </Form>
                     </Card.Body>
                 </Card>
+                <div className="ingameButtonContainer">
+                  <Button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="instructionsButton">INSTRUCTIONS</Button>
+                    <Instructions
+                        show={this.state.instructionShow}
+                        onHide={() => this.setState({ instructionShow: false })}
+                    />
+                  <Button className="playerListButton" onClick={() => this.setState({ playersShow: true })}>PLAYER LIST</Button>
+                    <PlayerList
+                        users={this.props.users}
+                        currentUser={this.props.currentUser}
+                        show={this.state.playersShow}
+                        onHide={() => this.setState({ playersShow: false })}
+                    />
+                </div>
             </div>
         )
     }

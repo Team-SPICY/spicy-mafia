@@ -72,6 +72,9 @@ class UserNightComponent extends Component {
                             aliveUsers={this.props.aliveUsers}
                             currentUser={this.props.currentUser}
                             prevVote={this.props.prevVote}
+                            playersShow={this.props.playerShow}
+                            instructionShow={this.props.instructionShow}
+                            users={this.props.users}
                         />
                     </div>
                     :

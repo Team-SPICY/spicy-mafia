@@ -5,6 +5,8 @@ import { Card, Modal, Button, Container, Badge } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col';
 import './NarratorNight.css';
+import PlayerList from "../Game/PlayerList";
+import Instructions from '../Game/Instructions'
 
 class NarratorNight extends Component {
     constructor(props) {
@@ -104,41 +106,54 @@ class NarratorNight extends Component {
 
     render() {
         return (
-          <div className="narratorNightContainer">
-            <Container bsPrefix="narratorNightContainerBS" fluid={true}>
-                <Row>
-                    <Col xs={6} md={7}>
-                        <FlipCard
-                            disabled={true}
-                            flipped={this.state.isFlipped}
-                            onFlip={this.handleOnFlip}
-                            onKeyDown={this.handleKeyDown}
-                        >
-                            <div onClick={this.showBack} >
-                                <img src={this.props.backgroundSrc} width={" "} height={"600"} />
-                                <div className='vote-stats'>
-                                    <h3 className='voting-stats-header'>VOTING STATES</h3>
-                                    <ListGroup variant="flush">
-                                        {this.renderMafiaStats()}
-                                        {this.renderNurseStats()}
-                                        {this.renderSheriffStats()}
-                                        {this.renderCivilianStats()}
-                                    </ListGroup>
-                                </div>
-                                <div className="changeCycleButtonContainer">
-                                  <Button onClick={this.props.resolve_votes} className="changeCycleButton">CHANGE CYCLE</Button>
-                                </div>
-                            </div>
-                            <div ref={this.backButton} onClick={this.showFront} >
-                                {
-                                    <img src={this.props.backgroundSrc} width={" "} height={"600"} />
-                                }
+          <div className={"NarratorNightContainer"}>
 
-                            </div>
-                        </FlipCard>
-                    </Col>
-                </Row>
-            </Container>
+
+              <FlipCard
+                  disabled={true}
+                  flipped={this.state.isFlipped}
+                  onFlip={this.handleOnFlip}
+                  onKeyDown={this.handleKeyDown}
+              >
+                  <div >
+                      <img onClick={this.showBack} src={this.props.backgroundSrc} width={" "} height={"600"} />
+                      <div className='vote-stats'>
+                          <h3 className='voting-stats-header'>VOTING STATES</h3>
+                          <ListGroup bsPrefix="voteStatesLG" variant="flush">
+                              {this.renderMafiaStats()}
+                              {this.renderNurseStats()}
+                              {this.renderSheriffStats()}
+                              {this.renderCivilianStats()}
+                          </ListGroup>
+                      </div>
+                      <div className="changeCycleButtonContainer">
+                        <Button onClick={this.props.resolve_votes} className="changeCycleButton">CHANGE CYCLE</Button>
+                      </div>
+                  </div>
+                  <div >
+                      {
+                          <img ref={this.backButton} onClick={this.showFront} src="/images/CardBack.png" width={" "} height={"600"} />
+
+
+                      }
+                      <div className="ingameButtonContainer">
+                        <Button onClick={() => this.setState({ instructionShow: true})} variant={"secondary"} type={"button"} className="instructionsButton">INSTRUCTIONS</Button>
+                          <Instructions
+                              show={this.state.instructionShow}
+                              onHide={() => this.setState({ instructionShow: false})}
+                          />
+                        <Button className="playerListButton" onClick={() => this.setState({ playersShow: true })}>PLAYER LIST</Button>
+                          <PlayerList
+                              users={this.props.users}
+                              currentUser={this.props.currentUser}
+                              show={this.state.playersShow}
+                              onHide={() => this.setState({ playersShow: false })}
+                          />
+                      </div>
+
+                  </div>
+              </FlipCard>
+
         </div >
         );
     }

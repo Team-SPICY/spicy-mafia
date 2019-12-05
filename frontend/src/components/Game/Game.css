@@ -17,34 +17,101 @@
   border-radius: 20px;
 }
 
+.buttonMafiaReturnHome{
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  margin: 0px 10px 0px 10px;
 
-.messageMafia {
+  font-size: 24px;
   font-weight: bold;
-  font-size: 10vw;
-  color: white;
-  font-family: sans-serif;
-  height: 100vh;
-  margin: 0;
-  position: absolute;
-  width: 100%;
+  cursor: pointer;
   text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: black;
+  background-color: white;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 5px #bababa;
+  display:inline;
+
+}
+.buttonMafiaReturnHome:hover {
+   background-color: white;
+   color: gray;
+
+
+ }
+
+.buttonMafiaReturnHome:active {
+   background-color: #989898;
+
+   transform: scale(1);
+}
+.buttonCivilianReturnHome{
+   position: relative;
+   display: block;
+   margin: 0 auto;
+   margin: 150px 10px 0px 10px;
+
+   font-size: 24px;
+   font-weight: bold;
+   cursor: pointer;
+   text-align: center;
+   text-decoration: none;
+   outline: none;
+   color: black;
+   background-color: white;
+   border: none;
+   border-radius: 15px;
+   box-shadow: 0 5px #bababa;
+   display:inline;
+
+}
+.buttonCivilianReturnHome:hover {
+  background-color: white;
+  color: gray;
+
+
 }
 
-.messageCivilian {
-  font-weight: bold;
-  font-size: 10vw;
-  color: white;
-  font-family: sans-serif;
-  height: 100vh;
-  margin: 0;
-  position: absolute;
-  width: 100%;
-  text-align: center;
+.buttonCivilianReturnHome:active {
+  background-color: #989898;
+
+  transform: scale(1);
 }
 
-.messengerImage{
-  padding-top: 200px;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.CivilianWinContainer{
+  position: relative;
+  height: 50vh;
+  width: auto;
+
+  /* background: red; */
+  border-radius: 20px;
+}
+
+.civilianWinImage{
+  width: auto;
+  height: 60vh;
+  margin-top: 50px;
+
+  margin-bottom: 50px;
+  /* background: purple; */
+  border-radius: 20px;
+}
+.MafiaWinContainer{
+
+  /* background: red; */
+  border-radius: 20px;
+}
+
+.mafiaWinImage{
+  width: 500px;
+  height: 500px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  /* background: purple; */
+  border-radius: 20px;
+  padding: 10px;
 }

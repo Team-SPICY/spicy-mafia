@@ -1,3 +1,14 @@
+.NightVote{
+  background: rgb(2,11,47);
+  background: linear-gradient(0deg, rgba(2,11,47,1) 22%, rgba(3,5,13,1) 93%);
+  min-height: 115vh;
+  padding-right: 455px;
+
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+
+}
 
 .buttonVoteNight{
   margin: 5px;
@@ -12,7 +23,8 @@
   outline: none;
   color: white;
   background: rgb(144,142,142);
-  background: linear-gradient(180deg, rgba(144,142,142,1) 26%, rgba(102,101,101,1) 63%, rgba(66,66,66,1) 100%);
+  background: linear-gradient(180deg, rgba(144,142,142,1) 26%,
+  rgba(102,101,101,1) 63%, rgba(66,66,66,1) 100%);
   border: none;
   border-radius: 15px;
   box-shadow: 0px 10px 10px 5px rgba(0, 0, 0, 0.05);
@@ -24,15 +36,6 @@
 
   background-color: white;
 }
-.badgeVotes{
-  background: white;
-  border-radius: 20px;
-  padding: 0px 10px 0px 10px;
-  margin-left: 10px;
-  margin-top: 10px;
-  color: red;
-  font-size: 15px;
-}
 
 .civilian-list{
   border-radius: 10px;
@@ -43,9 +46,10 @@
   width: 64%;
   margin-left: auto;
   margin-right: auto;
-  box-shadow: 0 5px #919191;
+  box-shadow: 0 5px #bababa;
 }
 .nurse-list{
+
   border-radius: 10px;
   max-height: 180px;
   margin-bottom: 10px;
@@ -54,31 +58,33 @@
   width: 64%;
   margin-left: auto;
   margin-right: auto;
-  box-shadow: 0 5px #919191;
+  box-shadow: 0 5px #bababa;
 }
 .civilian{
   background: white;
-  padding: 15px 0px 15px 0px;
+  padding: 5px 0px 5px 0px;
+  font-size: 20px;
 
-  margin: 10px 0px 10px 0px;
+  margin: 5px 0px 5px 0px;
   border-radius: 10px;
-  box-shadow: 0 5px #919191;
+  box-shadow: 0 5px #bababa;
 }
 .me-ingame{
 
-  padding: 15px 0px 15px 0px;
+  padding: 5px 0px 5px 0px;
+  font-size: 20px;
 
   color: rgb(182,33,15);
   color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%, rgba(52,2,2,1) 100%);
-  background: rgb(75,75,75);
-  background: radial-gradient(circle, rgba(75,75,75,1) 45%,
-    rgba(57,57,57,1) 76%, rgba(19,19,19,1) 100%);
+  background: #b5b5b5;
     font-weight: bold;
-  margin: 10px 0px 10px 0px;
+  margin: 5px 0px 5px 0px;
   border-radius: 10px;
-    box-shadow: 0 5px black;
+    box-shadow: 0 5px gray;
 }
 .mafia-list{
+  font-size: 20px;
+
     border-radius: 10px;
     max-height: 180px;
     margin-bottom: 10px;
@@ -87,38 +93,35 @@
     width: 64%;
     margin-left: auto;
     margin-right: auto;
-    box-shadow: 0 5px #919191;
+    box-shadow: 0 5px #bababa;
 
 
 
 }
 
 .me-mafia-li{
+  padding: 15px 0px 5px 0px;
+  font-size: 20px;
 
-  padding: 25px 0px 15px 0px;
-
-  color: rgb(182,33,15);
-  color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%, rgba(52,2,2,1) 100%);
-  background: rgb(75,75,75);
-  background: radial-gradient(circle, rgba(75,75,75,1) 45%,
-    rgba(57,57,57,1) 76%, rgba(19,19,19,1) 100%);
-    font-weight: bold;
-  margin: 10px 0px 10px 0px;
+  color: red;
+  background: #b5b5b5;
+  font-weight: bold;
+  margin: 5px 0px 5px 0px;
   border-radius: 10px;
-    box-shadow: 0 5px black;
+  box-shadow: 0 5px gray;
 }
 
 .mafia-li{
-    padding: 25px 0px 15px 0px;
-
+    padding: 15px 0px 5px 0px;
+    font-size: 20px;
     font-weight: bold;
     color: rgb(182,33,15);
     color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%, rgba(52,2,2,1) 100%);
     background: white;
-    margin: 10px 0px 10px 0px;
+    margin: 5px 0px 5px 0px;
     border-radius: 10px;
 
-    box-shadow: 0 5px #919191;
+    box-shadow: 0 5px #bababa;
 
 }
 .sheriff-list{
@@ -130,36 +133,36 @@
   width: 64%;
   margin-left: auto;
   margin-right: auto;
-  box-shadow: 0 5px #919191;
+  box-shadow: 0 5px #bababa;
 }
 
 .me-sheriff-li{
-  padding: 25px 0px 15px 0px;
   font-size: 20px;
-  color: orange;
-  background: rgb(75,75,75);
-  background: radial-gradient(circle, rgba(75,75,75,1) 45%,
-    rgba(57,57,57,1) 76%, rgba(19,19,19,1) 100%);
+
+  padding: 15px 0px 5px 0px;
+  font-size: 20px;
+  color: darkblue;
+  background: #b5b5b5;
   font-weight: bold;
-  margin: 10px 0px 10px 0px;
+  margin: 5px 0px 5px 0px;
   border-radius: 10px;
-  box-shadow: 0 5px black;
+  box-shadow: 0 5px gray;
 }
 .sheriff-li{
-  padding: 25px 0px 15px 0px;
-
+  font-size: 20px;
+  padding: 15px 0px 5px 0px;
   font-weight: bold;
-  color: orange;
+  color: darkblue;
   background: white;
-  margin: 10px 0px 10px 0px;
+  margin: 5px 0px 5px 0px;
   border-radius: 10px;
 
-  box-shadow: 0 5px #919191;
+  box-shadow: 0 5px #bababa;
 }
 
 .ingameButtonContainer{
   padding-bottom: 10px;
-  margin: 50px 0px 0px 0px;
+  margin: 10px 0px 0px 0px;
 
 }
 .ingameButtonContainer Button{
@@ -177,7 +180,7 @@
   background-color: white;
   border: none;
   border-radius: 15px;
-  box-shadow: 0 5px #919191;
+  box-shadow: 0 5px #bababa;
   display:inline;
 
 }
@@ -205,9 +208,14 @@
 
 }
 
-.quizQuestionHeader{
+.quizQuestionHeader, .questionHeader{
   color:white;
-  font-size: 30px;
-  margin-top: -15px;
+  font-size: 25px;
+  margin-top: -10px;
   margin-bottom: 15px;
+  border-radius: 10px;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 0 1px black;
+  text-transform: uppercase;
 }

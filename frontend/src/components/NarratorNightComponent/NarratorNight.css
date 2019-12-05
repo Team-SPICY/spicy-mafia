@@ -1,3 +1,14 @@
+.NarratorNightContainer{
+  background: rgb(2,11,47);
+  background: linear-gradient(0deg, rgba(2,11,47,1) 22%, rgba(3,5,13,1) 93%);
+  min-height: 115vh;
+  padding-right: 455px;
+
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+}
+
 .voteStateItem{
   background: white;
   width: 300px;
@@ -6,24 +17,29 @@
   padding: 10px 10px 10px 10px;
   border-style: none;
   border-radius: 10px;
-  box-shadow: 0 5px #919191;
+  box-shadow: 0 5px #bababa;
   outline: none;
   font-weight: bold;
 }
 
 .voting-stats-header{
   color:white;
+  font-size: 25px;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 0 1px black;
+  text-transform: uppercase;
 }
-.vote-stats ListGroup{
-  border-radius: 20px;
-  width: 10px;
-}
+
 .changeCycleButtonContainer Button{
   position: relative;
   margin: 0 auto;
-  margin: 30px 10px 0px 10px;
+  margin: 20px 10px 0px 10px;
 
-  font-size: 15px;
+  font-size: 20px;
   font-weight: bold;
   cursor: pointer;
   text-align: center;
@@ -33,7 +49,7 @@
   background-color: white;
   border: none;
   border-radius: 15px;
-  box-shadow: 0 5px #919191;
+  box-shadow: 0 5px #bababa;
   display:inline;
 
 }
@@ -49,3 +65,5 @@
 
    transform: scale(1);
  }
+
+ /*************/

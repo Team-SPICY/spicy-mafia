@@ -11,6 +11,8 @@ import Image from "react-bootstrap/Image";
 import WebSocketInstance from '../../services/WebSocket'
 import Instructions from './Instructions'
 
+
+
 export default class Game extends Component {
     constructor(props) {
         super(props);
@@ -190,6 +192,7 @@ export default class Game extends Component {
         console.log('state after updating: ', this.state.nurseSaved, this.state.mafiaKill)
         if (!(this.props.currentUser in alive_users)) {
             this.setState({ is_alive: false })
+
         }
     }
 
@@ -310,10 +313,32 @@ export default class Game extends Component {
         }
     }
 
+
+
     render() {
         return (
             <div>
                 {
+                  // check whether mafia or civilian won
+                  this.state.gameState === 'mafia_win' ?
+                    <div className="winContainer">
+                        <div className="MafiaWinContainer">
+                            <img className="mafiaWinImage" src="/images/MafiaWin.png"></img>
+
+                        </div>
+                        <Button className="buttonMafiaReturnHome" onClick={() => window.location.reload(false)}>BACK TO HOME</Button>
+                    </div>
+                    :
+                    this.state.gameState === 'civilian_win' ?
+                    <div className="winContainer">
+                        <div className="CivilianWinContainer">
+                            <img className="civilianWinImage" src="/images/CiviliansWin.png"></img>
+
+
+                        </div>
+                        <Button className="buttonCivilianReturnHome" onClick={() => window.location.reload(false)}>BACK TO HOME</Button>
+                    </div>
+                    :
                     this.state.is_alive === true ?
                         this.state.gameState === 'Lobby' ?
                             <div>
@@ -326,10 +351,10 @@ export default class Game extends Component {
                                 />
                                 <div className="numPlayersContainer">
                                     {
-                                        this.state.users.length === 1 ?
-                                            <p>{this.state.users.length} SUSPECT</p>
-                                            :
-                                            <p>{this.state.users.length} SUSPECTS</p>
+                                      this.state.users.length === 1 ?
+                                        <p>{this.state.users.length} SUSPECT</p>
+                                        :
+                                        <p>{this.state.users.length} SUSPECTS</p>
                                     }
                                 </div>
                             </div>
@@ -353,33 +378,21 @@ export default class Game extends Component {
                                     instructionShow={this.state.playersShow}
                                 />
                                 :
-                                this.state.gameState === 'mafia_win' ?
-                                    <div>
-                                        <h1 class="messageMafia">MAFIA WON!</h1>
-                                        <Image className="messengerImage" src="/images/GaryCard.png"></Image>
-                                    </div>
-                                    :
-                                    this.state.gameState === 'civilian_win' ?
-                                        <div>
-                                            <h1 class="messageCivilian">CIVILIANS WON!</h1>
-                                            <Image className="messengerImage" src="/images/GaryCard.png"></Image>
-                                        </div>
-                                        :
-                                        <UserDayComponent
-                                            aliveUsers={this.state.aliveUsers}
-                                            role={this.state.role}
-                                            accused={this.state.accused}
-                                            currentUser={this.props.currentUser}
-                                            trialVotes={this.state.trialVotes}
-                                            mafia_kill={this.state.mafiaKill}
-                                            nurse_saved={this.state.nurseSaved}
-                                            sheriff={this.state.successful_investigation}
-                                            winner={this.state.winner}
-                                            quizQuestion={this.state.quizQuestion}
-                                            users={this.state.users}
-                                            playerShow={this.state.playersShow}
-                                            instructionShow={this.state.playersShow}
-                                        />
+                                <UserDayComponent
+                                    aliveUsers={this.state.aliveUsers}
+                                    role={this.state.role}
+                                    accused={this.state.accused}
+                                    currentUser={this.props.currentUser}
+                                    trialVotes={this.state.trialVotes}
+                                    mafia_kill={this.state.mafiaKill}
+                                    nurse_saved={this.state.nurseSaved}
+                                    sheriff={this.state.successful_investigation}
+                                    winner={this.state.winner}
+                                    quizQuestion={this.state.quizQuestion}
+                                    users={this.state.users}
+                                    playerShow={this.state.playersShow}
+                                    instructionShow={this.state.playersShow}
+                                />
                         :
                         <div className="deadScreenContainer">
                             <Image className="deadScreen" src="/images/DeadScreen.png"></Image>

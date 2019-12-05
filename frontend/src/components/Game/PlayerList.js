@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Button, ListGroup } from 'react-bootstrap'
+import { Modal, Button, ListGroup, Badge } from 'react-bootstrap'
 import './Player_list.css';
 class PlayerList extends Component {
     constructor(props) {
@@ -8,7 +8,10 @@ class PlayerList extends Component {
     }
     renderUsers = () => {
         const currentUser = this.props.currentUser;
+
         console.log(currentUser, this.props.users);
+
+
         return this.props.users.map((user, i) => <ListGroup.Item key={user} className={user === currentUser ? "me" : 'other'}> <p>{user}</p></ListGroup.Item>);
     }
 
