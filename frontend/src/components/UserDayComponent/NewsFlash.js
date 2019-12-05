@@ -23,7 +23,14 @@ class NewsFlash extends Component {
             >
                 <Modal.Body bsPrefix="News">
                         <div className={"head_cont"}>
-                            <header className={"title"}>THE DARK NEWS</header>
+                            <header className={"title"}>THE SPICY TIMES  <Figure>
+                                    <Figure.Image
+                                        width ={60}
+                                        height={60}
+                                        src={"/images/SpicyTimesLogo.png"}
+                                    />
+                                </Figure>
+                            </header>
                         </div>
                         <div className={"date"}>
                             This City, This Day, 1934
@@ -35,24 +42,24 @@ class NewsFlash extends Component {
                                       <header className={"sub_title"}> {this.props.quizQuestion}</header>
                                       <p className={"inside_text"}> Civilians have come to the agreement that
                                           <span className={"result"}> {this.props.winner} </span>
-                                          is the choosen one.
+                                          is the chosen one.
                                       </p>
                                     </div>
                                     <div>
                                         <p className="sub_title">Sheriff Investigation</p>
                                         {
                                             this.props.sheriff === true ?
-                                                <p className="result">Sheriff investigated... and found a mafia</p>
+                                                <p className="inside_text">Sheriff investigated... and <span className={"result"}>found a mafia.</span></p>
                                                 :
-                                                <p className={"inside_text"} >Sadly Sheriff is investigation has resulted
+                                                <p className={"inside_text"} >Sadly Sheriff's investigation has been
                                                     <span className={"result"}> unsuccessful</span>.
-                                                    Investigation continues
+                                                    Investigation continues.
                                                 </p>
                                         }
                                     </div>
                                 </Col>
-                                <Col bsPrefix={"column"}>
-                                    <p className={"sub_title"}> BREAKING </p>
+                                <Col bsPrefix={"column_left"}>
+                                    <p className={"sub_title"}> THIS IS THE HEADER </p>
                                     <div>
                                     {
                                         this.props.mafia_kill !== "" ?
@@ -69,8 +76,7 @@ class NewsFlash extends Component {
                                                             src={"/images/MafiaCard.png"}
                                                             roundedCircle={true}
                                                         />
-                                                    </Figure>
-                                                    they learnt about the sudden death
+                                                    </Figure> they learnt about the sudden death.
                                                 </p>
                                             </div>
                                             :
