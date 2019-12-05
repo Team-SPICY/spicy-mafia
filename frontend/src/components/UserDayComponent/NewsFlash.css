@@ -16,6 +16,14 @@
     text-align: center;
 }
 
+
+.logo{
+background-color: antiquewhite;
+}
+
+
+
+
 .date{
     text-transform: uppercase;
     border-bottom: 2px solid black;
@@ -31,14 +39,27 @@
 .column {
     width: 50%;
     display: inline-block;
-    vertical-align: top;
+    vertical-align: center;
     font-family: Serif;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+.column_left{
+    width:50%;
+    display: inline-block;
+    vertical-align: after-edge;
+    font-family: Serif;
+    padding-left: 20px;
+    padding-right: 20px;
+
 }
 
 .inside_text {
     font-family: Serif;
     font-size: 20px;
     color: black;
+    text-justify: newspaper;
 }
 .sub_title{
     font-size: 30px;
