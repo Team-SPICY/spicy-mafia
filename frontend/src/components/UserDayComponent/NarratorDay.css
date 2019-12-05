@@ -17,6 +17,11 @@
 
 }
 
+.header {
+    color: white;
+    text-shadow: 2.5px 5px black;
+    text-transform:uppercase;
+}
 .Narrator Button{
   display: flex;
   flex-direction: column;
@@ -63,10 +68,8 @@
 }
 
 .formSuspects {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding-left: 40px;
+    display: inline-block;
+    list-style-type: none;
 }
 
 .submitButton {
@@ -89,4 +92,11 @@
     flex-direction: column;
     align-items: flex-end;
     padding-top: 12px;
+}
+
+.body {
+    background:-webkit-linear-gradient(270deg,lightgrey,darkgrey,darkgrey);
+    border: hidden;
+    height: inherit;
+    vertical-align: after-edge;
 }
