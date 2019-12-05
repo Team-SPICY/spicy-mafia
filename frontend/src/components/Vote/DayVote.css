@@ -17,3 +17,25 @@
     padding-left: 40px;
     padding-top: 20px;
 }
+
+.header {
+    color: white;
+    text-shadow: 2.5px 5px black;
+    text-transform:uppercase;
+}
+
+.body {
+    background:-webkit-linear-gradient(270deg,lightgrey,darkgrey,darkgrey);
+    color: #8c0705;
+    border: hidden;
+    padding: 40px 20px 20px 20px;
+    background-size: cover;
+    height: inherit;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.card {
+    border: hidden;
+    vertical-align: middle;
+}
