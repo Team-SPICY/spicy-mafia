@@ -19,27 +19,35 @@ import PlayerList from "../Game/PlayerList";
 export default class DayVote extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-        }
+        this.state = {}
 
     }
 
-    // recieve vote and reflect that vote
+    // Recieve vote and reflect that vote
 
     render() {
+        const isAccused = this.props.accused === this.props.currentUser;
         return (
             <div className={"DayVote"}>
-                <h1>{this.props.currentUser}</h1>
-                <Card style={{ width: '18rem' }}>
-                    <Card.Body>
+                <h1 className={"header"}>{this.props.currentUser}</h1>
+                <Card style = {{width: '30rem', height:'auto',verticalAlign:'middle'}}>
+                    <Card.Body bsPrefix={"body"}>
                         <Card.Title>IS {this.props.accused} GUILTY?</Card.Title>
                         <div>
-                            <Button onClick={() => WebSocketInstance.sendMessage({ 'command': 'on_trial_vote', playername: this.props.currentUser, vote: 'Guilty!' })}
-                                variant="secondary" size="lg" block>
+                            <Button onClick={() => WebSocketInstance.sendMessage({
+                                'command': 'on_trial_vote',
+                                playername: this.props.currentUser,
+                                vote: 'Guilty!'
+                            })}
+                                    variant="secondary" size="lg" block disabled={isAccused}>
                                 YES
                             </Button>
-                            <Button onClick={() => WebSocketInstance.sendMessage({ 'command': 'on_trial_vote', playername: this.props.currentUser, vote: 'Innocent!' })}
-                                variant="secondary" size="lg" block>
+                            <Button onClick={() => WebSocketInstance.sendMessage({
+                                'command': 'on_trial_vote',
+                                playername: this.props.currentUser,
+                                vote: 'Innocent!'
+                            })}
+                                    variant="secondary" size="lg" block disabled={isAccused}>
                                 NO
                             </Button>
                         </div>
@@ -74,20 +82,4 @@ export default class DayVote extends Component {
             </div>
         )
     }
-
 }
-
-/*
-return (
-    //flip card one side shows yes/no button, other side shows who voted yes who voted no
-    <Flipcard >
-        <div >
-            Side A
-        </div>
-        <div >
-            Side B
-        </div>
-
-    </Flipcard>
-)
-*/

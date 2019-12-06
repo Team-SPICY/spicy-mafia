@@ -22,7 +22,6 @@
     text-shadow: 2.5px 5px black;
     text-transform:uppercase;
 }
-
 .Narrator Button{
   display: flex;
   flex-direction: column;
@@ -69,10 +68,8 @@
 }
 
 .formSuspects {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding-left: 40px;
+    display: inline-block;
+    list-style-type: none;
 }
 
 .submitButton {
