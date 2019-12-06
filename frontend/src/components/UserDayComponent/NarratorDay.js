@@ -46,17 +46,23 @@ export default class NarratorDay extends Component {
                         <Form>
                             <fieldset className="formSuspects">
                                 {
+                                  <ListGroup bsPrefix="accusedLG">{
                                     Object.keys(this.props.aliveUsers)
                                         .filter((name) => { return this.props.aliveUsers[name] !== 'host' })
                                         .map((name) =>
+                                        <ListGroup.Item bsPrefix="accusedUserListItem">
                                             <Form.Check
+                                                bsPrefix="accusedCheck"
                                                 type="radio"
                                                 id={`default-${name}`}
                                                 label={`${name}`}
                                                 name="formSuspects"
                                                 onClick={() => this.setState({ accused_player: name })}
                                             />
-                                        )
+                                        </ListGroup.Item>
+                                      )
+                                    }
+                                  </ListGroup>
                                 }
                             </fieldset>
                         </Form>

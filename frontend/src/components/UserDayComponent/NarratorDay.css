@@ -112,7 +112,7 @@
   background: black;
 
   margin-top: -10px;
-  padding: 3px 10px 0 10px;
+  padding: 5px 10px 0 10px;
   max-height: 70px;
   width: 250px;
   margin-right:35px;
@@ -131,5 +131,36 @@
   background: -webkit-linear-gradient(#861704, #9f3a14);
 
   text-align: center;
-  width: 150px;
+  width: 220px;
+}
+
+.accusedLG{
+  border-radius: 10px;
+  max-height: 400px;
+  overflow:scroll;
+  -webkit-overflow-scrolling: touch;
+  color: black;
+  border: 1px solid white;
+  background: black;
+
+padding-top: 5px;
+  max-height: 150px;
+  width: 250px;
+
+  display: flex;
+  flex-direction: column;
+  align-items:  center;
+  align-self: center;
+  padding-bottom: 10px;
+
+}
+.accusedUserListItem{
+  font-weight: bold;
+  background: white;
+  border-radius: 10px;
+  margin-top: 2px;
+  align-items: center;
+  text-align: center;
+  width: 220px;
+
 }

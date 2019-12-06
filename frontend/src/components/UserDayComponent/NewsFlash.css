@@ -64,7 +64,7 @@
     text-justify: newspaper;
 }
 .sub_title{
-    font-size: 30px;
+    font-size: 20px;
     font-weight: bold;
     text-align: center;
     border-top: 1px solid black;
@@ -100,7 +100,7 @@
   padding-top: 10px;
 }
 .breaking_title{
-  font-size: 40px;
+  font-size: 26px;
   font-weight: bold;
   text-align: center;
   border-top: 1px solid black;
