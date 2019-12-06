@@ -14,7 +14,7 @@ import Game from "../Game/Game";
 import UserDayComponent from '../UserDayComponent/UserDayComponent';
 
 import PlayerList from "../Game/PlayerList";
-
+import {ListGroup} from 'react-bootstrap';
 
 export default class DayVote extends Component {
     constructor(props) {
@@ -30,11 +30,12 @@ export default class DayVote extends Component {
         return (
             <div className={"DayVote"}>
                 <h1 className={"header"}>{this.props.currentUser}</h1>
-                <Card style = {{width: '30rem', height:'auto',verticalAlign:'middle'}}>
+                <Card bsPrefix="cardDay">
                     <Card.Body bsPrefix={"body"}>
-                        <Card.Title>IS {this.props.accused} GUILTY?</Card.Title>
+                        <Card.Title bsPrefix="cardDayTitle">IS {this.props.accused} GUILTY?</Card.Title>
                         <div>
-                            <Button onClick={() => WebSocketInstance.sendMessage({
+                          <div className="dayVoteButtonContainer">
+                            <Button bsPrefix="buttonDayVote" onClick={() => WebSocketInstance.sendMessage({
                                 'command': 'on_trial_vote',
                                 playername: this.props.currentUser,
                                 vote: 'Guilty!'
@@ -42,7 +43,7 @@ export default class DayVote extends Component {
                                     variant="secondary" size="lg" block disabled={isAccused}>
                                 YES
                             </Button>
-                            <Button onClick={() => WebSocketInstance.sendMessage({
+                            <Button bsPrefix="buttonDayVote" onClick={() => WebSocketInstance.sendMessage({
                                 'command': 'on_trial_vote',
                                 playername: this.props.currentUser,
                                 vote: 'Innocent!'
@@ -50,22 +51,27 @@ export default class DayVote extends Component {
                                     variant="secondary" size="lg" block disabled={isAccused}>
                                 NO
                             </Button>
+                          </div>
                         </div>
                         <Form>
 
-                            <fieldset className="formPeopleVotes">
-                                <Card.Title>CONSENSUS:</Card.Title>
-                                {
-                                    Object.keys(this.props.trialVotes)
-                                        .map((name) =>
-                                            <Card.Text> {name}: {this.props.trialVotes[name]}</Card.Text>
-                                        )
-                                }
-                            </fieldset>
+                          <div className="formPeopleVotes">
+                              <Card.Title bsPrefix="peopleSayTitle">THE PEOPLE SAY</Card.Title>
+                              {
+                                <ListGroup bsPrefix="peopleVotesLG">
+                                  {
+                                  Object.keys(this.props.trialVotes)
+                                      .map((name) =>
+                                          <ListGroup.Item bsPrefix="peopleDayVoteItem"> {name}: {this.props.trialVotes[name]}</ListGroup.Item>
+                                      )
+                                    }
+                                </ListGroup>
+                              }
+                          </div>
                         </Form>
                     </Card.Body>
                 </Card>
-                <div className="ingameButtonContainer">
+                <div className="ingameDayButtonContainer">
                   <Button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="instructionsButton">INSTRUCTIONS</Button>
                     <Instructions
                         show={this.state.instructionShow}

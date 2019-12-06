@@ -76,14 +76,14 @@ class NewsFlash extends Component {
                                                     <span className={"result"}> {this.props.mafia_kill} </span>
                                                 </header>
                                                 <p className="inside_text" >
-                                                    Residents are left shocked when they learned about the sudden death. Authorities have arrived on the scene. Truly a dark day
+                                                    Residents are left shocked when they learned about the sudden death. Authorities have arrived on the scene. Truly a dark day here in Spiceville.
                                                     <Figure bsPrefix={"figure_img"}>
                                                         <Figure.Image
                                                             width ={171}
                                                             height={180}
                                                             src={"/images/NewsflashMafia.png"}
                                                         />
-                                                    </Figure>here in Spiceville.
+                                                    </Figure>
                                                 </p>
                                             </div>
                                             :

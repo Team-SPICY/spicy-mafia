@@ -1,17 +1,22 @@
+
 .NarratorNightContainer{
   background: rgb(2,11,47);
   background: linear-gradient(0deg, rgba(2,11,47,1) 22%, rgba(3,5,13,1) 93%);
-  min-height: 150vh;
-  padding-right: 455px;
+  min-height: 100vh;
+  padding-right: 300px;
 
   align-items: center;
   justify-content: center;
   align-content: center;
 }
-
+.NarratorNightContainer img{
+  text-align: center;
+  width: 300px;
+  height: auto;
+}
 .voteStateItem{
   background: white;
-  width: 300px;
+  width: 250px;
   margin: 0 auto;
   margin-top: 10px;
   padding: 10px 10px 10px 10px;
@@ -39,7 +44,7 @@
   margin: 0 auto;
   margin: 20px 10px 0px 10px;
 
-  font-size: 20px;
+  font-size: 15px;
   font-weight: bold;
   cursor: pointer;
   text-align: center;
@@ -48,7 +53,7 @@
   color: black;
   background-color: white;
   border: none;
-  border-radius: 15px;
+  border-radius: 12px;
   box-shadow: 0 5px #bababa;
   display:inline;
 

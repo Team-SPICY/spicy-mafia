@@ -8,9 +8,11 @@
     align-items: center;
     justify-content: center;
     align-content: center;
+
 }
 
 .formPeopleVotes {
+
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -19,21 +21,31 @@
 }
 
 .header {
+  font-weight: bold;
     color: white;
-    text-shadow: 2.5px 5px black;
+    text-shadow: 0px 3px black;
     text-transform:uppercase;
+
 }
 
 .body {
-    background:-webkit-linear-gradient(270deg,lightgrey,darkgrey,darkgrey);
-    color: #8c0705;
+    color: white;
+    background: rgb(47,47,47);
+    background: linear-gradient(0deg, rgba(47,47,47,1) 0%,
+    rgba(28,28,28,1) 100%);
+    border: 2px solid white;
+    border-radius: 20px;
     border: hidden;
-    padding: 40px 20px 20px 20px;
+    padding: 40px 10px 20px 10px;
     background-size: cover;
     height: inherit;
     vertical-align: middle;
     text-align: center;
     position: relative;
+    box-shadow: 0 5px #bababa;
+    width: 300px;
+    border: 3px solid white;
+    max-height: 500px;
 }
 
 .card {
@@ -41,3 +53,91 @@
     vertical-align: middle;
     position: relative;
 }
+.dayVoteButtonContainer{
+  padding-bottom: 10px;
+  border-bottom: 1px solid white;
+
+}
+.dayVoteButtonContainer Button{
+  display: block;
+  height: 35px;
+  width: 100px;
+  margin: 0 auto;
+  margin-top: 10px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: white;
+  background: rgb(144,142,142);
+  background: linear-gradient(180deg, rgba(144,142,142,1) 26%, rgba(102,101,101,1) 63%, rgba(66,66,66,1) 100%);
+  border: none;
+  border-radius: 10px;
+  /* box-shadow: 0 5px #919191; */
+  box-shadow: 0px 10px 10px 5px rgba(0, 0, 0, 0.05);
+
+
+}
+
+.dayVoteButtonContainer Button:hover {
+  background: -webkit-linear-gradient(#861704, #9f3a14);
+
+  background-color: white;
+}
+.dayVoteButtonContainer Button:disabled {
+  color: white;
+  cursor:not-allowed;
+  background: gray;
+}
+
+.ingameDayButtonContainer Button{
+  position: relative;
+  margin: 0 auto;
+  padding: 10px 0 10px 0;
+  margin: 15px 10px 15px 10px;
+  width: 220px;
+  min-width: 180px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: black;
+  background-color: white;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 5px #bababa;
+  display:block;
+
+}
+.ingameDayButtonContainer Button:hover {
+   background-color: white;
+   color: gray;
+ }
+
+ .ingameDayButtonContainer Button:active {
+   background-color: #989898;
+
+   transform: scale(1);
+ }
+ .cardDayTitle{
+   font-weight: bold;
+   font-size: 30px;
+   margin-top: -20px;
+   padding-bottom: 20px;
+   border-bottom: 1px solid white;
+ }
+
+ .peopleSayTitle{
+
+   font-weight: bold;
+   font-size: 15px;
+
+   padding: 5px 5px 5px 5px;
+   margin-left: 30px;
+   margin-top: -20px;
+
+ }

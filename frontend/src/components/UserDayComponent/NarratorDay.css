@@ -17,22 +17,26 @@
 
 }
 
-.header {
-    color: white;
-    text-shadow: 2.5px 5px black;
-    text-transform:uppercase;
+
+.formSuspects {
+    display: inline-block;
+    list-style-type: none;
 }
-.Narrator Button{
+
+.submitButton {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px solid white;
+    padding-bottom: 10px;
+
+}
+
+.submitButton Button{
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-
   margin-top: 10px;
-  /* margin-right: 100px;
-  margin-left: 100px;
-  align-self: center; */
-
-
   font-size: 15px;
   font-weight: bold;
   cursor: pointer;
@@ -49,54 +53,83 @@
 
 }
 
-
-
-.Narrator Button:active {
-  color: rgb(182,33,15);
-  color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%,
-    rgba(52,2,2,1) 100%);
-  background: gray;
-  transform: scale(1);
-}
-.Narrator Button:hover {
+.submitButton Button:hover {
   background: -webkit-linear-gradient(#861704, #9f3a14);
 
   background-color: white;
 }
-.Narrator Button:focus {
-  outline: 0;
+
+.killButton Button{
+  margin: 0 auto;
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: white;
+  background: rgb(144,142,142);
+  background: linear-gradient(180deg, rgba(144,142,142,1) 26%, rgba(102,101,101,1) 63%, rgba(66,66,66,1) 100%);
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0px 10px 10px 5px rgba(0, 0, 0, 0.05);
+  text-transform: uppercase;
 }
 
-.formSuspects {
-    display: inline-block;
-    list-style-type: none;
+.killButton Button:hover {
+  background: -webkit-linear-gradient(#861704, #9f3a14);
+
+  background-color: white;
 }
 
-.submitButton {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    padding-top: 12px;
+
+.cardDayNarratorTitle{
+
+  font-weight: bold;
+  font-size: 30px;
+  margin-top: -20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid white;
+}
+.concensusTitle{
+  font-weight: bold;
+  font-size: 15px;
+
+  padding: 5px 5px 5px 5px;
+  margin-left: 45px;
+  margin-top: -20px;
+
 }
 
-.formPeopleVotes {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding-left: 40px;
-    padding-top: 20px;
-}
+.peopleVotesLG{
+  border-radius: 10px;
+  max-height: 400px;
+  overflow:scroll;
+  -webkit-overflow-scrolling: touch;
+  color: black;
+  border: 1px solid white;
+  background: black;
 
-.killButton {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    padding-top: 12px;
-}
+  margin-top: -10px;
+  padding: 3px 10px 0 10px;
+  max-height: 70px;
+  width: 250px;
+  margin-right:35px;
+  display: flex;
+  flex-direction: column;
+  align-items:  center;
+  align-self: center;
+  padding-bottom: 10px;
 
-.body {
-    background:-webkit-linear-gradient(270deg,lightgrey,darkgrey,darkgrey);
-    border: hidden;
-    height: inherit;
-    vertical-align: after-edge;
+}
+.peopleDayVoteItem{
+  font-weight: bold;
+  margin-top: 2px;
+  padding: 2px 0 2px 0;
+  border-radius: 10px;
+  background: -webkit-linear-gradient(#861704, #9f3a14);
+
+  text-align: center;
+  width: 150px;
 }

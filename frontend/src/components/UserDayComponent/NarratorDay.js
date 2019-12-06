@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-
 import Image from 'react-bootstrap/Image';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
@@ -8,8 +7,7 @@ import './Cycles.css';
 import './NarratorDay.css';
 import NewsFlash from './NewsFlash'
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import {ListGroup} from 'react-bootstrap'
 
 import Form from 'react-bootstrap/Form';
 import WebSocketInstance from '../../services/WebSocket';
@@ -42,9 +40,9 @@ export default class NarratorDay extends Component {
         return (
             <div className={"Narrator"}>
                 <h1 className={"header"}>NARRATOR</h1>
-                <Card style={{ width: '20rem' }}>
+                <Card bsPrefix="cardNarratorDay">
                     <Card.Body bsPrefix={"body"}>
-                        <Card.Title style ={{color:'darkred'}}>WHO TO ACCUSE?</Card.Title>
+                        <Card.Title bsPrefix="cardDayNarratorTitle">WHO TO ACCUSE?</Card.Title>
                         <Form>
                             <fieldset className="formSuspects">
                                 {
@@ -67,15 +65,19 @@ export default class NarratorDay extends Component {
                                 variant="secondary">SUBMIT</Button>
                         </div>
 
-                        <fieldset className="formPeopleVotes">
-                            <Card.Title>THE PEOPLE SAY:</Card.Title>
+                        <div className="formPeopleVotes">
+                          <Card.Title bsPrefix="concensusTitle">CONSENSUS</Card.Title>
                             {
+                              <ListGroup bsPrefix="peopleVotesLG">
+                                {
                                 Object.keys(this.props.trialVotes)
                                     .map((name) =>
-                                        <Card.Text> {name}: {this.props.trialVotes[name]}</Card.Text>
+                                        <ListGroup.Item bsPrefix="peopleDayVoteItem"> {name}: {this.props.trialVotes[name]}</ListGroup.Item>
                                     )
+                                  }
+                              </ListGroup>
                             }
-                        </fieldset>
+                        </div>
 
                         <div className="killButton">
                             <Button onClick={() => this.resolve_day_votes()}>Kill Accused and Change Cycle</Button>
@@ -83,7 +85,7 @@ export default class NarratorDay extends Component {
 
                     </Card.Body>
                 </Card>
-                <div className="ingameButtonContainer">
+                <div className="ingameDayButtonContainer">
                   <Button onClick={() => this.setState({ instructionShow: true, isFlipped: false })} variant={"secondary"} type={"button"} className="instructionsButton">INSTRUCTIONS</Button>
                     <Instructions
                         show={this.state.instructionShow}

@@ -2,20 +2,24 @@
   background: rgb(2,11,47);
   background: linear-gradient(0deg, rgba(2,11,47,1) 22%, rgba(3,5,13,1) 93%);
   min-height: 115vh;
-  padding-right: 455px;
+  padding-right: 300px;
 
   align-items: center;
   justify-content: center;
   align-content: center;
 
 }
-
+.NightVote img{
+  text-align: center;
+  width: 300px;
+  height: auto;
+}
 .buttonVoteNight{
   margin: 5px;
   padding-bottom: 10px;
   padding-top: 5px;
-  width: 200px;
-  font-size: 20px;
+  width: 150px;
+  font-size: 15px;
   font-weight: bold;
   cursor: pointer;
   text-align: center;
@@ -26,7 +30,7 @@
   background: linear-gradient(180deg, rgba(144,142,142,1) 26%,
   rgba(102,101,101,1) 63%, rgba(66,66,66,1) 100%);
   border: none;
-  border-radius: 15px;
+  border-radius: 12px;
   box-shadow: 0px 10px 10px 5px rgba(0, 0, 0, 0.05);
 
 }
@@ -43,13 +47,12 @@
   margin-bottom: 10px;
   overflow:scroll;
   -webkit-overflow-scrolling: touch;
-  width: 64%;
+  width: 80%;
   margin-left: auto;
   margin-right: auto;
   box-shadow: 0 5px #bababa;
 }
 .nurse-list{
-
   border-radius: 10px;
   max-height: 180px;
   margin-bottom: 10px;
@@ -63,8 +66,7 @@
 .civilian{
   background: white;
   padding: 5px 0px 5px 0px;
-  font-size: 20px;
-
+  width: auto;
   margin: 5px 0px 5px 0px;
   border-radius: 10px;
   box-shadow: 0 5px #bababa;
@@ -72,36 +74,34 @@
 .me-ingame{
 
   padding: 5px 0px 5px 0px;
-  font-size: 20px;
+  font-size: 15px;
 
   color: rgb(182,33,15);
   color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%, rgba(52,2,2,1) 100%);
   background: #b5b5b5;
-    font-weight: bold;
+  font-weight: bold;
   margin: 5px 0px 5px 0px;
   border-radius: 10px;
-    box-shadow: 0 5px gray;
+  box-shadow: 0 5px gray;
 }
 .mafia-list{
-  font-size: 20px;
+  font-size: 15px;
 
     border-radius: 10px;
     max-height: 180px;
     margin-bottom: 10px;
     overflow:scroll;
     -webkit-overflow-scrolling: touch;
-    width: 64%;
+    width: 80%;
     margin-left: auto;
     margin-right: auto;
     box-shadow: 0 5px #bababa;
-
-
 
 }
 
 .me-mafia-li{
   padding: 15px 0px 5px 0px;
-  font-size: 20px;
+  font-size: 15px;
 
   color: red;
   background: #b5b5b5;
@@ -140,7 +140,7 @@
   font-size: 20px;
 
   padding: 15px 0px 5px 0px;
-  font-size: 20px;
+  font-size: 15px;
   color: darkblue;
   background: #b5b5b5;
   font-weight: bold;
@@ -149,7 +149,7 @@
   box-shadow: 0 5px gray;
 }
 .sheriff-li{
-  font-size: 20px;
+  font-size: 15px;
   padding: 15px 0px 5px 0px;
   font-weight: bold;
   color: darkblue;
@@ -162,15 +162,16 @@
 
 .ingameButtonContainer{
   padding-bottom: 10px;
-  margin: 10px 0px 0px 0px;
 
 }
 .ingameButtonContainer Button{
   position: relative;
   margin: 0 auto;
-  margin: 0px 10px 0px 10px;
-
-  font-size: 24px;
+  padding: 10px 0 10px 0;
+  margin: 0px 10px 15px 10px;
+  width: 220px;
+  min-width: 180px;
+  font-size: 15px;
   font-weight: bold;
   cursor: pointer;
   text-align: center;
@@ -179,7 +180,7 @@
   color: black;
   background-color: white;
   border: none;
-  border-radius: 15px;
+  border-radius: 12px;
   box-shadow: 0 5px #bababa;
   display:inline;
 
@@ -187,8 +188,6 @@
 .ingameButtonContainer Button:hover {
    background-color: white;
    color: gray;
-
-
  }
 
  .ingameButtonContainer Button:active {
@@ -211,11 +210,12 @@
 .quizQuestionHeader, .questionHeader{
   color:white;
   font-size: 25px;
-  margin-top: -10px;
-  margin-bottom: 15px;
+  margin-top: -5px;
+  margin-bottom: 10px;
   border-radius: 10px;
   font-weight: bold;
   text-align: center;
   text-shadow: 0 1px black;
   text-transform: uppercase;
+
 }
