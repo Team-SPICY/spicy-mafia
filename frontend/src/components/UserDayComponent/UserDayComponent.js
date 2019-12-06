@@ -9,8 +9,7 @@ import DayVote from '../Vote/DayVote';
 import NewsFlash from './NewsFlash';
 
 import {Button} from 'react-bootstrap'
-import PlayerList from "../Game/PlayerList";
-import Instructions from '../Game/Instructions'
+
 
 class UserDayComponent extends Component {
     constructor(props) {
@@ -40,6 +39,9 @@ class UserDayComponent extends Component {
                             currentUser={this.props.currentUser}
                             trialVotes={this.props.trialVotes}
                             resolve_votes={this.props.resolve_votes}
+                            playersShow={this.props.playerShow}
+                            instructionShow={this.props.instructionShow}
+                            users={this.props.users}
                         />
                         :
                         <div>
@@ -50,21 +52,11 @@ class UserDayComponent extends Component {
                             currentUser={this.props.currentUser}
                             trialVotes={this.props.trialVotes}
                             gameState={this.props.gameState}
+                            users={this.props.users}
+                            instructionShow={this.props.instructionShow}
+                            playersShow={this.props.playersShow}
                         />
-                          <div className="ingameButtonContainer">
-                            <Button onClick={() => this.setState({ instructionShow: true })} variant={"secondary"} type={"button"} className="instructionsButton">INSTRUCTIONS</Button>
-                              <Instructions
-                                  show={this.state.instructionShow}
-                                  onHide={() => this.setState({ instructionShow: false })}
-                              />
-                            <Button className="playerListButton" onClick={() => this.setState({ playersShow: true })}>PLAYER LIST</Button>
-                              <PlayerList
-                                  users={this.props.users}
-                                  currentUser={this.props.currentUser}
-                                  show={this.state.playersShow}
-                                  onHide={() => this.setState({ playersShow: false })}
-                              />
-                          </div>
+
                         </div>
 
                 }

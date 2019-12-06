@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Button, ListGroup } from 'react-bootstrap'
+import { Modal, Button, ListGroup, Badge } from 'react-bootstrap'
 import './Player_list.css';
 class PlayerList extends Component {
     constructor(props) {
@@ -8,7 +8,10 @@ class PlayerList extends Component {
     }
     renderUsers = () => {
         const currentUser = this.props.currentUser;
+
         console.log(currentUser, this.props.users);
+
+
         return this.props.users.map((user, i) => <ListGroup.Item key={user} className={user === currentUser ? "me" : 'other'}> <p>{user}</p></ListGroup.Item>);
     }
 
@@ -20,23 +23,22 @@ class PlayerList extends Component {
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
             >
-                <Modal.Header closeButton>
+                <Modal.Header bsPrefix="playerListHeader">
                     <Modal.Title id="contained-modal-title-vcenter">
-                        Players
+                        PLAYERS
                     </Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body bsPrefix="playerListBody">
                     <div className={"container"}>
-                        LIST OF PLAYERS
-                        <div>
+                        <div className="playerListLG">
                             <ListGroup>{
                                 this.renderUsers()
                             }</ListGroup>
                         </div>
                     </div>
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button variant={'outline-dark'} onClick={this.props.onHide}>Close</Button>
+                <Modal.Footer bsPrefix="playerListFooter">
+                    <Button variant={'outline-dark'} onClick={this.props.onHide}>CLOSE</Button>
                 </Modal.Footer>
             </Modal>
         );
