@@ -30,7 +30,7 @@ class Lobby extends Component {
 
     return (
 
-      <div>
+      <div className="lobbyContainer">
         <div className="lobbyLogoContainer">
           <Image className="lobbyLogo" src="/images/LobbyTitle.png" />
         </div>

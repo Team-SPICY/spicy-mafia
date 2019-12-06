@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import FlipCard from 'react-flipcard';
 import ListGroup from "react-bootstrap/ListGroup";
-import { Card, Modal, Button, Container } from 'react-bootstrap'
+import { Card, Modal, Button, Container, Badge } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col';
 import './NarratorNight.css';
+import PlayerList from "../Game/PlayerList";
+import Instructions from '../Game/Instructions'
 
 class NarratorNight extends Component {
     constructor(props) {
@@ -53,7 +55,7 @@ class NarratorNight extends Component {
         });
         const votes = this.props.mafiaVotes;
         const numVotes = votes.length;
-        return (<ListGroup.Item>Mafia Votes:{numVotes}/{num}</ListGroup.Item>)
+        return (<ListGroup.Item bsPrefix="voteStateItem">MAFIA VOTES: {numVotes}/{num} {numVotes === num? <Badge variant="danger"> DONE</Badge>:null}</ListGroup.Item>)
 
     }
     renderCivilianStats() {
@@ -67,7 +69,7 @@ class NarratorNight extends Component {
         });
         const votes = this.props.civilianVotes;
         const numVotes = votes.length;
-        return (<ListGroup.Item>Civilian Votes: {numVotes}/{num}</ListGroup.Item>)
+        return (<ListGroup.Item bsPrefix="voteStateItem">CIVILIAN VOTES: {numVotes}/{num} {numVotes === num ? <Badge variant="danger"> DONE</Badge>:null}</ListGroup.Item>)
 
     }
 
@@ -82,7 +84,7 @@ class NarratorNight extends Component {
         });
         const votes = this.props.nurseVotes;
         const numVotes = votes.length;
-        return (<ListGroup.Item>Nurse Votes: {numVotes}/{num}</ListGroup.Item>)
+        return (<ListGroup.Item bsPrefix="voteStateItem">NURSE VOTES: {numVotes}/{num} {numVotes === num? <Badge variant="danger"> DONE</Badge>:null}</ListGroup.Item>)
     }
 
     renderSheriffStats() {
@@ -96,48 +98,62 @@ class NarratorNight extends Component {
         });
         const votes = this.props.sheriffVotes;
         const numVotes = votes.length;
-        return (<ListGroup.Item>Sheriff Votes: {numVotes}/{num}</ListGroup.Item>)
+        return (<ListGroup.Item bsPrefix="voteStateItem">SHERIFF VOTES: {numVotes}/{num} {numVotes === num? <Badge variant="danger"> DONE</Badge>:null}</ListGroup.Item>)
 
     }
 
 
 
     render() {
-        return (<div>
-            <Container fluid={true}>
-                <Row>
-                    <Col xs={6} md={7}>
-                        <FlipCard
-                            disabled={true}
-                            flipped={this.state.isFlipped}
-                            onFlip={this.handleOnFlip}
-                            onKeyDown={this.handleKeyDown}
-                        >
-                            <div onClick={this.showBack} >
-                                <img src={this.props.backgroundSrc} width={" "} height={"600"} />
-                                <div className='vote-stats'>
-                                    <h3 className='voting-stats-header'>Voting Stats - Don't Snitch!</h3>
-                                    <ListGroup variant="flush">
-                                        {this.renderMafiaStats()}
-                                        {this.renderNurseStats()}
-                                        {this.renderSheriffStats()}
-                                        {this.renderCivilianStats()}
-                                    </ListGroup>
-                                </div>
-                                <div className="changeCycleButtonContainer">
-                                  <Button onClick={this.props.resolve_votes} className="changeCycleButton">Change Cycle</Button>
-                                </div>
-                            </div>
-                            <div ref={this.backButton} onClick={this.showFront} >
-                                {
-                                    <img src={this.props.backgroundSrc} width={" "} height={"600"} />
-                                }
+        return (
+          <div className={"NarratorNightContainer"}>
 
-                            </div>
-                        </FlipCard>
-                    </Col>
-                </Row>
-            </Container>
+
+              <FlipCard
+                  disabled={true}
+                  flipped={this.state.isFlipped}
+                  onFlip={this.handleOnFlip}
+                  onKeyDown={this.handleKeyDown}
+              >
+                  <div >
+                      <img onClick={this.showBack} src={this.props.backgroundSrc} width={" "} height={"600"} />
+                      <div className='vote-stats'>
+                          <h3 className='voting-stats-header'>VOTING STATES</h3>
+                          <ListGroup bsPrefix="voteStatesLG" variant="flush">
+                              {this.renderMafiaStats()}
+                              {this.renderNurseStats()}
+                              {this.renderSheriffStats()}
+                              {this.renderCivilianStats()}
+                          </ListGroup>
+                      </div>
+                      <div className="changeCycleButtonContainer">
+                        <Button onClick={this.props.resolve_votes} className="changeCycleButton">CHANGE CYCLE</Button>
+                      </div>
+                  </div>
+                  <div >
+                      {
+                          <img ref={this.backButton} onClick={this.showFront} src="/images/CardBack.png" width={" "} height={"600"} />
+
+
+                      }
+                      <div className="ingameButtonContainer">
+                        <Button onClick={() => this.setState({ instructionShow: true})} variant={"secondary"} type={"button"} className="instructionsButton">INSTRUCTIONS</Button>
+                          <Instructions
+                              show={this.state.instructionShow}
+                              onHide={() => this.setState({ instructionShow: false})}
+                          />
+                        <Button className="playerListButton" onClick={() => this.setState({ playersShow: true })}>PLAYER LIST</Button>
+                          <PlayerList
+                              users={this.props.users}
+                              currentUser={this.props.currentUser}
+                              show={this.state.playersShow}
+                              onHide={() => this.setState({ playersShow: false })}
+                          />
+                      </div>
+
+                  </div>
+              </FlipCard>
+
         </div >
         );
     }

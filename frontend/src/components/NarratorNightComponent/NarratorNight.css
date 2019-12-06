@@ -1,50 +1,69 @@
+.NarratorNightContainer{
+  background: rgb(2,11,47);
+  background: linear-gradient(0deg, rgba(2,11,47,1) 22%, rgba(3,5,13,1) 93%);
+  min-height: 115vh;
+  padding-right: 455px;
+
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+}
+
+.voteStateItem{
+  background: white;
+  width: 300px;
+  margin: 0 auto;
+  margin-top: 10px;
+  padding: 10px 10px 10px 10px;
+  border-style: none;
+  border-radius: 10px;
+  box-shadow: 0 5px #bababa;
+  outline: none;
+  font-weight: bold;
+}
+
 .voting-stats-header{
   color:white;
+  font-size: 25px;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 0 1px black;
+  text-transform: uppercase;
 }
-.vote-stats ListGroup{
-  border-radius: 20px;
-  width: 10px;
-}
+
 .changeCycleButtonContainer Button{
-  
+  position: relative;
+  margin: 0 auto;
+  margin: 20px 10px 0px 10px;
 
-
-
-  margin-top: 10px;
-
-  align-self: center;
-
-
-  font-size: 15px;
+  font-size: 20px;
   font-weight: bold;
   cursor: pointer;
   text-align: center;
   text-decoration: none;
   outline: none;
-  color: white;
-  background: rgb(144,142,142);
-  background: linear-gradient(180deg, rgba(144,142,142,1) 26%, rgba(102,101,101,1) 63%, rgba(66,66,66,1) 100%);
+  color: black;
+  background-color: white;
   border: none;
-  border-radius: 10px;
-  /* box-shadow: 0 5px #919191; */
-  box-shadow: 0px 10px 10px 5px rgba(0, 0, 0, 0.05);
+  border-radius: 15px;
+  box-shadow: 0 5px #bababa;
+  display:inline;
 
-}
-
-
-
-.changeCycleButtonContainer Button:active {
-  color: rgb(182,33,15);
-  color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%,
-    rgba(52,2,2,1) 100%);
-  background: gray;
-  transform: scale(1);
 }
 .changeCycleButtonContainer Button:hover {
-  background: -webkit-linear-gradient(#861704, #9f3a14);
+   background-color: white;
+   color: gray;
 
-  background-color: white;
-}
-.changeCycleButtonContainer Button:focus {
-  outline: 0;
-}
+
+ }
+
+ .changeCycleButtonContainer Button:active {
+   background-color: #989898;
+
+   transform: scale(1);
+ }
+
+ /*************/

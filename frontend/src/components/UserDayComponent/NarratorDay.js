@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+
 import Image from 'react-bootstrap/Image';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
@@ -12,6 +13,9 @@ import Col from 'react-bootstrap/Col';
 
 import Form from 'react-bootstrap/Form';
 import WebSocketInstance from '../../services/WebSocket';
+
+import PlayerList from "../Game/PlayerList";
+import Instructions from '../Game/Instructions'
 
 export default class NarratorDay extends Component {
     constructor(props) {
@@ -79,6 +83,20 @@ export default class NarratorDay extends Component {
 
                     </Card.Body>
                 </Card>
+                <div className="ingameButtonContainer">
+                  <Button onClick={() => this.setState({ instructionShow: true, isFlipped: false })} variant={"secondary"} type={"button"} className="instructionsButton">INSTRUCTIONS</Button>
+                    <Instructions
+                        show={this.state.instructionShow}
+                        onHide={() => this.setState({ instructionShow: false, isFlipped: false })}
+                    />
+                  <Button className="playerListButton" onClick={() => this.setState({ playersShow: true })}>PLAYER LIST</Button>
+                    <PlayerList
+                        users={this.props.users}
+                        currentUser={this.props.currentUser}
+                        show={this.state.playersShow}
+                        onHide={() => this.setState({ playersShow: false })}
+                    />
+                </div>
             </div>
         )
     }
