@@ -297,10 +297,15 @@ export default class Game extends Component {
         console.log('users: ', this.state.users);
 
         //if the currentUser is the new host
-        if (is_Host == true && this.props.currentUser == newHost){
+        if (is_Host == true && this.props.currentUser == newHost && this.state.gameState == 'Lobby'){
           //set currentUser isHost state to true
           console.log('SETTING NEW HOST STATE')
           this.setState({isHost: true})
+        }
+        else if (is_Host == true && this.state.gameState !== 'Lobby'){
+          //if host leaves in game, everybody is kicked out
+          console.log('EVERYBODY LEAVE THE GAME')
+          window.location.reload()
         }
     }
 
