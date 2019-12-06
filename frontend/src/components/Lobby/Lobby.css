@@ -1,11 +1,14 @@
+.lobbyContainer{
+  /* background: blue; */
+}
 .listContainer{
   /* background: red; */
 
   box-shadow: 0px 10px 10px 5px rgba(0, 0, 0, 0.05);
   position: relative;
   margin: 0 auto;
-  width: 450px;
-  height: 450px;
+  width: 350px;
+  height: 350px;
   max-height: 450px;
   text-align: center;
   margin-bottom: 10px;
@@ -13,7 +16,6 @@
   -webkit-overflow-scrolling: touch;
   border-style: double;
   border: 1px;
-
   border-radius: 20px;
   background: rgba(19,19,19,1);
 
@@ -27,7 +29,7 @@
   background: radial-gradient(circle, rgba(75,75,75,1) 45%,
     rgba(57,57,57,1) 76%, rgba(19,19,19,1) 100%);
 
-  font-size: 20px;
+  font-size: 15px;
   padding-top: 25px;
   text-align: center;
 }
@@ -38,7 +40,7 @@
   background: radial-gradient(circle, rgba(99,99,99,1) 45%,
     rgba(99,99,99,1) 76%, rgba(82,81,81,1) 100%);
 
-  font-size: 20px;
+  font-size: 15px;
   padding-top: 25px;
   text-align: center;
 
@@ -46,7 +48,7 @@
 
 
 .lobbyLogo{
-  width: 350px;
+  width: 280px;
   height: auto;
   padding: 40px 20px 0px 20px;
   margin-bottom: -15px;
@@ -55,17 +57,19 @@
 
 .lobbyLogoContainer{
   position: relative;
+  /* background: red; */
+  margin: 0 auto;
 }
 
 .lobbyButtonContainer{
   /* background: red; */
   margin-top: -10px;
+  margin: 0 auto;
 }
 .Lobby button{
   margin: 5px;
-  padding: ;
-  width: 200px;
-  font-size: 20px;
+  width: 180px;
+  font-size: 15px;
   font-weight: bold;
   cursor: pointer;
   text-align: center;
@@ -75,7 +79,7 @@
   background: rgb(144,142,142);
   background: linear-gradient(180deg, rgba(144,142,142,1) 26%, rgba(102,101,101,1) 63%, rgba(66,66,66,1) 100%);
   border: none;
-  border-radius: 15px;
+  border-radius: 10px;
   box-shadow: 0px 10px 10px 5px rgba(0, 0, 0, 0.05);
 
 }
@@ -110,14 +114,12 @@
 
 .numPlayersContainer p{
   /* background: red; */
-  padding-top: 0px;
   padding-bottom: -50px;
   font-size: 20px;
   font-weight: bold;
   background: -webkit-linear-gradient(#861704, #9f3a14);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-
 }
 
 .secretCodeContainer{
@@ -129,14 +131,14 @@
 
 .secretCodeContainer h1{
   margin-top: -10px;
-  padding-top: 0px;
-  font-size: 30px;
+  padding-top: 5px;
+  font-size: 20px;
   background: -webkit-linear-gradient(#861704, #9f3a14);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .secretCodeContainer p{
   margin: 15px 0 4px 0;
-  font-size: 20px;
+  font-size: 15px;
   color: white;
 }
