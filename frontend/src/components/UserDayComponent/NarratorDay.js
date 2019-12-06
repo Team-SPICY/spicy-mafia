@@ -52,7 +52,6 @@ export default class NarratorDay extends Component {
                                         .map((name) =>
                                         <ListGroup.Item bsPrefix="accusedUserListItem">
                                             <Form.Check
-                                                bsPrefix="accusedCheck"
                                                 type="radio"
                                                 id={`default-${name}`}
                                                 label={`${name}`}
