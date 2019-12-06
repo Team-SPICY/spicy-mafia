@@ -1,7 +1,7 @@
 .NarratorNightContainer{
   background: rgb(2,11,47);
   background: linear-gradient(0deg, rgba(2,11,47,1) 22%, rgba(3,5,13,1) 93%);
-  min-height: 115vh;
+  min-height: 150vh;
   padding-right: 455px;
 
   align-items: center;

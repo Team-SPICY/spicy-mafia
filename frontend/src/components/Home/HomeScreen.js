@@ -19,7 +19,7 @@ export class Home extends Component {
     render() {
 
         return (
-            {/* Adds Home Screen Image */}
+            /* Adds Home Screen Image */
             <div className="Homescreen">
 
                 <div className="homeContainer">
