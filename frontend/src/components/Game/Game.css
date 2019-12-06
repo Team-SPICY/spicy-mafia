@@ -104,11 +104,12 @@
 
   /* background: red; */
   border-radius: 20px;
+
 }
 
 .mafiaWinImage{
-  width: 500px;
-  height: 500px;
+  width: 300px;
+  height: auto;
   margin-top: 50px;
   margin-bottom: 50px;
   /* background: purple; */

@@ -50,7 +50,7 @@ class Instructions extends Component {
                                     <Tab.Pane className="instructionsPane" eventKey="General">
                                       <li>There are Mafia Members and Civilians. Only one group can survive.</li>
                                       <li>Civilians win when Mafia is completely eliminated.</li>
-                                      <li>Mafia wins when they become the majority or are equal in number to the Civilians.</li>
+                                      <li>Mafia wins when they are equal in number to the Civilians.</li>
                                       <li>During the Night-Time cycle, everyone must put their votes in.</li>
                                       <li>The Nurse, who is part of the Civilians, must attempt to save someone.
                                       If the Nurse selects a player who the Mafia is trying to kill, the player survives</li>
