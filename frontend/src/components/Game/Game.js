@@ -320,7 +320,7 @@ export default class Game extends Component {
         return (
             <div>
                 {
-                  // check whether mafia or civilian won
+                  {/* check whether mafia or civilian won */}
                   this.state.gameState === 'mafia_win' ?
                     <div className="winContainer">
                         <div className="MafiaWinContainer">

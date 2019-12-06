@@ -64,7 +64,7 @@ class UserNightComponent extends Component {
     render() {
         return (
             <div>
-                // if player is host, display game stats to narrator
+                {/* if player is host, display game stats to narrator */}
                 {this.props.role === 'host' ?
                     <div>
                         <NarratorNight

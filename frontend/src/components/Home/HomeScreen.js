@@ -19,7 +19,7 @@ export class Home extends Component {
     render() {
 
         return (
-            // Adds Home Screen Image 
+            {/* Adds Home Screen Image */}
             <div className="Homescreen">
 
                 <div className="homeContainer">
@@ -27,8 +27,8 @@ export class Home extends Component {
                     <div className="homeLogoContainer">
                       <img className="homeLogo" src="/images/MafiaHomeLogo.png" />
                     </div>
-            
-                    // Allows users to type in their username
+
+                    {/* Allows users to type in their username */}
                     <label>USERNAME</label>
                     <div className= "inputContainer">
                       <div className="usernameInput">
@@ -42,15 +42,15 @@ export class Home extends Component {
                       </div>
                     </div>
 
-                  // Buttons to host or join game
+                  {/* Buttons to host or join game */}
                   <div className ="buttonContainer">
                     <Button onClick={() => this.props.handleCreateGame(this.props.username)} className="buttonHost">HOST</Button>
                     <Button onClick={() => this.setState({ roomIDShow: true })} className="buttonJoin">JOIN</Button>
                   </div>
 
                 </div>
-                
-                // checks if room code exist and player can join
+
+                {/* checks if room code exist and player can join */}
                 {this.state.roomIDShow ?
                     <ShowRoomId
                         show={this.state.roomIDShow}
