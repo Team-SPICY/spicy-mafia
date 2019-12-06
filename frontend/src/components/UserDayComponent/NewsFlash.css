@@ -14,6 +14,7 @@
     font-weight: 900;
     font-size: 60px;
     text-align: center;
+
 }
 
 .logo{
@@ -27,6 +28,7 @@
     padding: 10px 0 10px 0;
     text-align: center;
     font-family: Serif;
+    margin-bottom: 10px;
 }
 .result{
     color: darkred;
@@ -39,6 +41,8 @@
     font-family: Serif;
     padding-right: 20px;
     padding-left: 20px;
+    border-right: 1px solid black;
+    padding-top: 20px;
 }
 
 .column_left{
@@ -48,6 +52,8 @@
     font-family: Serif;
     padding-left: 20px;
     padding-right: 20px;
+    /*MY CHANGE*/
+    padding-top: 20px;
 
 }
 
@@ -61,11 +67,24 @@
     font-size: 30px;
     font-weight: bold;
     text-align: center;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+
 }
 
 .footer{
     background: antiquewhite;
     text-align: center;
+    border-top: 2px solid black;
+    padding: 10px 0 10px 0;
+
+}
+.footer Button{
+  background: black;
+  border: none;
+}
+.footer Button:hover{
+  background: gray;
 }
 
 .figure_img {
@@ -76,4 +95,14 @@
     text-wrap: normal;
     flex-wrap: wrap;
 
+}
+.inside_text{
+  padding-top: 10px;
+}
+.breaking_title{
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
 }

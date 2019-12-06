@@ -11,7 +11,15 @@ class NewsFlash extends Component {
 
         };
     }
+    showCurrentDate=()=>{
 
+          var date = new Date().getDate();
+          var month = new Date().getMonth() + 1;
+          var year = new Date().getFullYear();
+          var DateMonthYear = '';
+          return DateMonthYear = month + '/' + date + '/' + year;
+
+    }
     render() {
         return (
 
@@ -33,33 +41,33 @@ class NewsFlash extends Component {
                         </header>
                     </div>
                     <div className={"date"}>
-                        This City, This Day, 1934
+                        This City, This Day, {this.showCurrentDate()}
                     </div>
                     <Container  >
                         <Row>
                             <Col bsPrefix={"column"}>
                                 <div>
                                     <header className={"sub_title"}> {this.props.quizQuestion}</header>
-                                    <p className={"inside_text"}> Civilians have come to the agreement that
+                                    <p className={"inside_text"}> The Civilians have come to the agreement that
                                         <span className={"result"}> {this.props.winner} </span>
                                         is the chosen one.
                                     </p>
                                 </div>
                                 <div>
-                                    <p className="sub_title">Sheriff Investigation</p>
+                                    <header className="sub_title">Sheriff Investigation</header>
                                     {
                                         this.props.sheriff === true ?
                                             <p className="inside_text">Sheriff investigated... and <span className={"result"}>found a mafia.</span></p>
                                             :
-                                            <p className={"inside_text"} >Sadly Sheriff's investigation has been
+                                            <p className={"inside_text"} >Sadly the Sheriff's investigation was
                                                 <span className={"result"}> unsuccessful</span>.
-                                                Investigation continues.
+                                                The investigation continues.
                                             </p>
                                     }
                                 </div>
                             </Col>
                             <Col bsPrefix={"column_left"}>
-                                <p className={"sub_title"}> THIS IS THE HEADER </p>
+                                <p className={"breaking_title"}> BREAKING NEWS </p>
                                 <div>
                                     {
                                         this.props.mafia_kill !== "" ?
@@ -68,15 +76,14 @@ class NewsFlash extends Component {
                                                     <span className={"result"}> {this.props.mafia_kill} </span>
                                                 </header>
                                                 <p className="inside_text" >
-                                                    Residents left shocked when
+                                                    Residents are left shocked when they learned about the sudden death. Authorities have arrived on the scene. Truly a dark day
                                                     <Figure bsPrefix={"figure_img"}>
                                                         <Figure.Image
                                                             width ={171}
                                                             height={180}
-                                                            src={"/images/MafiaCard.png"}
-                                                            roundedCircle={true}
+                                                            src={"/images/NewsflashMafia.png"}
                                                         />
-                                                    </Figure> they learnt about the sudden death.
+                                                    </Figure>here in Spiceville.
                                                 </p>
                                             </div>
                                             :
@@ -87,16 +94,16 @@ class NewsFlash extends Component {
                                     {
                                         this.props.nurse_saved !== "" ?
                                             <div>
-                                                <p className={"inside_text"}>Nurse saved a
+                                                <header className="sub_title">Attempted Murder</header>
+                                                <p className={"inside_text"}>Last night, an unfortunate event occurred. However, the Nurse arrived quickly on the scene and was able to <span className={"result"}>save</span> the
                                                     <Figure bsPrefix={"figure_img"}>
                                                         <Figure.Image
                                                             width ={171}
                                                             height={180}
-                                                            src={"/images/NurseCard.png"}
-                                                            roundedCircle={true}
+                                                            src={"/images/NewsflashNurse.png"}
                                                         />
-                                                    </Figure>
-                                                    could have been victim...</p>
+                                                    </Figure> victim involved...
+                                                  </p>
 
                                             </div>
                                             :
