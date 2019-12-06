@@ -2,14 +2,12 @@
 .NarratorNightContainer{
   background: rgb(2,11,47);
   background: linear-gradient(0deg, rgba(2,11,47,1) 22%, rgba(3,5,13,1) 93%);
-  min-height: 100vh;
+  min-height: 110vh;
   padding-right: 300px;
-
-  align-items: center;
-  justify-content: center;
-  align-content: center;
+  overflow:  scroll;
 }
 .NarratorNightContainer img{
+
   text-align: center;
   width: 300px;
   height: auto;
@@ -41,10 +39,10 @@
 
 .changeCycleButtonContainer Button{
   position: relative;
-  margin: 0 auto;
+
   margin: 20px 10px 0px 10px;
 
-  font-size: 15px;
+  font-size: 12px;
   font-weight: bold;
   cursor: pointer;
   text-align: center;
