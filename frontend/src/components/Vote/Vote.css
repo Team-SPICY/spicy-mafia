@@ -59,7 +59,7 @@
   margin-bottom: 10px;
   overflow:scroll;
   -webkit-overflow-scrolling: touch;
-  width: 64%;
+  width: 80%;
   margin-left: auto;
   margin-right: auto;
   box-shadow: 0 5px #bababa;
@@ -104,7 +104,8 @@
   padding: 15px 0px 5px 0px;
   font-size: 15px;
 
-  color: red;
+  color: rgb(182,33,15);
+  color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%, rgba(52,2,2,1) 100%);
   background: #b5b5b5;
   font-weight: bold;
   margin: 5px 0px 5px 0px;
@@ -114,7 +115,7 @@
 
 .mafia-li{
     padding: 15px 0px 5px 0px;
-    font-size: 20px;
+    font-size: 15px;
     font-weight: bold;
     color: rgb(182,33,15);
     color: linear-gradient(180deg, rgba(182,33,15,1) 60%, rgba(94,1,1,1) 76%, rgba(52,2,2,1) 100%);
@@ -131,7 +132,7 @@
   margin-bottom: 10px;
   overflow:scroll;
   -webkit-overflow-scrolling: touch;
-  width: 64%;
+  width: 80%;
   margin-left: auto;
   margin-right: auto;
   box-shadow: 0 5px #bababa;
