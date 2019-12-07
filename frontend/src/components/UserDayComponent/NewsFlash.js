@@ -95,14 +95,14 @@ class NewsFlash extends Component {
                                         this.props.nurse_saved !== "" ?
                                             <div>
                                                 <header className="sub_title">Attempted Murder</header>
-                                                <p className={"inside_text"}>Last night, an unfortunate event occurred. However, the Nurse arrived quickly on the scene and was able to <span className={"result"}>save</span> the
+                                                <p className={"inside_text"}>Last night, an unfortunate event occurred. However, the Nurse arrived quickly on the scene and was able to <span className={"result"}>save</span> the victim involved.
                                                     <Figure bsPrefix={"figure_img"}>
                                                         <Figure.Image
                                                             width ={171}
                                                             height={180}
                                                             src={"/images/NewsflashNurse.png"}
                                                         />
-                                                    </Figure> victim involved...
+                                                    </Figure>
                                                   </p>
 
                                             </div>
