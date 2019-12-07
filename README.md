@@ -1,5 +1,3 @@
-Websocket has been integrated, try it out!
-
 # Introduction
 Spicy-Mafia is an online game developed by team SPICY. Like party games such as Werewolf and Mafia, Spicy-Mafia is basically about a group of people looking for the killer(s) before the number of killers matches that of themselves. That group of people include civilians, a sheriff, and a nurse. All of this is narrated by a narrator who uses their story-telling skills to weave an intriguing and hilarious story. However, its lobby system, game mechanics, and role distribution system addresses the issues found in those games such as keeping track of statistics and voting, managing time, and cheating.
 
@@ -30,6 +28,9 @@ Spicy-Mafia is an online game developed by team SPICY. Like party games such as 
 # Contact
 
 Charles Xiong- Project Manager (c5xiong@ucsd.edu)
+
 Jacob Doering-Powell - Software Development Lead (jdoering@ucsd.edu)
+
 Brandon Gonzalez - Software Architect (brg029@ucsd.edu)
+
 Thuc Phan - User Interface Specialist (tcp004@ucsd.edu)
