@@ -61,7 +61,7 @@ class Instructions extends Component {
                                       <li>During the Day-Time cycle, everyone will discuss and put someone on trial,
                                       if that individual is voted guilty, then that player will die.</li>
                                       <li>Someone must die during the Day-Time cycle.</li>
-                                      <li>20% of the players will be Mafia.</li>
+                                      <li>About 30% of the players will be Mafia.</li>
                                       <li>There will only be one Nurse and one Sheriff.</li>
                                       <li>Everyone else will be a Civilian.</li>
                                     </Tab.Pane>
@@ -70,7 +70,7 @@ class Instructions extends Component {
                                       <li>Once every player is inside the lobby, press the "Start" button.</li>
                                       <li>Once everyone’s vote is placed, and the “News Flash” is displayed, be creative and start the narrative.</li>
                                       <li>During discussion time, you must put someone on trial based on the players’ discussion by selecting
-                                      a player and must continue to do so until someone dies.</li>
+                                      a player and must continue to do so until someone is voted to be hung by a majority of the users. </li>
                                     </Tab.Pane>
                                     <Tab.Pane className="instructionsPane" eventKey="Mafia">
                                       <li>You must keep your role secret.</li>
