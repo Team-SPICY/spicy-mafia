@@ -7,7 +7,7 @@ verify_ssl = true
 
 [packages]
 django-channels = "==0.7.0"
-djangorestframework = "==3.10.3"
+djangorestframework = "==3.11.2"
 gcloud = "==0.17.0"
 googleapis-common-protos = "==1.6.0"
 httplib2 = "==0.14.0"
